@@ -23,23 +23,24 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-  .state('menu', {
-    url: '/menu',
-    templateUrl: "partials/menu.html",
+  .state('app', {
+    url: '/app',
+    abstract: true,
+    templateUrl: 'partials/menu.html',
     controller: 'AppCtrl'
   })
   
-  .state('orders', {
+  .state('app.orders', {
       url: '/orders',
       templateUrl: 'partials/orders.html',
       controller: 'xxx'
   })
   
-  .state('history', {
-      url: 'history',
+  .state('app.history', {
+      url: '/history',
       templateUrl: 'partials/history.html',
       controller: 'xxx'
   });
   
-  $urlRouterProvider.otherwise('/menu');
+  $urlRouterProvider.otherwise('/app/orders');
 });
