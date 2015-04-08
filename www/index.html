@@ -19,6 +19,8 @@
     <script src="cordova.js"></script>
 
     <!-- your app's js -->
+    <script src="js/controllers.js"></script>
+    <script src="js/services.js"></script>
     <script src="js/app.js"></script>
   </head>
   <body ng-app="starter">
@@ -26,9 +28,11 @@
     <ion-pane>
       <ion-header-bar class="bar-stable">
         <h1 class="title">Ionic Blank Starter</h1>
+          <div ng-controller="AppCtrl">{{message}}</div>
       </ion-header-bar>
       <ion-content>
       </ion-content>
     </ion-pane>
+      
   </body>
 </html>
