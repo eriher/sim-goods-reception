@@ -18,4 +18,16 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
       StatusBar.styleDefault();
     }
   });
+})
+
+.config(function($stateProvider, $urlRouterProvider) {
+  $stateProvider
+
+  .state('menu', {
+    url: "/menu",
+    templateUrl: "partials/menu.html",
+    controller: 'AppCtrl'
+  });
+  
+  $urlRouterProvider.otherwise('/menu');
 });
