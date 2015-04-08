@@ -24,9 +24,21 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
   $stateProvider
 
   .state('menu', {
-    url: "/menu",
+    url: '/menu',
     templateUrl: "partials/menu.html",
     controller: 'AppCtrl'
+  })
+  
+  .state('orders', {
+      url: '/orders',
+      templateUrl: 'partials/orders.html',
+      controller: 'xxx'
+  })
+  
+  .state('history', {
+      url: 'history',
+      templateUrl: 'partials/history.html',
+      controller: 'xxx'
   });
   
   $urlRouterProvider.otherwise('/menu');
