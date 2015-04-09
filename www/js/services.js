@@ -5,7 +5,7 @@ angular.module('app.services', [])
     var menuItems =
         [{ text: 'Ordrar', iconClass: 'icon ion-map', link: 'menu'},
          { text: 'Historik',iconClass: 'icon ion-map', link: 'history'},
-         { text: 'Om SIM-app',iconClass: 'icon ion-map', link: 'history'}];
+         { text: 'Om SIM-app',iconClass: 'icon ion-map', link: 'about'}];
     
     return {
         all: function() {

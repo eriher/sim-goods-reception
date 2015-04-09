@@ -31,15 +31,32 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
   })
   
   .state('app.orders', {
-      url: '/orders',
-      templateUrl: 'partials/orders.html',
-      controller: 'xxx'
+    url: '/orders',
+    views :{
+        'menuContent': {
+            templateUrl: 'partials/orders.html',
+            controller: 'xxx'
+        }
+    }
   })
   
   .state('app.history', {
       url: '/history',
-      templateUrl: 'partials/history.html',
-      controller: 'xxx'
+      views: {
+          'menuContent':{
+              templateUrl: 'partials/history.html',
+              controller: 'xxx'
+          }
+      }
+  })
+  .state('app.about', {
+      url: '/about',
+      views: {
+          'menuContent': {
+          templateUrl: 'partials/about.html',
+          controller: 'xxx'
+          }
+      }
   });
   
   $urlRouterProvider.otherwise('/app/orders');
