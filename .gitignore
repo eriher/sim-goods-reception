@@ -6,3 +6,7 @@ platforms/
 plugins/
 *.xdk
 *.xdke
+intelxdk.config.androi.xml
+intelxdk.config.crosswalk.xml
+intelxdk.config.ios.xml
+intelxdk.config.windows8.xml
