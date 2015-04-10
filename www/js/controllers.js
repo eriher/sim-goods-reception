@@ -9,4 +9,16 @@ angular.module('app.controllers', [])
         $window.alert(page);
         $location.url('/'+ page);
     };
+})
+
+.controller('OrdersCtrl', function($scope) {
+    $scope.navTitle = 'Orders';
+})
+
+.controller('AboutCtrl', function($scope) {
+    $scope.navTitle = 'About';
+})
+
+.controller('HistoryCtrl', function($scope) {
+    $scope.navTitle = 'History';
 });

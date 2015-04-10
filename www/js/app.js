@@ -35,7 +35,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
     views :{
         'menuContent': {
             templateUrl: 'partials/orders.html',
-            controller: 'xxx'
+            controller: 'OrdersCtrl'
         }
     }
   })
@@ -45,7 +45,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
       views: {
           'menuContent':{
               templateUrl: 'partials/history.html',
-              controller: 'xxx'
+              controller: 'HistoryCtrl'
           }
       }
   })
@@ -53,8 +53,8 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
       url: '/about',
       views: {
           'menuContent': {
-          templateUrl: 'partials/about.html',
-          controller: 'xxx'
+              templateUrl: 'partials/about.html',
+              controller: 'AboutCtrl'
           }
       }
   });
