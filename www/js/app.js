@@ -57,6 +57,15 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
               controller: 'AboutCtrl'
           }
       }
+  })
+  .state('app.order', {
+      url: '/orders/:orderId',
+      views: {
+          'menuContent': {
+              templateUrl: 'templates/order.html',
+              controller: 'OrderCtrl'
+          }
+      }
   });
   
   $urlRouterProvider.otherwise('/app/orders');
