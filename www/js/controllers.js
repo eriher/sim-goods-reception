@@ -7,6 +7,10 @@ angular.module('app.controllers', [])
     $scope.scanBtn = ScanService.scan();
 })
 
+.controller('OrderCtrl', function($scope) {
+    $scope.navTitle= 'Order';
+})
+
 .controller('OrdersCtrl', function($scope) {
     $scope.navTitle = 'Orders';
 })
