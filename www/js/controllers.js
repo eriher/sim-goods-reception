@@ -28,4 +28,7 @@ angular.module('app.controllers', [])
 
 .controller('HistoryCtrl', function($scope) {
     $scope.navTitle = 'History';
+})
+.controller('SigninCtrl', function($scope) {
+    $scope.navTitle = 'Sign In';
 });

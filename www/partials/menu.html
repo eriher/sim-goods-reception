@@ -25,7 +25,7 @@
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item nav-clear menu-close href="#/app/{{item.link}}" class="item item-icon-left" ng-repeat="item in menuItems">
+        <ion-item nav-clear menu-close href="#/app/{{item.link}}" ng-click='goTo(item.link)' class="item item-icon-left" ng-repeat="item in menuItems">
         <i ng-class="item.iconClass"></i>
         {{item.text}}
       </ion-list>
