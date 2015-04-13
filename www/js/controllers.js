@@ -21,6 +21,11 @@ angular.module('app.controllers', [])
         $location.url(url + '/' + page);
         };
     
+    $scope.refresh= function(){
+        $scope.orderItems = OrdersService.test();
+        $scope.$broadcast('scroll.refreshComplete');
+    };
+    
 })
 
 .controller('AboutCtrl', function($scope) {

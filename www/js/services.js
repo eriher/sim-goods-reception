@@ -22,9 +22,18 @@ angular.module('app.services', [])
          { text: 'Test2', link: '2'},
          { text: 'Test3', link: '3'}];
     
+    // For testing refresh
+    var test =
+        [{ text: 'Updated 1', link: '1'},
+         { text: 'Updated 2', link: '2'}];
+    
+    
     return {
         all: function() {
             return orderItems;
+        },
+        test: function() {
+            return test;
         }
     }
 })
