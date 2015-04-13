@@ -59,7 +59,8 @@ angular.module('app.services', [])
 
         }, function (error) { 
             console.log("Scanning failed: ", error); 
-        } );
+        } 
+                    );
     }
     
         return { scan : function(){
@@ -68,4 +69,20 @@ angular.module('app.services', [])
 
 }
 }
-);
+)
+
+.factory('SigninService', function($window){
+    
+    return function(name, password) {
+        var login;
+        if(name =='name' && password =='pw'){
+            login = true;
+        }
+        else {
+            login = false;
+        }
+        return login;
+            
+    }
+});
+
