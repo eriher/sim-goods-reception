@@ -1,6 +1,7 @@
 <ion-view view-title={{navTitle}}>
   <ion-content class='has-header'>
     <h1>Orders</h1>
+    <ion-refresher on-refresh='refresh()' icon='ripple' ></ion-refresher>
     <ion-list>
      <div class="card" ng-repeat = 'orderItem in orderItems'>
         <div class='item item-divider'>
