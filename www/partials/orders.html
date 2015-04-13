@@ -1,13 +1,18 @@
 <ion-view view-title={{navTitle}}>
   <ion-content class='has-header'>
     <h1>Orders</h1>
-      <div class='card'>
-          <div class='item item-divider'>
-            Header
-          </div>
-              <div class='item item-text-wrap'>
-                Basic card
-          </div>
-      </div>
+    <ion-list>
+     <div class="card" ng-repeat = 'orderItem in orderItems'>
+        <div class='item item-divider'>
+            {{orderItem.text}}
+        </div>
+        <div class='item item-text-wrap'>
+            This is a basic Card with some text.
+            <button class="button button-full button-positive" ng-click='goTo(orderItem.link)'>
+                Full Width Block Button
+            </button>
+        </div>
+     </div> 
+    </ion-list>
   </ion-content>
 </ion-view>
