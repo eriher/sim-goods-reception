@@ -14,6 +14,21 @@ angular.module('app.services', [])
     }
 })
 
+// For testing purposes
+.factory('OrdersService', function(){
+    
+    var orderItems =
+        [{ text: 'Test1', link: '1'},
+         { text: 'Test2', link: '2'},
+         { text: 'Test3', link: '3'}];
+    
+    return {
+        all: function() {
+            return orderItems;
+        }
+    }
+})
+
 .factory('ScanService', function(){
     
         var scan = function(){
