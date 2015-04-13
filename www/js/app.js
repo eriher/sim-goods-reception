@@ -66,7 +66,12 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
               controller: 'OrderCtrl'
           }
       }
-  });
+  })
+  .state('app.signin', {
+      url: '/signin',
+      templateUrl: 'partials/signin.html',
+      controller: 'SigninCtrl'
+  })
   
   $urlRouterProvider.otherwise('/app/orders');
 });
