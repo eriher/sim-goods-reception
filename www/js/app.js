@@ -62,11 +62,16 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
       url: '/orders/:orderId',
       views: {
           'menuContent': {
-              templateUrl: 'templates/order.html',
+              templateUrl: 'partials/order.html',
               controller: 'OrderCtrl'
           }
       }
-  });
+  })
+  .state('app.signin', {
+      url: '/signin',
+      templateUrl: 'partials/signin.html',
+      controller: 'SigninCtrl'
+  })
   
   $urlRouterProvider.otherwise('/app/orders');
 });
