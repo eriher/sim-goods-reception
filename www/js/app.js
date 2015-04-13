@@ -23,14 +23,14 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-  .state('app', {
-    url: '/app',
+  .state('menu', {
+    url: '/menu',
     abstract: true,
     templateUrl: 'partials/menu.html',
     controller: 'AppCtrl'
   })
   
-  .state('app.orders', {
+  .state('menu.orders', {
     url: '/orders',
     views :{
         'menuContent': {
@@ -40,7 +40,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
     }
   })
   
-  .state('app.history', {
+  .state('menu.history', {
       url: '/history',
       views: {
           'menuContent':{
@@ -49,7 +49,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
           }
       }
   })
-  .state('app.about', {
+  .state('menu.about', {
       url: '/about',
       views: {
           'menuContent': {
@@ -58,7 +58,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
           }
       }
   })
-  .state('app.order', {
+  .state('menu.order', {
       url: '/orders/:orderId',
       views: {
           'menuContent': {
@@ -67,11 +67,11 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
           }
       }
   })
-  .state('app.signin', {
+  .state('signin', {
       url: '/signin',
       templateUrl: 'partials/signin.html',
       controller: 'SigninCtrl'
   })
   
-  $urlRouterProvider.otherwise('/app/orders');
+  $urlRouterProvider.otherwise('/signin');
 });
