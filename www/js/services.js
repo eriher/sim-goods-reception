@@ -16,9 +16,9 @@ angular.module('app.services', [])
 
 .factory('OrdersService', function(){
     
-    var orderItems = [{ text: 'OrderItem_1', link: '11'},
-                    { text: 'OrderItem_2', link: '12'},
-                    { text: 'OrderItem_3', link: '13'}];
+    var orderItems = [{ text: 'OrderItem_1', link: '11', status:'checked'},
+                    { text: 'OrderItem_2', link: '12', status:'unchecked'},
+                    { text: 'OrderItem_3', link: '13', status:'checked with errors'}];
     
     // Request DB for name of id
     getName = function(id){

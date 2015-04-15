@@ -33,6 +33,8 @@ angular.module('app.controllers', [])
     
         $location.url(url + '/' + page);
         };
+    $scope.test1 = false;
+    $scope.test2 = false;
 })
 
 .controller('HomeCtrl', function($scope, HomeService, $location, $ionicPopup) {
