@@ -25,7 +25,7 @@ angular.module('app.controllers', [])
     $scope.id = $stateParams.orderId;
 })
 
-.controller('OrdersCtrl', function($scope, OrdersService, $location) {
+.controller('OrdersCtrl', function($scope, OrdersService, $location, $ionicPopup) {
     $scope.navTitle = 'Orders';
     $scope.orderItems = OrdersService.all();
     $scope.goTo = function(page) {
@@ -36,6 +36,10 @@ angular.module('app.controllers', [])
     $scope.refresh= function(){
         $scope.orderItems = OrdersService.test();
         $scope.$broadcast('scroll.refreshComplete');
+        var connetionStatus = OrdersService.getConnection();
+        if(connetionStatus == 'No network connection' || connetionStatus =='WiFi connection') {
+             $scope.message = connetionStatus;
+        }
     };
 })
 
