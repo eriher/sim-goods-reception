@@ -3,7 +3,7 @@ angular.module('app.services', [])
 .factory('MenuService', function(){
     
     var menuItems =
-        [{ text: 'Orders', iconClass: 'icon ion-map', link: 'orders'},
+        [{ text: 'Home', iconClass: 'icon ion-map', link: 'home'},
          { text: 'History',iconClass: 'icon ion-map', link: 'history'},
          { text: 'About',iconClass: 'icon ion-map', link: 'about'}];
     
@@ -15,7 +15,7 @@ angular.module('app.services', [])
 })
 
 // For testing purposes
-.factory('OrdersService', function(){
+.factory('HomeService', function(){
     
     var orderItems =
         [{ text: 'Test1', link: '1'},

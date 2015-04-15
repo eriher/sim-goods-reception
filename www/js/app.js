@@ -30,12 +30,12 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
     controller: 'AppCtrl'
   })
   
-  .state('menu.orders', {
-    url: '/orders',
+  .state('menu.home', {
+    url: '/home',
     views :{
         'menuContent': {
-            templateUrl: 'partials/orders.html',
-            controller: 'OrdersCtrl'
+            templateUrl: 'partials/home.html',
+            controller: 'HomeCtrl'
         }
     }
   })
@@ -59,7 +59,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
       }
   })
   .state('menu.order', {
-      url: '/orders/:orderId',
+      url: '/home/:orderId',
       views: {
           'menuContent': {
               templateUrl: 'partials/order.html',

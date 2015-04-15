@@ -22,18 +22,18 @@ angular.module('app.controllers', [])
     $scope.id = $stateParams.orderId;
 })
 
-.controller('OrdersCtrl', function($scope, OrdersService, $location, $ionicPopup) {
-    $scope.navTitle = 'Orders';
-    $scope.orderItems = OrdersService.all();
+.controller('HomeCtrl', function($scope, HomeService, $location, $ionicPopup) {
+    $scope.navTitle = 'Home';
+    $scope.orderItems = HomeService.all();
     $scope.goTo = function(page) {
         var url = $location.url();
         $location.url(url + '/' + page);
         };
     
     $scope.refresh= function(){
-        $scope.orderItems = OrdersService.test();
+        $scope.orderItems = HomeService.test();
         $scope.$broadcast('scroll.refreshComplete');
-        var connetionStatus = OrdersService.getConnection();
+        var connetionStatus = HomeService.getConnection();
         if(connetionStatus == 'No network connection' || connetionStatus =='WiFi connection') {
              $scope.message = connetionStatus;
         }
@@ -53,7 +53,7 @@ angular.module('app.controllers', [])
     $scope.signIn = function(user){
         //if(SigninService(user.Name, user.Password))
         {
-            $state.go('menu.orders');
+            $state.go('menu.home');
         }
     };
 });
