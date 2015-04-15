@@ -37,7 +37,6 @@ angular.module('app.controllers', [])
         $scope.orderItems = OrdersService.test();
         $scope.$broadcast('scroll.refreshComplete');
     };
-    
 })
 
 .controller('AboutCtrl', function($scope) {
@@ -47,11 +46,13 @@ angular.module('app.controllers', [])
 .controller('HistoryCtrl', function($scope) {
     $scope.navTitle = 'History';
 })
-.controller('SigninCtrl', function($scope, $state) {
+.controller('SigninCtrl', function($scope, $state, SigninService, $window) {
+    $scope.formData = {};
     
     $scope.signIn = function(user){
+        //if(SigninService(user.Name, user.Password))
+        {
             $state.go('menu.orders');
-        };
-    
-    
+        }
+    };
 });

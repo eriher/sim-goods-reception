@@ -41,6 +41,7 @@ angular.module('app.services', [])
 .factory('ScanService', function($q){
         
         var scan = function(){
+
         var deferred = $q.defer();
         try {
             cordova.plugins.barcodeScanner.scan(
@@ -62,4 +63,18 @@ angular.module('app.services', [])
     }
 
 }
-);
+)
+.factory('SigninService', function($window){
+    
+    return function(name, password) {
+        var login;
+        if(name =='name' && password =='pw'){
+            login = true;
+        }
+        else {
+            login = false;
+        }
+        return login;
+            
+    }
+});
