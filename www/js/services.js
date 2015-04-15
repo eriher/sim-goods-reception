@@ -17,7 +17,7 @@ angular.module('app.services', [])
 // For testing purposes
 .factory('HomeService', function(){
     
-    var orderItems =
+    var deliveryNotes =
         [{ text: 'Test1', link: '1'},
          { text: 'Test2', link: '2'},
          { text: 'Test3', link: '3'}];
@@ -40,7 +40,7 @@ angular.module('app.services', [])
     
     return {
         all: function() {
-            return orderItems;
+            return deliveryNotes;
         },
         test: function() {
             return test;

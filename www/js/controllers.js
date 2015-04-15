@@ -24,14 +24,14 @@ angular.module('app.controllers', [])
 
 .controller('HomeCtrl', function($scope, HomeService, $location, $ionicPopup) {
     $scope.navTitle = 'Home';
-    $scope.orderItems = HomeService.all();
+    $scope.deliveryNotes = HomeService.all();
     $scope.goTo = function(page) {
         var url = $location.url();
         $location.url(url + '/' + page);
         };
     
     $scope.refresh= function(){
-        $scope.orderItems = HomeService.test();
+        $scope.deliveryNotes = HomeService.test();
         $scope.$broadcast('scroll.refreshComplete');
         var connetionStatus = HomeService.getConnection();
         if(connetionStatus == 'No network connection' || connetionStatus =='WiFi connection') {
