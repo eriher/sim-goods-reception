@@ -58,8 +58,17 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
           }
       }
   })
+  .state('menu.orders', {
+      url: '/home/:ordersId',
+      views: {
+          'menuContent': {
+              templateUrl: 'partials/orders.html',
+              controller: 'OrdersCtrl'
+          }
+      }
+  })
   .state('menu.order', {
-      url: '/home/:orderId',
+      url: '/home/:ordersId/:orderId',
       views: {
           'menuContent': {
               templateUrl: 'partials/order.html',
