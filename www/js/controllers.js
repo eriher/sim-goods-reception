@@ -4,7 +4,19 @@ angular.module('app.controllers', [])
     
     $scope.menuItems = MenuService.all();
     
-    $scope.scanBtn = ScanService.scan();
+    $scope.scanBtn = function(){
+        ScanService.scan().then(function(result){
+            //scan not cancelled by user
+            if(result.result.cancelled === false)
+                alert("id: "+result.result.text+", format: "+result.result.format);
+            else
+                alert("Scan cancelled");
+        },
+                               function(reason){
+                                alert(reason);
+                                })
+    };
+
 
 })
 

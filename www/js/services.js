@@ -38,34 +38,28 @@ angular.module('app.services', [])
     }
 })
 
-.factory('ScanService', function(){
-    
+.factory('ScanService', function($q){
+        
         var scan = function(){
-        var scanner = cordova.require("cordova/plugin/BarcodeScanner");
-
-        scanner.scan( function (result) { 
-
-            alert("We got a barcode\n" + 
-            "Result: " + result.text + "\n" + 
-            "Format: " + result.format + "\n" + 
-            "Cancelled: " + result.cancelled);  
-
-           console.log("Scanner result: \n" +
-                "text: " + result.text + "\n" +
-                "format: " + result.format + "\n" +
-                "cancelled: " + result.cancelled + "\n");
-            document.getElementById("info").innerHTML = result.text;
-            console.log(result);
-
-        }, function (error) { 
-            console.log("Scanning failed: ", error); 
-        } );
-    }
-    
-        return { scan : function(){
-        return scan;
+        var deferred = $q.defer();
+        try {
+            cordova.plugins.barcodeScanner.scan(
+                function (result) {  // success
+                    deferred.resolve({'error':false, 'result': result});
+                }, 
+                function (error) {  // failure
+                    deferred.resolve({'error':true, 'result': error.toString()});
+                }
+            );
+        }
+        catch (exc) {
+            deferred.resolve({'error':true, 'result': 'exception: ' + exc.toString()});
+        }
+        return deferred.promise;
+        }
+    return{
+        scan : scan
     }
 
-}
 }
 );
