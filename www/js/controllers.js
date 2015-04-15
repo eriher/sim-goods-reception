@@ -7,10 +7,7 @@ angular.module('app.controllers', [])
     $scope.scanBtn = function(){
         ScanService.scan().then(function(result){
             //scan not cancelled by user
-            if(result.result.cancelled === false)
-                alert("id: "+result.result.text+", format: "+result.result.format);
-            else
-                alert("Scan cancelled");
+                alert("id: "+result.result.text+", format: "+result.result.format+", cancelled: "+result.result.cancelled);
         },
                                function(reason){
                                 alert(reason);

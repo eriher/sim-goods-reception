@@ -62,8 +62,7 @@ angular.module('app.services', [])
         scan : scan
     }
 
-}
-)
+})
 .factory('SigninService', function($window){
     
     return function(name, password) {
