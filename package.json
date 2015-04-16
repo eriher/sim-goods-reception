@@ -19,7 +19,8 @@
     "org.apache.cordova.console",
     "com.ionic.keyboard",
     "com.phonegap.plugins.barcodescanner",
-    "org.apache.cordova.network-information"
+    "org.apache.cordova.network-information",
+    "nl.x-services.plugins.toast"
   ],
   "cordovaPlatforms": []
 }

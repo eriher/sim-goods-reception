@@ -85,17 +85,42 @@ angular.module('app.services', [])
                     deferred.resolve({'error':false, 'result': result});
                 }, 
                 function (error) {  // failure
-                    deferred.resolve({'error':true, 'result': error.toString()});
+                    deferred.rejet({'error':true, 'result': error.toString()});
                 }
             );
         }
         catch (exc) {
-            deferred.resolve({'error':true, 'result': 'exception: ' + exc.toString()});
+            deferred.rejet({'error':true, 'result': 'exception: ' + exc.toString()});
         }
         return deferred.promise;
         }
     return{
         scan : scan
+    }
+
+})
+.factory('ToastService', function($q, $window){
+        
+        var toast = function(message){
+            var defer = $q.defer();
+        try {
+            $window.cordova.plugins.toast.showShortCenter(message, 
+                function (result) {
+                    defer.resolve(result);
+                }, 
+                function (error) {  // failure
+                    defer.reject(error);
+                });
+        }
+        catch (exc) {
+            defer.reject(exc)
+            console.log("fail");
+        }
+            return defer.promise;
+        }
+        
+    return{
+        toast : toast
     }
 
 })

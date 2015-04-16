@@ -1,17 +1,31 @@
 angular.module('app.controllers', [])
 
-.controller('AppCtrl', function($scope, MenuService, ScanService) {
+.controller('AppCtrl', function($scope, MenuService, ScanService, ToastService) {
     
     $scope.menuItems = MenuService.all();
     
     $scope.scanBtn = function(){
-        ScanService.scan().then(function(result){
-            //scan not cancelled by user
-                alert("id: "+result.result.text+", format: "+result.result.format+", cancelled: "+result.result.cancelled);
-        },
-                               function(reason){
-                                alert(reason);
-                                })
+        ScanService.scan().then(
+            function(result){
+            //scan not cancelled by 
+            if(!result.cancelled){
+                ToastService.toast("Success").then(function(result){
+                    alert("Scan Sucess - success toast");
+                },
+                                                   function(reject){
+                    alert("Scan Sucess - fail toast"+reject);
+                });
+            }
+            else
+                ToastService.toast("Scan Cancelled").then(function(result){
+                    alert("Scan Cancelled - success toast");
+                },
+                                                   function(reject){
+                    alert("Scan Cancelled - fail toast");
+                });        },
+        function(reason){
+            alert(reason);
+        })
     };
 
 
