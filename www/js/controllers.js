@@ -36,6 +36,21 @@ angular.module('app.controllers', [])
     $scope.id = $stateParams.orderId;
 })
 
+.controller('OrdersCtrl', function($scope, $stateParams, OrdersService, $location) {
+    var id = $stateParams.ordersId;
+    $scope.navTitle= 'Orders';
+    $scope.message = OrdersService.name(id);
+    $scope.orderItems = OrdersService.items();
+    
+    $scope.goTo = function(page) {
+        var url = $location.url();
+    
+        $location.url(url + '/' + page);
+        };
+    $scope.test1 = false;
+    $scope.test2 = false;
+})
+
 .controller('HomeCtrl', function($scope, HomeService, $location, $ionicPopup) {
     $scope.navTitle = 'Home';
     $scope.deliveryNotes = HomeService.all();

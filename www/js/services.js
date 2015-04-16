@@ -14,13 +14,35 @@ angular.module('app.services', [])
     }
 })
 
+.factory('OrdersService', function(){
+    
+    var orderItems = [{ text: 'OrderItem_1', link: '11', status:'checked'},
+                    { text: 'OrderItem_2', link: '12', status:'unchecked'},
+                    { text: 'OrderItem_3', link: '13', status:'checked with errors'},
+                    { text: 'OrderItem_4', link: '14', status:'partially checked'} ];
+    
+    // Request DB for name of id
+    getName = function(id){
+        return 'DESCRIPTION';
+    }
+    
+    return {
+        items : function() {
+            return orderItems;
+        },
+        name : function(id){
+            return getName(id);
+        }
+    }
+})
+
 // For testing purposes
 .factory('HomeService', function(){
     
     var deliveryNotes =
-        [{ text: 'Test1', link: '1'},
-         { text: 'Test2', link: '2'},
-         { text: 'Test3', link: '3'}];
+        [{ text: 'Delivery note 1', link: '1'},
+         { text: 'Delivery note 2', link: '2'},
+         { text: 'Delivery note 3', link: '3'}];
     
     // For testing refresh
     var test =
