@@ -1,8 +1,16 @@
-angular.module('app.controllers', [])
+(function(){angular.module('app.controllers', [])
 
-.controller('AppCtrl', function($scope, $state, MenuService, ScanService, ToastService) {
+.controller('AppCtrl', function($scope, $state, MenuService, ScanService, ToastService, $ionicHistory) {
     
     $scope.menuItems = MenuService.all();
+    
+    $scope.menuClick = function(dest){
+        $ionicHistory.nextViewOptions({
+            disableBack: true,
+            disableAnimate : true
+        }); 
+        $state.go("menu."+dest);
+    }
     
     $scope.scanBtn = function(){
         ScanService.scan().then(
@@ -56,13 +64,12 @@ angular.module('app.controllers', [])
     $scope.test2 = false;
 })
 
-.controller('HomeCtrl', function($scope, HomeService, $location, $ionicPopup) {
+.controller('HomeCtrl', function($scope, HomeService, $state) {
     $scope.navTitle = 'Home';
     $scope.dispatchNotes = HomeService.all();
-    $scope.goTo = function(page) {
-        var url = $location.url();
-        $location.url(url + '/' + page);
-        };
+    $scope.goTo = function(id) {
+        $state.go('menu.orders', {ordersId : id });
+    }
     
     $scope.refresh= function(){
         $scope.deliveryNotes = HomeService.test();
@@ -86,8 +93,10 @@ angular.module('app.controllers', [])
     
     $scope.signIn = function(user){
         //if(SigninService(user.Name, user.Password))
-        {
+        {  
             $state.go('menu.home');
+            
         }
     };
 });
+}());

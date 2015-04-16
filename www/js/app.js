@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('app', ['ionic', 'app.controllers', 'app.services'])
+(function(){angular.module('app', ['ionic', 'app.controllers', 'app.services'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -74,7 +74,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
               templateUrl: 'partials/order.html',
               controller: 'OrderCtrl'
           }
-      }
+      } 
   })
   .state('signin', {
       url: '/signin',
@@ -84,3 +84,4 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
   
   $urlRouterProvider.otherwise('/signin');
 });
+           }());

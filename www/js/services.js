@@ -1,4 +1,5 @@
-angular.module('app.services', [])
+(function() {
+    angular.module('app.services', [])
 
 .factory('MenuService', function(){
     
@@ -138,3 +139,4 @@ angular.module('app.services', [])
             
     }
 });
+           }());
