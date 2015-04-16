@@ -12,3 +12,10 @@
     font-size: 32px;
     color : green;
 }
+
+.col {
+    text-align: center;
+}
+.row {
+    text-align: center;
+}

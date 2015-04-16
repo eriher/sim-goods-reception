@@ -41,14 +41,14 @@ angular.module('app.controllers', [])
     $scope.navTitle= 'Orders';
     $scope.message = OrdersService.name(id);
     $scope.orderItems = OrdersService.items();
+    $scope.pallets = OrdersService.pallets();
     
     $scope.goTo = function(page) {
         var url = $location.url();
     
         $location.url(url + '/' + page);
         };
-    $scope.test1 = false;
-    $scope.test2 = false;
+    
 })
 
 .controller('HomeCtrl', function($scope, HomeService, $location, $ionicPopup) {

@@ -21,6 +21,8 @@ angular.module('app.services', [])
                     { text: 'Order3', link: '13', status:'checked with errors'},
                     { text: 'Order4', link: '14', status:'partially checked'} ];
     
+    var pallets = { quantity: '4', weight:'80'};
+    
     // Request DB for name of id
     getName = function(id){
         return 'DESCRIPTION';
@@ -32,6 +34,9 @@ angular.module('app.services', [])
         },
         name : function(id){
             return getName(id);
+        },
+        pallets: function(){
+            return pallets;
         }
     }
 })
