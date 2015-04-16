@@ -59,7 +59,7 @@
       }
   })
   .state('menu.orders', {
-      url: '/home/:ordersId',
+      url: '/home/:dispatchId',
       views: {
           'menuContent': {
               templateUrl: 'partials/orders.html',
@@ -68,7 +68,7 @@
       }
   })
   .state('menu.order', {
-      url: '/home/:ordersId/:orderId',
+      url: '/home/:dispatchId/:orderId',
       views: {
           'menuContent': {
               templateUrl: 'partials/order.html',

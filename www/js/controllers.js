@@ -23,12 +23,12 @@
                         case 78 :
                             scanId = scanId.replace('N','');
                             alert(scanId)
-                            $state.go('menu.orders', {ordersId : scanId });
+                            $state.go('menu.orders', {dispatchId : scanId });
                              break;
                         case 65 :
                             scanId = scanId.replace('A', '');
                             alert(scanId)
-                            $state.go('menu.order', {ordersId : 5, orderId : scanId});
+                            $state.go('menu.order', {dispatchId : 5, orderId : scanId});
                             break;
                 };
 
@@ -44,25 +44,27 @@
 
 })
 
-.controller('OrderCtrl', function($scope, $stateParams, $ionicHistory, $location) {
-    var id = $stateParams.orderId;
-    $scope.navTitle= 'Order Id: '+id;
-    $scope.id = id;
-    $location.replace();
+.controller('OrderCtrl', function($scope, $stateParams, $ionicHistory) {
+    $scope.navTitle= 'Order Id: '+$stateParams.orderId;
+    $scope.id = $stateParams.orderId;
+    //alert($ionicHistory.backView());
+    //$ionicHistory.clearHistory();
+    //$ionicHistory.backView() = 'menu/home/1';
+    
+    //$ionicHistory.currentView($ionicHistory.backView());
+    
 })
 
-.controller('OrdersCtrl', function($scope, $stateParams, OrdersService, $location) {
-    var id = $stateParams.ordersId;
+.controller('OrdersCtrl', function($scope, $stateParams, OrdersService, $state) {
+    var id = $stateParams.dispatchId;
     $scope.navTitle= 'Dispatch Id: '+id;
     $scope.message = OrdersService.name(id);
     $scope.orderItems = OrdersService.items();
     $scope.pallets = OrdersService.pallets();
     
-    $scope.goTo = function(page) {
-        var url = $location.url();
-    
-        $location.url(url + '/' + page);
-        };
+    $scope.goTo = function(id2) {
+        $state.go('menu.order', {dispatchId: id, orderId : id2 });
+    }
     
 })
 
@@ -70,7 +72,7 @@
     $scope.navTitle = 'Home';
     $scope.dispatchNotes = HomeService.all();
     $scope.goTo = function(id) {
-        $state.go('menu.orders', {ordersId : id });
+        $state.go('menu.orders', {dispatchId : id });
     }
     
     $scope.refresh= function(){
