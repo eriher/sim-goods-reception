@@ -1,4 +1,4 @@
-<ion-side-menus enable-menu-with-back-views="false" ng-app='app'>
+<ion-side-menus enable-menu-with-back-views="true">
     
     <!-- CENTER -->
   <ion-side-menu-content>
@@ -26,7 +26,7 @@
     <ion-content>
       <ion-list>
 
-        <ion-item nav-clear menu-close href="#/menu/{{item.link}}" class="item item-icon-left" ng-repeat="item in menuItems">
+        <ion-item nav-clear menu-close ng-click="menuClick(item.link)" class="item item-icon-left" ng-repeat="item in menuItems">
 
         <i ng-class="item.iconClass"></i>
         {{item.text}}
