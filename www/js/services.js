@@ -18,7 +18,8 @@ angular.module('app.services', [])
     
     var orderItems = [{ text: 'OrderItem_1', link: '11', status:'checked'},
                     { text: 'OrderItem_2', link: '12', status:'unchecked'},
-                    { text: 'OrderItem_3', link: '13', status:'checked with errors'}];
+                    { text: 'OrderItem_3', link: '13', status:'checked with errors'},
+                    { text: 'OrderItem_4', link: '14', status:'partially checked'} ];
     
     // Request DB for name of id
     getName = function(id){

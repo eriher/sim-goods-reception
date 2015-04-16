@@ -1,11 +1,12 @@
 <ion-view view-title={{navTitle}}>
   <ion-content class='has-header'>
+      <p></p>
       <h1>{{message}}</h1>
       <div class='list' ng-repeat = 'item in orderItems'>
           <a class="item item-icon-right" ng-click='goTo(item.link)'>
               {{item.text}}
             <i class="icon ion-checkmark-circled" id ='icon_red' ng-show='item.status=="checked with errors"'></i>
-            <i class="icon ion-checkmark-circled" id ='icon_yellow' ng-show='item.status=="unchecked"'></i>
+            <i class="icon ion-checkmark-circled" id ='icon_yellow' ng-show='item.status=="partially checked"'></i>
             <i class="icon ion-checkmark-circled" id ='icon_green' ng-show='item.status=="checked"'></i>
           </a>
       </div>
