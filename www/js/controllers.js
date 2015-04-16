@@ -1,6 +1,6 @@
 angular.module('app.controllers', [])
 
-.controller('AppCtrl', function($scope, MenuService, ScanService, ToastService) {
+.controller('AppCtrl', function($scope, $state, MenuService, ScanService, ToastService) {
     
     $scope.menuItems = MenuService.all();
     
@@ -8,37 +8,42 @@ angular.module('app.controllers', [])
         ScanService.scan().then(
             function(result){
             //scan not cancelled by 
-            if(!result.cancelled){
-                ToastService.toast("Success").then(function(result){
-                    alert("Scan Sucess - success toast");
-                },
-                                                   function(reject){
-                    alert("Scan Sucess - fail toast"+reject);
+            if(!result.result.cancelled){
+                alert("not cancelled"+result.result.text);
+                var scanId = result.result.text;
+                switch(scanId.charCodeAt(0)) {
+                        case 78 :
+                            scanId = scanId.replace('N','');
+                            alert(scanId)
+                            $state.go('menu.orders', {ordersId : scanId });
+                             break;
+                        case 65 :
+                            scanId = scanId.replace('A', '');
+                            alert(scanId)
+                            $state.go('menu.order', {ordersId : 5, orderId : scanId});
+                            break;
+                };
+
+            }
+            else{
+                alert("scan cancelled");
+            }},
+                function(reject){
+                    alert("scan cancelled");
                 });
             }
-            else
-                ToastService.toast("Scan Cancelled").then(function(result){
-                    alert("Scan Cancelled - success toast");
-                },
-                                                   function(reject){
-                    alert("Scan Cancelled - fail toast");
-                });        },
-        function(reason){
-            alert(reason);
-        })
-    };
 
 
 })
 
 .controller('OrderCtrl', function($scope, $stateParams) {
-    $scope.navTitle= 'Order';
+    $scope.navTitle= 'Order Id: '+$stateParams.orderId;
     $scope.id = $stateParams.orderId;
 })
 
 .controller('OrdersCtrl', function($scope, $stateParams, OrdersService, $location) {
     var id = $stateParams.ordersId;
-    $scope.navTitle= 'Orders';
+    $scope.navTitle= 'Dispatch Id: '+id;
     $scope.message = OrdersService.name(id);
     $scope.orderItems = OrdersService.items();
     

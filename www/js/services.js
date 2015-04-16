@@ -104,7 +104,7 @@ angular.module('app.services', [])
         var toast = function(message){
             var defer = $q.defer();
         try {
-            $window.cordova.plugins.toast.showShortCenter(message, 
+            $window.plugins.toast.showShortCenter(message, 
                 function (result) {
                     defer.resolve(result);
                 }, 
