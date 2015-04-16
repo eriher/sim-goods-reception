@@ -2,7 +2,6 @@
   <ion-content class='has-header'>
       <p></p>
       <h1>{{message}}</h1>
-      {{pallets.weight}}
       <ion-list>
       <div class='card' ng-repeat = 'item in orderItems'>
           <div class='item item-divider'>
@@ -14,14 +13,15 @@
               </a>
           </div>
           <div class='item item-text-wrap'>
-            <div class='row'>
-                <div class='col'>Quantity</div>
-                <div class='col'>Weight</div>
-            </div>
-            <div class='row'>
-                <div class='col'>{{pallets.quantity}}</div>
-                <div class='col'>{{pallets.weight}}</div>
-            </div>
+              <table class="table">
+                <thead>
+                    <tr>
+                    <td>Quantity</td><td>Weight</td>
+                    </tr>
+                </thead>
+                <td>{{pallets.quantity}}</td>
+                <td>{{pallets.weight}}</td>
+              </table>
             </div>
           </div>
       </ion-list>

@@ -39,6 +39,7 @@ angular.module('app.controllers', [])
 .controller('OrderCtrl', function($scope, $stateParams) {
     $scope.navTitle= 'Order Id: '+$stateParams.orderId;
     $scope.id = $stateParams.orderId;
+    
 })
 
 .controller('OrdersCtrl', function($scope, $stateParams, OrdersService, $location) {
