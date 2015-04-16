@@ -44,10 +44,11 @@
 
 })
 
-.controller('OrderCtrl', function($scope, $stateParams) {
-    $scope.navTitle= 'Order Id: '+$stateParams.orderId;
-    $scope.id = $stateParams.orderId;
-    
+.controller('OrderCtrl', function($scope, $stateParams, $ionicHistory, $location) {
+    var id = $stateParams.orderId;
+    $scope.navTitle= 'Order Id: '+id;
+    $scope.id = id;
+    $location.replace();
 })
 
 .controller('OrdersCtrl', function($scope, $stateParams, OrdersService, $location) {
@@ -75,10 +76,10 @@
     $scope.refresh= function(){
         $scope.deliveryNotes = HomeService.test();
         $scope.$broadcast('scroll.refreshComplete');
-        var connetionStatus = HomeService.getConnection();
+        /*var connetionStatus = HomeService.getConnection();
         if(connetionStatus == 'No network connection' || connetionStatus =='WiFi connection') {
              $scope.message = connetionStatus;
-        }
+        }*/
     };
 })
 

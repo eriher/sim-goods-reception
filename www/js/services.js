@@ -54,7 +54,7 @@
     var test =
         [{ text: 'Updated 1', link: '1'},
          { text: 'Updated 2', link: '2'}];
-    
+    /*
     // For connection
     var states = {};
             states[Connection.UNKNOWN]  = 'Unknown connection';
@@ -65,7 +65,7 @@
             states[Connection.CELL_4G]  = 'Cell 4G connection';
             states[Connection.CELL]     = 'Cell generic connection';
             states[Connection.NONE]     = 'No network connection';
-    
+    */
     return {
         all: function() {
             return dispatchNotes;
@@ -73,10 +73,10 @@
         test: function() {
             return test;
         },
-        getConnection: function() {
+        /*getConnection: function() {
             var networkState = navigator.connection.type;
             return states[networkState];
-        }
+        }*/
     }
 })
 
