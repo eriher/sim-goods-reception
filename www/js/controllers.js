@@ -39,7 +39,7 @@ angular.module('app.controllers', [])
 
 .controller('HomeCtrl', function($scope, HomeService, $location, $ionicPopup) {
     $scope.navTitle = 'Home';
-    $scope.deliveryNotes = HomeService.all();
+    $scope.dispatchNotes = HomeService.all();
     $scope.goTo = function(page) {
         var url = $location.url();
         $location.url(url + '/' + page);

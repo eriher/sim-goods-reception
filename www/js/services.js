@@ -16,10 +16,10 @@ angular.module('app.services', [])
 
 .factory('OrdersService', function(){
     
-    var orderItems = [{ text: 'OrderItem_1', link: '11', status:'checked'},
-                    { text: 'OrderItem_2', link: '12', status:'unchecked'},
-                    { text: 'OrderItem_3', link: '13', status:'checked with errors'},
-                    { text: 'OrderItem_4', link: '14', status:'partially checked'} ];
+    var orderItems = [{ text: 'Order1', link: '11', status:'checked'},
+                    { text: 'Order2', link: '12', status:'unchecked'},
+                    { text: 'Order3', link: '13', status:'checked with errors'},
+                    { text: 'Order4', link: '14', status:'partially checked'} ];
     
     // Request DB for name of id
     getName = function(id){
@@ -39,10 +39,10 @@ angular.module('app.services', [])
 // For testing purposes
 .factory('HomeService', function(){
     
-    var deliveryNotes =
-        [{ text: 'Delivery note 1', link: '1'},
-         { text: 'Delivery note 2', link: '2'},
-         { text: 'Delivery note 3', link: '3'}];
+    var dispatchNotes =
+        [{ text: 'Dispatch note 1', link: '1'},
+         { text: 'Dispatch note 2', link: '2'},
+         { text: 'Dispatch note 3', link: '3'}];
     
     // For testing refresh
     var test =
@@ -62,7 +62,7 @@ angular.module('app.services', [])
     
     return {
         all: function() {
-            return deliveryNotes;
+            return dispatchNotes;
         },
         test: function() {
             return test;
