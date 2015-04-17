@@ -1,9 +1,28 @@
 (function(){angular.module('app.controllers', [])
 
-.controller('AppCtrl', function($scope, $state, MenuService, ScanService, ToastService, $ionicHistory) {
+.controller('AppCtrl', function($scope, $state, MenuService, ScanService, ToastService, $ionicHistory, $location) {
     
     $scope.menuItems = MenuService.all();
-    
+        $scope.back = function() {
+            //$ionicHistory.goBack();
+            
+
+            var url = $location.path();
+            url = url.slice(0,url.lastIndexOf('/'));
+        if(url == '/menu/home'){
+            $ionicHistory.nextViewOptions({
+                disableAnimate: true,
+                disableBack: true,
+                historyRoot: true
+                });
+        } 
+        else{
+            $ionicHistory.nextViewOptions({
+                disableAnimate: true,
+            });
+        }
+            $location.path(url).replace();
+        }
     $scope.menuClick = function(dest){
         $ionicHistory.nextViewOptions({
             disableBack: true,
