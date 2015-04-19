@@ -2,15 +2,21 @@
     angular.module('app.services', [])
 
 .factory('MenuService', function(){
-    
+    var userName = "";
     var menuItems =
-        [{ text: 'Home', iconClass: 'icon ion-map', link: 'home'},
-         { text: 'History',iconClass: 'icon ion-map', link: 'history'},
-         { text: 'About',iconClass: 'icon ion-map', link: 'about'}];
+        [{ text: 'Home', iconClass: 'icon ion-home', link: 'menu.home'},
+         { text: 'History',iconClass: 'icon ion-filing', link: 'menu.history'},
+         { text: 'Help', iconClass: 'icon ion-help-circled',  link: 'menu.help'},
+         { text: 'About',iconClass: 'icon ion-information-circled', link: 'menu.about'},
+         { text: 'Sign out', iconClass:  'icon ion-log-out', link: 'signin'}
+        ];
     
     return {
-        all: function() {
+        items: function() {
             return menuItems;
+        },
+        userName: function(){
+            return userName;
         }
     }
 })
@@ -130,18 +136,19 @@
     }
 
 })
-.factory('SigninService', function($window){
+.factory('SigninService', ['MenuService', function(MenuService,$window){
     
     return function(name, password) {
         var login;
-        if(name =='name' && password =='pw'){
+        //if(name =='name' && password =='pw'){
             login = true;
-        }
-        else {
-            login = false;
-        }
+            MenuService.userName = name;
+        //}
+        //else {
+        //    login = false;
+        //}
         return login;
             
     }
-});
+}]);
            }());

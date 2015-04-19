@@ -2,13 +2,13 @@
 
 .controller('AppCtrl', function($scope, $state, MenuService, ScanService, ToastService, $ionicHistory, $location) {
     
-    $scope.menuItems = MenuService.all();
-        $scope.back = function() {
-            //$ionicHistory.goBack();
-            
-
-            var url = $location.path();
-            url = url.slice(0,url.lastIndexOf('/'));
+    $scope.menuItems = MenuService.items();
+    
+    $scope.userName = MenuService.userName;
+    
+    $scope.back = function() {
+        var url = $location.path();
+        url = url.slice(0,url.lastIndexOf('/'));
         if(url == '/menu/home'){
             $ionicHistory.nextViewOptions({
                 disableAnimate: true,
@@ -21,14 +21,16 @@
                 disableAnimate: true,
             });
         }
+            
             $location.path(url).replace();
         }
+    
     $scope.menuClick = function(dest){
         $ionicHistory.nextViewOptions({
             disableBack: true,
             disableAnimate : true
         }); 
-        $state.go("menu."+dest);
+        $state.go(dest);
     }
     
     $scope.scanBtn = function(){
@@ -111,11 +113,19 @@
 .controller('HistoryCtrl', function($scope) {
     $scope.navTitle = 'History';
 })
-.controller('SigninCtrl', function($scope, $state, SigninService, $window) {
+.controller('SigninCtrl', function($scope, $state, SigninService, $ionicHistory) {
     $scope.formData = {};
+    $scope.$on('$ionicView.beforeEnter', function(){
+        $ionicHistory.clearHistory();
+        $ionicHistory.clearCache();
+    });
+    $scope.$on('$ionicView.leave', function(){
+        $ionicHistory.clearHistory();
+        $ionicHistory.clearCache();
+    });
     
     $scope.signIn = function(user){
-        //if(SigninService(user.Name, user.Password))
+        if(SigninService(user.Name, user.Password))
         {  
             $state.go('menu.home');
             

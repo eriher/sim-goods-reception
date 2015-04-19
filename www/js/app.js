@@ -77,6 +77,7 @@
       } 
   })
   .state('signin', {
+      cache: false,
       url: '/signin',
       templateUrl: 'partials/signin.html',
       controller: 'SigninCtrl'
