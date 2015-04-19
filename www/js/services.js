@@ -1,5 +1,6 @@
 (function() {
     angular.module('app.services', [])
+    
 
 .factory('MenuService', function(){
     
@@ -22,7 +23,7 @@
                     { text: 'Order3', link: '13', status:'checked with errors'},
                     { text: 'Order4', link: '14', status:'partially checked'} ];
     
-    var pallets = { quantity: '4', weight:'80'};
+    var pallets = { orderDate: '2015-03-12', quantity: '4', weight:'80'};
     
     // Request DB for name of id
     getName = function(id){

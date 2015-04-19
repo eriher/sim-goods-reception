@@ -5,7 +5,6 @@
     $scope.menuItems = MenuService.all();
         $scope.back = function() {
             //$ionicHistory.goBack();
-            
 
             var url = $location.path();
             url = url.slice(0,url.lastIndexOf('/'));
@@ -21,8 +20,9 @@
                 disableAnimate: true,
             });
         }
-            $location.path(url).replace();
+            $location.path(url).replace(); 
         }
+        
     $scope.menuClick = function(dest){
         $ionicHistory.nextViewOptions({
             disableBack: true,
@@ -66,12 +66,6 @@
 .controller('OrderCtrl', function($scope, $stateParams, $ionicHistory) {
     $scope.navTitle= 'Order Id: '+$stateParams.orderId;
     $scope.id = $stateParams.orderId;
-    //alert($ionicHistory.backView());
-    //$ionicHistory.clearHistory();
-    //$ionicHistory.backView() = 'menu/home/1';
-    
-    //$ionicHistory.currentView($ionicHistory.backView());
-    
 })
 
 .controller('OrdersCtrl', function($scope, $stateParams, OrdersService, $state) {
@@ -97,10 +91,6 @@
     $scope.refresh= function(){
         $scope.deliveryNotes = HomeService.test();
         $scope.$broadcast('scroll.refreshComplete');
-        /*var connetionStatus = HomeService.getConnection();
-        if(connetionStatus == 'No network connection' || connetionStatus =='WiFi connection') {
-             $scope.message = connetionStatus;
-        }*/
     };
 })
 
