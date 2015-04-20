@@ -107,11 +107,26 @@
     $scope.formData = {};
     $scope.$on('$ionicView.beforeEnter', function(){
         $ionicHistory.clearHistory();
-        $ionicHistory.clearCache();
     });
     $scope.$on('$ionicView.leave', function(){
+        //Uncomment for real build
+        //window.shimIndexedDB.__useShim();
+                //
+        // Declare Database
+        //
+        var db = new Dexie("FriendDatabase");
+        db.version(1).stores({ friends: "++id,name,age" });
+        db.open();
+
+        //
+        // Manipulate and Query Database
+        //
+        db.friends.add({name: "Josephine", age: 21}).then(function() {
+            db.friends.where("age").below(25).each(function(friend) {
+                alert("Found young friend: " + JSON.stringify(friend));
+            });
+        });
         $ionicHistory.clearHistory();
-        $ionicHistory.clearCache();
     });
     
     $scope.signIn = function(user){
