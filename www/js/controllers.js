@@ -15,7 +15,7 @@
                 disableBack: true,
                 historyRoot: true
                 });
-        } 
+        }
         else{
             $ionicHistory.nextViewOptions({
                 disableAnimate: true,
@@ -83,15 +83,19 @@
     
 })
 
-.controller('HomeCtrl', function($scope, HomeService, $state) {
+.controller('HomeCtrl', function($scope, HomeService, $state, $location) {
     $scope.navTitle = 'Home';
     $scope.dispatchNotes = HomeService.all();
     $scope.goTo = function(id) {
         $state.go('menu.orders', {dispatchId : id });
     }
     
+    $scope.test = function(){
+        $location.path('menu/about').replace();
+    }
+    
     $scope.refresh= function(){
-        $scope.deliveryNotes = HomeService.test();
+        $scope.dispatchNotes = HomeService.test();
         $scope.$broadcast('scroll.refreshComplete');
     };
 })
@@ -123,11 +127,12 @@
         //
         db.friends.add({name: "Josephine", age: 21}).then(function() {
             db.friends.where("age").below(25).each(function(friend) {
-                alert("Found young friend: " + JSON.stringify(friend));
+                //alert("Found young friend: " + JSON.stringify(friend));
             });
         });
         $ionicHistory.clearHistory();
     });
+
     
     $scope.signIn = function(user){
         //if(SigninService(user.Name, user.Password))
