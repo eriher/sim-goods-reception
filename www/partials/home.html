@@ -5,11 +5,12 @@
         <ion-list>
          <div class="card" ng-repeat = 'note in dispatchNotes'>
             <div class='item item-divider'>
-                {{note.text}}
+                {{note.id}}
             </div>
             <div class='item item-text-wrap'>
-                This is a basic Card with some text.
-                <button class="button button-full button-positive" ng-click='goTo(note.link)'>
+                {{note.description}}
+                {{note.date}}
+                <button class="button button-full button-positive" ng-click='goTo(note.id)'>
                     Full Width Block Button
                 </button>
             </div>

@@ -24,12 +24,28 @@
 
 .factory('OrdersService', function(){
     
-    var orderItems = [{ text: 'Order1', link: '11', status:'checked'},
+    /*var orderItems = [{ text: 'Order1', link: '11', status:'checked'},
                     { text: 'Order2', link: '12', status:'unchecked'},
                     { text: 'Order3', link: '13', status:'checked with errors'},
                     { text: 'Order4', link: '14', status:'partially checked'} ];
     
-    var pallets = { orderDate: '2015-03-12', quantity: '4', weight:'80'};
+    var pallets = { orderDate: '2015-03-12', quantity: '4', weight:'80'};*/
+        
+        var orderItems = function(){
+            var db = new Dexie("localSIM");
+
+            db.open().then(
+                function(success){
+                console.log("Sucess outer:"+success);
+                db.order.toArray(function(result) {
+                            console.log(JSON.stringify(result))
+                });         
+                },
+                function(fail){
+                    console.log("Fail:"+fail);
+                })
+        };
+        
     
     // Request DB for name of id
     var getName = function(id){
@@ -38,7 +54,7 @@
     
     return {
         items : function() {
-            return orderItems;
+            return orderItems();
         },
         name : function(id){
             return getName(id);
@@ -50,12 +66,49 @@
 })
 
 // For testing purposes
-.factory('HomeService', function(){
-    
-    var dispatchNotes =
+.factory('HomeService', function($q){
+       
+        
+        var dispatchNotes = function() {
+            var deferred = $q.defer();
+            
+            var db = new Dexie("localSIM");
+
+            db.open().then(
+                function(success){
+                console.log("Sucess outer:"+success);
+                db.dispatchNotes.each(function(friend) {
+                    console.log(JSON.stringify(friend));
+    });         },
+                function(fail){
+                    console.log("Fail:"+fail);
+                    var db = new Dexie("localSIM");
+                    db.version(1).stores({ dispatchNotes: "id", order: "[did+id],did,id"});
+                    db.open().then(
+                        function(success){console.log("Sucess inner:"+success);
+        console.log("before add");
+        db.dispatchNotes.add({id: "N104", description: "CJ-TUBE-0140", date: "P4/2/2015"});
+        db.dispatchNotes.add({id: "N105", description: "CJ-TUBE-0141", date: "P4/2/2015"});
+        db.dispatchNotes.add({id: "N106", description: "CJ-TUBE-0142", date: "P4/2/2015"});
+        db.dispatchNotes.add({id: "N107", description: "CJ-TUBE-0143", date: "P4/2/2015"})
+        db.order.add({did:"N104", id:"AK029250", quantity: "5", weight: "30"});
+        db.order.add({did:"N104", id:"AK028890", quantity: "10", weight: "300"})
+        .then(function(){                            db.dispatchNotes.toArray(function(result) {
+                            console.log(JSON.stringify(result));
+                            deferred.resolve({'error':false,'result':result});
+                            }); 
+                         db.order.toArray(function(result) {
+                            console.log(JSON.stringify(result))});
+                        },function(fail){console.log("Fail:"+fail)});})
+ 
+})
+        db.close();
+        return deferred.promise;        
+            }
+    /*var dispatchNotes =
         [{ text: 'Dispatch note 1', link: '1'},
          { text: 'Dispatch note 2', link: '2'},
-         { text: 'Dispatch note 3', link: '3'}];
+         { text: 'Dispatch note 3', link: '3'}];*/
     
     // For testing refresh
     var test =
@@ -63,8 +116,8 @@
          { text: 'Updated 2', link: '2'}];
 
     return {
-        all: function() {
-            return dispatchNotes;
+        dispatchNotes: function() {
+            return dispatchNotes();
         },
         test: function() {
             return test;

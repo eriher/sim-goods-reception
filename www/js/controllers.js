@@ -75,8 +75,6 @@
     $scope.navTitle= 'Dispatch Id: '+id;
     $scope.message = OrdersService.name(id);
     $scope.orderItems = OrdersService.items();
-    $scope.pallets = OrdersService.pallets();
-    
     $scope.goTo = function(id2) {
         $state.go('menu.order', {dispatchId: id, orderId : id2 });
     }
@@ -85,10 +83,12 @@
 
 .controller('HomeCtrl', function($scope, HomeService, $state, $location) {
     $scope.navTitle = 'Home';
-    $scope.dispatchNotes = HomeService.all();
+    $scope.dispatchNotes =  HomeService.dispatchNotes().then(function(success){console.log("homeservice success:"+JSON.stringify(success.result));
+                                                                               $scope.dispatchNotes = success.result},function(fail){console.log("homeservice fail:"+fail)});
     $scope.goTo = function(id) {
         $state.go('menu.orders', {dispatchId : id });
     }
+                                     
     
     $scope.refresh= function(){
         $scope.dispatchNotes = HomeService.test();
@@ -114,24 +114,11 @@
                 //
         // Declare Database
         //
-        var db = new Dexie("FriendDatabase");
-        db.version(1).stores({ friends: "++id,name,age" });
-        db.open();
-
-        //
-        // Manipulate and Query Database
-        //
-        db.friends.add({name: "Josephine", age: 21}).then(function() {
-            db.friends.where("age").below(25).each(function(friend) {
-                //alert("Found young friend: " + JSON.stringify(friend));
-            });
-        });
         $ionicHistory.clearHistory();
     });
 
-    
     $scope.signIn = function(user){
-        //if(SigninService(user.Name, user.Password))
+        if(SigninService(user.Name, user.Password))
         {  
             $state.go('menu.home');
             
