@@ -118,15 +118,19 @@
     });
 
     $scope.signIn = function(user){
-        if(SigninService(user.Name, user.Password))
+        if(SigninService.login(user.Name, user.Password))
         {  
             $state.go('menu.home');
-            
+        }
+        else
+        {
+            alert('Username/password was incorrect!');
         }
     };
     
-    $scope.test = function(user){
-        alert('Forgot password');
+    $scope.test = function(){
+        
+        $scope.testa = SigninService.loginTest();
     }
         
 });

@@ -175,19 +175,39 @@
     }
 
 })
-.factory('SigninService', ['MenuService', function(MenuService,$window){
+.factory('SigninService',  function(MenuService, $window, $http){
     
-    return function(name, password) {
+    var login = function(name, password) {
         var login;
-        //if(name =='name' && password =='pw'){
+        if(name =='admin' && password =='admin'){
             login = true;
-            MenuService.userName = name;
-        //}
-        //else {
-        //    login = false;
-        //}
-        return login;
-            
+            //MenuService.userName = name;
+        }
+        else {
+            login = false;
+        }
+        return login;  
     }
-}]);
+    
+    var loginTest = function(){
+        
+        $http.get('https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=API_KEY')
+        .success(function(result){
+            alert('success '+JSON.stringify(result));
+        })
+        .error(function(e){
+            alert(e);
+        })
+    }
+    
+    return{
+        login: function(name, password){
+            return login(name, password);
+        },
+        loginTest: function(){
+            return loginTest();
+        }
+    }
+        
+});
            }());
