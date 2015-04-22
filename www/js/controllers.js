@@ -90,10 +90,6 @@
         $state.go('menu.orders', {dispatchId : id });
     }
     
-    $scope.test = function(){
-        $location.path('menu/about').replace();
-    }
-    
     $scope.refresh= function(){
         $scope.dispatchNotes = HomeService.test();
         $scope.$broadcast('scroll.refreshComplete');
@@ -141,5 +137,10 @@
             
         }
     };
+    
+    $scope.test = function(user){
+        alert('Forgot password');
+    }
+        
 });
 }());
