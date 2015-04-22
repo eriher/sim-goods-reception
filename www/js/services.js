@@ -22,7 +22,7 @@
     }
 })
 
-.factory('OrdersService', function(){
+.factory('OrdersService', ['DBService', function(DBService){
     
     /*var orderItems = [{ text: 'Order1', link: '11', status:'checked'},
                     { text: 'Order2', link: '12', status:'unchecked'},
@@ -31,19 +31,8 @@
     
     var pallets = { orderDate: '2015-03-12', quantity: '4', weight:'80'};*/
         
-        var orderItems = function(){
-            var db = new Dexie("localSIM");
-
-            db.open().then(
-                function(success){
-                console.log("Sucess outer:"+success);
-                db.order.toArray(function(result) {
-                            console.log(JSON.stringify(result))
-                });         
-                },
-                function(fail){
-                    console.log("Fail:"+fail);
-                })
+        var orderItems = function(id){
+            return DBService.getOrders(id);
         };
         
     
@@ -53,8 +42,8 @@
     }
     
     return {
-        items : function() {
-            return orderItems();
+        items : function(id) {
+            return orderItems(id);
         },
         name : function(id){
             return getName(id);
@@ -63,47 +52,14 @@
             return pallets;
         }
     }
-})
+}])
 
 // For testing purposes
-.factory('HomeService', function($q){
+.factory('HomeService', ['DBService', function(DBService){
        
         
         var dispatchNotes = function() {
-            var deferred = $q.defer();
-            
-            var db = new Dexie("localSIM");
-
-            db.open().then(
-                function(success){
-                console.log("Sucess outer:"+success);
-                db.dispatchNotes.each(function(friend) {
-                    console.log(JSON.stringify(friend));
-    });         },
-                function(fail){
-                    console.log("Fail:"+fail);
-                    var db = new Dexie("localSIM");
-                    db.version(1).stores({ dispatchNotes: "id", order: "[did+id],did,id"});
-                    db.open().then(
-                        function(success){console.log("Sucess inner:"+success);
-        console.log("before add");
-        db.dispatchNotes.add({id: "N104", description: "CJ-TUBE-0140", date: "P4/2/2015"});
-        db.dispatchNotes.add({id: "N105", description: "CJ-TUBE-0141", date: "P4/2/2015"});
-        db.dispatchNotes.add({id: "N106", description: "CJ-TUBE-0142", date: "P4/2/2015"});
-        db.dispatchNotes.add({id: "N107", description: "CJ-TUBE-0143", date: "P4/2/2015"})
-        db.order.add({did:"N104", id:"AK029250", quantity: "5", weight: "30"});
-        db.order.add({did:"N104", id:"AK028890", quantity: "10", weight: "300"})
-        .then(function(){                            db.dispatchNotes.toArray(function(result) {
-                            console.log(JSON.stringify(result));
-                            deferred.resolve({'error':false,'result':result});
-                            }); 
-                         db.order.toArray(function(result) {
-                            console.log(JSON.stringify(result))});
-                        },function(fail){console.log("Fail:"+fail)});})
- 
-})
-        db.close();
-        return deferred.promise;        
+            return DBService.getDispatchNotes();
             }
     /*var dispatchNotes =
         [{ text: 'Dispatch note 1', link: '1'},
@@ -123,7 +79,7 @@
             return test;
         }
     }
-})
+}])
 
 .factory('ScanService', function($q){
         
@@ -133,10 +89,10 @@
         try {
             cordova.plugins.barcodeScanner.scan(
                 function (result) {  // success
-                    deferred.resolve({'error':false, 'result': result});
+                    deferred.resolve(result);
                 }, 
                 function (error) {  // failure
-                    deferred.rejet({'error':true, 'result': error.toString()});
+                    deferred.rejet(error.toString());
                 }
             );
         }
@@ -153,21 +109,21 @@
 .factory('ToastService', function($q, $window){
         
         var toast = function(message){
-            var defer = $q.defer();
+            var deferred = $q.defer();
         try {
             $window.plugins.toast.showShortCenter(message, 
                 function (result) {
-                    defer.resolve(result);
+                    deferred.resolve(result);
                 }, 
                 function (error) {  // failure
-                    defer.reject(error);
+                    deferred.reject(error);
                 });
         }
         catch (exc) {
-            defer.reject(exc)
+            deferred.reject(exc)
             console.log("fail");
         }
-            return defer.promise;
+            return deferred.promise;
         }
         
     return{
@@ -189,5 +145,78 @@
         return login;
             
     }
-}]);
-           }());
+}])
+.factory('DBService', function($q){
+                //window.shimIndexedDB.__useShim();
+                console.log("no database exists");
+                var db = new Dexie("localSIM");
+                db.version(1).stores({ dispatchNotes: "id", order: "id,did,[did+id],relation"});
+                //test data
+                db.on('ready', function () {
+                    db.dispatchNotes.add({id: "N104", description: "CJ-TUBE-0140", date: "P4/2/2015"});
+                    db.dispatchNotes.add({id: "N105", description: "CJ-TUBE-0141", date: "P4/2/2015"});
+                    db.dispatchNotes.add({id: "N106", description: "CJ-TUBE-0142", date: "P4/2/2015"});
+                    db.dispatchNotes.add({id: "N107", description: "CJ-TUBE-0143", date: "P4/2/2015"})
+                    db.order.add({did:"N104", id:"AK029250", quantity: "5", weight: "30"});
+                    db.order.add({did:"N104", id:"AK028890", quantity: "10", weight: "300"});
+                    db.order.add({did:"N105", id:"AK029255", quantity: "1", weight: "320"});
+                    db.order.add({did:"N105", id:"AK028896", quantity: "14", weight: "34"});
+                });
+                db.open();
+
+        var getDispatchNotes = function(){
+        var deferred = $q.defer();
+        db.dispatchNotes.toArray(function(result) {
+                            console.log(JSON.stringify(result));
+                            deferred.resolve(result);
+                            }); 
+        db.order.toArray(function(result) {
+                            console.log(JSON.stringify(result))});                             
+        return deferred.promise;
+        };
+        
+        var getOrders = function(id){
+            console.log("idtype:"+id);
+            var deferred = $q.defer();
+           db.order.where("did").equals(id).toArray(function(result) {
+                            console.log(JSON.stringify(result));
+                            deferred.resolve(result);
+                            });                   
+            return deferred.promise;
+        }
+        
+        var idType =  function(scanId){
+            console.log("idtype:"+scanId);
+            var deferred = $q.defer();
+            db.dispatchNotes.get(scanId).then(function(result) {
+                
+                if(result){
+                        alert(JSON.stringify(result));
+                        deferred.resolve({'type':"dispatch", 'dispatchId':result.id});
+                }
+            
+            });
+            db.order.get(scanId).then(function(result) {
+                console.log(result);
+                        if(result){
+                            alert(JSON.stringify(result));
+                            deferred.resolve({'type':"order", 'dispatchId':result.did,'orderId':result.id});
+                         }
+                         });
+            
+            return deferred.promise;
+        }
+        
+         return {
+             getDispatchNotes: function() {
+                 return getDispatchNotes();
+            },
+             getOrders: function(id){
+                 return getOrders(id);
+         },
+             idType: function(id){
+                 return idType(id);
+         }
+         }
+})
+}());
