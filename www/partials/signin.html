@@ -1,7 +1,23 @@
 <ion-view view-title="Sign In" ng-controller='SigninCtrl'>
     <ion-content>
-    <h1>Sign In</h1>
-          <div class="list">
+        <div class="card" id='signin_card1'>
+            <div class="item item-text-wrap" id='signin_card2'>
+                <form>
+                    <p>Username</p>
+                    <input type="text" ng-model="user.Name" placeholder="Username" align='center'>
+                    <p>Password</p>
+                    <input type="password" ng-model="user.Password" placeholder="Password" align='center'>
+                    <button class="button button-balanced" ng-click="signIn(user)">Sign In</button>
+                    <button class="button button-positive" ng-click="test(user)">Forgot your password?</button>
+                </form>
+            </div>
+        </div>
+  </ion-content>
+</ion-view>
+
+<!--
+<h1 align='center'>Sign In</h1>
+          <div class="panel">
         <label class="item item-input">
           <span class="input-label">Username:</span>
           <input type="text" ng-model="user.Name" placeholder="Username">
@@ -14,5 +30,4 @@
         <button class="button button-block button-dark" ng-click="signIn(user)">
           Sign In
         </button>
-  </ion-content>
-</ion-view>
+-->

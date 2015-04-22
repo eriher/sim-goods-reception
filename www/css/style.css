@@ -19,3 +19,29 @@
 .row {
     text-align: center;
 }
+
+#signin_card1 {
+    float: left;
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+    box-shadow: 5px 5px 5px gray;
+}
+
+#signin_card2 {
+    margin-left: auto;
+    margin-right: auto;
+    background: #929df0;
+}
+
+input {   
+    text-align: center;
+    width: 100%;
+    border-top-left-radius: 5px !important;
+    border-top-right-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+    margin-top: 10px;
+    margin-bottom: 10px;  
+}

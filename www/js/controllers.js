@@ -41,10 +41,10 @@
                 var scanId = result.text;
                 DBService.idType(scanId).then(function(success){
                 switch(success.type) {
-                        case dispatch :
+                        case "dispatch" :
                             $state.go('menu.orders', {dispatchId : success.dispatchId });
                              break;
-                        case order :
+                        case "order" :
                             $state.go('menu.order', {dispatchId : success.dispatchId, orderId : success.orderId});
                             break;
                 };},function(fail){console.log(fail)})
@@ -96,20 +96,7 @@
         $state.go('menu.orders', {dispatchId : id });
     }
                                      
-    
-    $scope.test = function(){
-                DBService.idType("AK029250").then(function(success){
-                    console.log(success.type);
-                switch(success.type) {
-                        case "dispatch":
-                            $state.go('menu.orders', {dispatchId : success.dispatchId });
-                             break;
-                        case "order":
-                            $state.go('menu.order', {dispatchId : success.dispatchId, orderId : success.orderId});
-                            break;
-                };},function(fail){console.log(fail)})
-    }
-    
+
     $scope.refresh= function(){
         $scope.dispatchNotes = HomeService.test();
         $scope.$broadcast('scroll.refreshComplete');
@@ -144,5 +131,10 @@
             
         }
     };
+    
+    $scope.test = function(user){
+        alert('Forgot password');
+    }
+        
 });
 }());
