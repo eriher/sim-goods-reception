@@ -5,8 +5,8 @@
       <ion-list>
       <div class='card' ng-repeat = 'item in orderItems'>
           <div class='item item-divider'>
-              <a class="item item-icon-right" ng-click='goTo(item.link)'>
-                  {{item.text}}
+              <a class="item item-icon-right" ng-click='goTo(item.id)'>
+                  {{item.id}}
                 <i class="icon ion-checkmark-circled" id ='icon_red' ng-show='item.status=="checked with errors"'></i>
                 <i class="icon ion-checkmark-circled" id ='icon_yellow' ng-show='item.status=="partially checked"'></i>
                 <i class="icon ion-checkmark-circled" id ='icon_green' ng-show='item.status=="checked"'></i>
@@ -19,9 +19,9 @@
                     <td>Order Date</td><td>Quantity</td><td>Weight</td>
                     </tr>
                 </thead>
-                <td>{{pallets.orderDate}}</td>
-                <td>{{pallets.quantity}}</td>
-                <td>{{pallets.weight}}</td>
+                <td>{{item.date}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.weight}}</td>
               </table>
             </div>
           </div>

@@ -1,6 +1,6 @@
 (function(){angular.module('app.controllers', [])
 
-.controller('AppCtrl', function($scope, $state, MenuService, ScanService, ToastService, $ionicHistory, $location) {
+.controller('AppCtrl', function($scope, $state, MenuService, ScanService, ToastService, $ionicHistory, $location, DBService) {
     
     $scope.menuItems = MenuService.items();
     
@@ -37,21 +37,17 @@
         ScanService.scan().then(
             function(result){
             //scan not cancelled by 
-            if(!result.result.cancelled){
-                alert("not cancelled"+result.result.text);
-                var scanId = result.result.text;
-                switch(scanId.charCodeAt(0)) {
-                        case 78 :
-                            scanId = scanId.replace('N','');
-                            alert(scanId)
-                            $state.go('menu.orders', {dispatchId : scanId });
+            if(!result.cancelled){
+                var scanId = result.text;
+                DBService.idType(scanId).then(function(success){
+                switch(success.type) {
+                        case "dispatch" :
+                            $state.go('menu.orders', {dispatchId : success.dispatchId });
                              break;
-                        case 65 :
-                            scanId = scanId.replace('A', '');
-                            alert(scanId)
-                            $state.go('menu.order', {dispatchId : 5, orderId : scanId});
+                        case "order" :
+                            $state.go('menu.order', {dispatchId : success.dispatchId, orderId : success.orderId});
                             break;
-                };
+                };},function(fail){console.log(fail)})
 
             }
             else{
@@ -72,24 +68,35 @@
 
 .controller('OrdersCtrl', function($scope, $stateParams, OrdersService, $state) {
     var id = $stateParams.dispatchId;
+    
     $scope.navTitle= 'Dispatch Id: '+id;
+    
     $scope.message = OrdersService.name(id);
-    $scope.orderItems = OrdersService.items();
+    
+    $scope.orderItems = OrdersService.items(id).then(
+        function(success){console.log("orderservice success:"+JSON.stringify(success));
+                          $scope.orderItems = success},
+        function(fail){console.log("orderservice fail:"+fail)});;
+    
     $scope.goTo = function(id2) {
         $state.go('menu.order', {dispatchId: id, orderId : id2 });
     }
     
 })
 
-.controller('HomeCtrl', function($scope, HomeService, $state, $location) {
+.controller('HomeCtrl', function($scope, HomeService, $state, $location,DBService) {
     $scope.navTitle = 'Home';
-    $scope.dispatchNotes =  HomeService.dispatchNotes().then(function(success){console.log("homeservice success:"+JSON.stringify(success.result));
-                                                                               $scope.dispatchNotes = success.result},function(fail){console.log("homeservice fail:"+fail)});
+    
+    $scope.dispatchNotes =  HomeService.dispatchNotes().then(
+        function(success){console.log("homeservice success:"+JSON.stringify(success));
+                          $scope.dispatchNotes = success},
+        function(fail){console.log("homeservice fail:"+fail)});
+    
     $scope.goTo = function(id) {
         $state.go('menu.orders', {dispatchId : id });
     }
                                      
-    
+
     $scope.refresh= function(){
         $scope.dispatchNotes = HomeService.test();
         $scope.$broadcast('scroll.refreshComplete');

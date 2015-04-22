@@ -20,7 +20,8 @@
     "com.ionic.keyboard",
     "com.phonegap.plugins.barcodescanner",
     "org.apache.cordova.network-information",
-    "nl.x-services.plugins.toast"
+    "nl.x-services.plugins.toast",
+    "cordova-plugin-indexeddb-async"
   ],
   "cordovaPlatforms": []
 }
