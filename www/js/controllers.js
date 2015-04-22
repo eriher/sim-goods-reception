@@ -15,7 +15,7 @@
                 disableBack: true,
                 historyRoot: true
                 });
-        } 
+        }
         else{
             $ionicHistory.nextViewOptions({
                 disableAnimate: true,
@@ -81,7 +81,7 @@
     
 })
 
-.controller('HomeCtrl', function($scope, HomeService, $state) {
+.controller('HomeCtrl', function($scope, HomeService, $state, $location) {
     $scope.navTitle = 'Home';
     $scope.dispatchNotes =  HomeService.dispatchNotes().then(function(success){console.log("homeservice success:"+JSON.stringify(success.result));
                                                                                $scope.dispatchNotes = success.result},function(fail){console.log("homeservice fail:"+fail)});
@@ -90,8 +90,12 @@
     }
                                      
     
+    $scope.test = function(){
+        $location.path('menu/about').replace();
+    }
+    
     $scope.refresh= function(){
-        $scope.deliveryNotes = HomeService.test();
+        $scope.dispatchNotes = HomeService.test();
         $scope.$broadcast('scroll.refreshComplete');
     };
 })
@@ -114,7 +118,9 @@
                 //
         // Declare Database
         //
+        $ionicHistory.clearHistory();
     });
+
     $scope.signIn = function(user){
         if(SigninService(user.Name, user.Password))
         {  

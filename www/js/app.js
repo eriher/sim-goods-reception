@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 (function(){angular.module('app', ['ionic', 'app.controllers', 'app.services'])
 
-.run(function($ionicPlatform) {
+.run(function($rootScope, $ionicPlatform, $ionicHistory, $state, $location) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -18,6 +18,22 @@
       StatusBar.styleDefault();
     }
   });
+    
+    // For Android and Windows phone backbutton!
+    $ionicPlatform.registerBackButtonAction(function () {
+        if ($state.is('menu.home') || $state.is('menu.history') || $state.is('menu.help') || $state.is('menu.about') || $state.is('menu.signin')) {
+            navigator.app.exitApp();
+        } 
+        else {
+            var url = $location.path();
+            url = url.slice(0,url.lastIndexOf('/'));
+            $ionicHistory.nextViewOptions({
+                disableAnimate: true,
+            });
+            $location.path(url).replace();
+            $rootScope.$apply();
+        }
+    }, 100);
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
