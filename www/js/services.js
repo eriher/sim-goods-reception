@@ -168,7 +168,7 @@
 })
 
 .factory('DBService', function($q){
-                //window.shimIndexedDB.__useShim();
+                window.shimIndexedDB && window.shimIndexedDB.__useShim();
                 console.log("no database exists");
                 var db = new Dexie("localSIM");
                 db.version(1).stores({ dispatchNotes: "id", order: "id,did,[did+id],relation"});
