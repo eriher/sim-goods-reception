@@ -1,6 +1,6 @@
 (function(){angular.module('app.controllers', [])
 
-.controller('AppCtrl', function($scope, $state, MenuService, ScanService, ToastService, $ionicHistory, $location, DBService) {
+.controller('AppCtrl', function($scope, $state, MenuService, ScanService, ToastService, $ionicHistory, $location, DBService, SigninService) {
     
     $scope.menuItems = MenuService.items();
     
@@ -29,8 +29,13 @@
         $ionicHistory.nextViewOptions({
             disableBack: true,
             disableAnimate : true
-        }); 
+        });
+        if(dest == 'signin')
+        {
+            SigninService.logout();
+        }
         $state.go(dest);
+
     }
     
     $scope.scanBtn = function(){
@@ -109,13 +114,6 @@
 })
 
 .controller('SigninCtrl', function($scope, $state, SigninService, $ionicHistory) {
-    $scope.formData = {};
-    $scope.$on('$ionicView.beforeEnter', function(){
-        $ionicHistory.clearHistory();
-    });
-    $scope.$on('$ionicView.leave', function(){
-        $ionicHistory.clearHistory();
-    });
 
     $scope.signIn = function(user){
         if(SigninService.login(user.Name, user.Password))
@@ -130,11 +128,48 @@
     
     $scope.test = function(user){
         SigninService.loginTest(user.Name, user.Password);
+        
     }
     
+    $scope.$on('$ionicView.beforeEnter', function () {
+        //For navigation, clearHistory
+        $ionicHistory.clearHistory();
+        
+        //Check if previously checked in
+        var loggedIn = window.localStorage['loggedIn'] || false;
+        var user = JSON.parse(window.localStorage['user'] || '{}');
+        if(loggedIn == 'true'){
+            
+            if(typeof user.username != 'undefined' && typeof user.password != 'undefined')
+            {
+                SigninService.loginTest(user.username, user.password);
+            }
+            
+        }
+    });
+    
+    $scope.$on('$ionicView.leave', function(){
+        $ionicHistory.clearHistory();
+    });
+
+    
     $scope.$on('event:auth-loginConfirmed', function() {
+        window.localStorage['loggedIn'] = true;
         $state.go('menu.home');
-  });
+    });
+    
+    $scope.$on('event:auth-login-failed', function(e, status) {  
+        
+    var error = "Login failed.";
+    if (status == 400) {
+      error = "Invalid Username or Password.";
+    }
+    alert(error);
+    });
+    
+    $scope.$on('event:auth-logout-complete', function() {
+        localStorage.clear();
+    });  
         
 });
 }());
