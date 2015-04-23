@@ -44,7 +44,7 @@
     
     // For Android and Windows phone backbutton!
     $ionicPlatform.registerBackButtonAction(function () {
-        if ($state.is('menu.home') || $state.is('menu.history') || $state.is('menu.help') || $state.is('menu.about') || $state.is('menu.signin')) {
+        if ($state.is('menu.home') || $state.is('menu.history') || $state.is('menu.help') || $state.is('menu.about') || $state.is('signin')) {
             navigator.app.exitApp();
         } 
         else {

@@ -23,13 +23,6 @@
 })
 
 .factory('OrdersService', ['DBService', function(DBService){
-    
-    /*var orderItems = [{ text: 'Order1', link: '11', status:'checked'},
-                    { text: 'Order2', link: '12', status:'unchecked'},
-                    { text: 'Order3', link: '13', status:'checked with errors'},
-                    { text: 'Order4', link: '14', status:'partially checked'} ];
-    
-    var pallets = { orderDate: '2015-03-12', quantity: '4', weight:'80'};*/
         
         var orderItems = function(id){
             return DBService.getOrders(id);
@@ -183,17 +176,19 @@
                 //window.shimIndexedDB && window.shimIndexedDB.__useShim();
                 console.log("no database exists");
                 var db = new Dexie("localSIM");
-                db.version(1).stores({ dispatchNotes: "id", order: "id,did,[did+id],relation"});
+                db.version(1).stores({ dispatchNotes: "id", order: "id,did,[did+id],relation", pallet:"id,oid,[oid+id]relation"});
                 //test data
                 db.on('ready', function () {
-                    db.dispatchNotes.add({id: "N104", description: "CJ-TUBE-0140", date: "P4/2/2015"});
-                    db.dispatchNotes.add({id: "N105", description: "CJ-TUBE-0141", date: "P4/2/2015"});
-                    db.dispatchNotes.add({id: "N106", description: "CJ-TUBE-0142", date: "P4/2/2015"});
-                    db.dispatchNotes.add({id: "N107", description: "CJ-TUBE-0143", date: "P4/2/2015"})
-                    db.order.add({did:"N104", id:"AK029250", quantity: "5", weight: "30"});
-                    db.order.add({did:"N104", id:"AK028890", quantity: "10", weight: "300"});
-                    db.order.add({did:"N105", id:"AK029255", quantity: "1", weight: "320"});
-                    db.order.add({did:"N105", id:"AK028896", quantity: "14", weight: "34"});
+                    db.dispatchNotes.add({id: "N104", description: "CJ-TUBE-0140", date: "P4/2/2015", status:"incoming"});
+                    db.dispatchNotes.add({id: "N105", description: "CJ-TUBE-0141", date: "P4/2/2015", status:"checked with errors"});
+                    db.dispatchNotes.add({id: "N106", description: "CJ-TUBE-0142", date: "P4/2/2015", status:"partially checked"});
+                    db.dispatchNotes.add({id: "N107", description: "CJ-TUBE-0143", date: "P4/2/2015", status:"checked"});
+                    db.order.add({did:"N104", id:"AK029250", quantity: "5", weight: "30", status:"unchecked"});
+                    db.order.add({did:"N104", id:"AK028890", quantity: "10", weight: "300", status:"unchecked"});
+                    db.order.add({did:"N105", id:"AK029255", quantity: "1", weight: "320", status:"unchecked"});
+                    db.order.add({did:"N105", id:"AK028896", quantity: "14", weight: "34", status:"unchecked"});
+                    db.pallet.add({id:"376", oid:"AK029250"});
+                    db.pallet.add({id:"377", oid:"AK028890"});
                 });
                 db.open();
 
@@ -239,6 +234,7 @@
             
             return deferred.promise;
         }
+        
         
          return {
              getDispatchNotes: function() {
