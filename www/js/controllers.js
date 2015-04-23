@@ -135,10 +135,13 @@
         }
     };
     
-    $scope.test = function(){
-        
-        $scope.testa = SigninService.loginTest();
+    $scope.test = function(user){
+        SigninService.loginTest(user.Name, user.Password);
     }
+    
+    $scope.$on('event:auth-loginConfirmed', function() {
+        $state.go('menu.home');
+  });
         
 });
 }());

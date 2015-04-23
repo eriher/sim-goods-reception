@@ -1,5 +1,5 @@
 (function() {
-    angular.module('app.services', [])
+    angular.module('app.services', ['http-auth-interceptor'])
     
 
 .factory('MenuService', function(){
@@ -131,13 +131,13 @@
     }
 
 })
-.factory('SigninService',  function(MenuService, $window, $http){
+.factory('SigninService',  function(MenuService, $window, $http, authService){
     
     var login = function(name, password) {
         var login;
         if(name =='admin' && password =='admin'){
             login = true;
-            //MenuService.userName = name;
+            MenuService.userName = name;
         }
         else {
             login = false;
@@ -145,30 +145,42 @@
         return login;  
     }
     
-    var loginTest = function(){
+    var loginTest = function(name, password){
         
-        $http.get('https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=API_KEY')
-        .success(function(result){
-            alert('success '+JSON.stringify(result));
+        var access = false;
+        $http.post('https://login', {username : name , password: password})
+        .success(function(data){
+            
+            var authToken = data.authorizationToken;
+            alert(authToken);
+            
+            $http.defaults.headers.common.Authorization = data.authorizationToken;
+            authService.loginConfirmed(data, function(config){
+                config.headers.Authorization = data.authorizationToken;
+                return config;
+            });
+                
+            
         })
         .error(function(e){
-            alert(e);
+            alert('error in login ' +e);
         })
+
     }
     
     return{
         login: function(name, password){
             return login(name, password);
         },
-        loginTest: function(){
-            return loginTest();
+        loginTest: function(name, password){
+            return loginTest(name, password);
         }
     }
         
 })
 
 .factory('DBService', function($q){
-                window.shimIndexedDB && window.shimIndexedDB.__useShim();
+                //window.shimIndexedDB && window.shimIndexedDB.__useShim();
                 console.log("no database exists");
                 var db = new Dexie("localSIM");
                 db.version(1).stores({ dispatchNotes: "id", order: "id,did,[did+id],relation"});
