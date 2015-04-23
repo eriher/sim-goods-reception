@@ -39,26 +39,23 @@
             //scan not cancelled by 
             if(!result.cancelled){
                 var scanId = result.text;
-                DBService.idType(scanId).then(function(success){
-                switch(success.type) {
-                        case "dispatch" :
-                            $state.go('menu.orders', {dispatchId : success.dispatchId });
-                             break;
-                        case "order" :
-                            $state.go('menu.order', {dispatchId : success.dispatchId, orderId : success.orderId});
+                switch(scanId.charCodeAt(0)) {
+                        case 78 :
+                        
+                            $state.go('menu.orders', {dispatchId : scanId });
                             break;
-                };},function(fail){console.log(fail)})
-
-            }
-            else{
-                alert("scan cancelled");
-            }},
-                function(reject){
-                    alert("scan cancelled");
-                });
-            }
-
-
+                        case 65 :
+                            $state.go('menu.order', {dispatchId : 5, orderId : scanId});
+                            break;
+                        case 83 :
+                            $state.go('menu.pallet',{palletId : scanId});
+                            break;
+                };}
+                else{
+                alert("Scan cancelled");
+                }}
+                ,function(reject){console.log("Scan failed:"+fail)})
+    }
 })
 
 .controller('OrderCtrl', function($scope, $stateParams, $ionicHistory) {
@@ -110,17 +107,13 @@
 .controller('HistoryCtrl', function($scope) {
     $scope.navTitle = 'History';
 })
+
 .controller('SigninCtrl', function($scope, $state, SigninService, $ionicHistory) {
     $scope.formData = {};
     $scope.$on('$ionicView.beforeEnter', function(){
         $ionicHistory.clearHistory();
     });
     $scope.$on('$ionicView.leave', function(){
-        //Uncomment for real build
-        //window.shimIndexedDB.__useShim();
-                //
-        // Declare Database
-        //
         $ionicHistory.clearHistory();
     });
 
