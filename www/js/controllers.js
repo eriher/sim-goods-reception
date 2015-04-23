@@ -142,6 +142,8 @@
             
             if(typeof user.username != 'undefined' && typeof user.password != 'undefined')
             {
+                //Previously checked in, goes direct to home and picks up new authToken via loginTest
+                $state.go('menu.home');
                 SigninService.loginTest(user.username, user.password);
             }
             
