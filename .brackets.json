@@ -1,0 +1,19 @@
+{
+    "jscodehints.detectedExclusions": [
+        "C:/Users/Olof/Documents/Chalmers kurser/Exjobb/sim-goods-reception/www/lib/ionic/js/ionic.bundle.js",
+        "C:/Users/Olof/Documents/Chalmers kurser/Exjobb/sim-goods-reception/platforms/windows/www/cordova.js",
+        "C:/Users/Olof/Documents/Chalmers kurser/Exjobb/sim-goods-reception/platforms/windows/www/js/app.js",
+        "C:/Users/Olof/Documents/Chalmers kurser/Exjobb/sim-goods-reception/platforms/windows/www/js/controllers.js",
+        "C:/Users/Olof/Documents/Chalmers kurser/Exjobb/sim-goods-reception/platforms/windows/www/js/services.js",
+        "C:/Users/Olof/Documents/Chalmers kurser/Exjobb/sim-goods-reception/plugins/com.phonegap.plugins.barcodescanner/spec/html/TrivialReporter.js",
+        "C:/Users/Olof/Documents/Chalmers kurser/Exjobb/sim-goods-reception/platforms/windows/www/lib/bootstrap-3.3.4-dist/js/bootstrap.js",
+        "C:/Users/Olof/Documents/Chalmers kurser/Exjobb/sim-goods-reception/platforms/windows/www/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js",
+        "C:/Users/Olof/Documents/Chalmers kurser/Exjobb/sim-goods-reception/platforms/windows/www/lib/bootstrap-3.3.4-dist/js/npm.js",
+        "C:/Users/Olof/Documents/Chalmers kurser/Exjobb/sim-goods-reception/platforms/ios/www/js/Dexie.js",
+        "C:/Users/Olof/Documents/Chalmers kurser/Exjobb/sim-goods-reception/platforms/ios/www/lib/ionic/js/ionic.bundle.js",
+        "C:/Users/Olof/Documents/Chalmers kurser/Exjobb/sim-goods-reception/platforms/windows/www/lib/ionic/js/angular/angular-animate.min.js",
+        "C:/Users/Olof/Documents/Chalmers kurser/Exjobb/sim-goods-reception/platforms/windows/www/lib/ionic/js/angular/angular-resource.js",
+        "C:/Users/Olof/Documents/Chalmers kurser/Exjobb/sim-goods-reception/www/lib/bootstrap-3.3.4-dist/js/npm.js",
+        "C:/Users/Olof/Documents/Chalmers kurser/Exjobb/sim-goods-reception/www/js/services.js"
+    ]
+}
