@@ -150,10 +150,8 @@
 })
 
 .factory('DBService', function($q){
-                //window.shimIndexedDB.__useShim();
-                window.shimIndexedDB.__debug(true);
                 var db = new Dexie("localSIM");
-                db.version(1).stores({ dispatch: "id", pallet: "id", article:"id", order:"id", palletHas:"++,pid,aid,[pid,aid],order"});
+                db.version(1).stores({ dispatch: "id", pallet: "id, did", article:"id", order:"id", palletHas:"++,pid,aid,[pid,aid],order"});
                 //test data
                 db.on('ready', function () {
                     db.dispatch.add({id: "N104", description: "CJ-TUBE-0140", date: "D040915", status: "incoming"});
