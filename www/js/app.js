@@ -15,17 +15,23 @@
     
     $httpBackend.whenPOST('https://login').respond(function(method, url, data) {
         var data = angular.fromJson(data);
-        alert(data.username +' ' + data.password);
-
+        
         if(data.username == 'admin' && data.password =='admin'){
+            console.log('if-statement')
             return  [200 , { authorizationToken: "NjMwNjM4OTQtMjE0Mi00ZWYzLWEzMDQtYWYyMjkyMzNiOGIy" } ];
         }
         else{ 
-            return [401 , {authorizationToken: 'false'}]
+            console.log('else');
+            return [400];
         } 
     });
     
-    
+
+    $httpBackend.whenGET('https://logout').respond(function(method, url, data) {
+    return [200];
+    });
+
+
     $httpBackend.whenGET(/.*/).passThrough();
     
 })

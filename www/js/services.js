@@ -72,7 +72,7 @@
     }
 
 })
-.factory('SigninService',  function(MenuService, $window, $http, authService){
+.factory('SigninService',  function(MenuService, $window, $http, authService,$rootScope){
     
     var login = function(name, password) {
         var login;
@@ -91,9 +91,11 @@
         var access = false;
         $http.post('https://login', {username : name , password: password})
         .success(function(data){
+            console.log('success');
             
-            var authToken = data.authorizationToken;
-            alert(authToken);
+            //if the user data is correct, set it in localStorage(for now)
+            var user =  { username: name, password: password};
+            window.localStorage['user'] = JSON.stringify(user);
             
             $http.defaults.headers.common.Authorization = data.authorizationToken;
             authService.loginConfirmed(data, function(config){
@@ -103,10 +105,15 @@
                 
             
         })
-        .error(function(e){
-            alert('error in login ' +e);
+        .error(function(data, status, headers, config){
+            $rootScope.$broadcast('event:auth-login-failed', status);
         })
 
+    }
+    
+    var logout = function(){
+        delete $http.defaults.headers.common.Authorization;
+        $rootScope.$broadcast('event:auth-logout-complete');
     }
     
     return{
@@ -115,6 +122,9 @@
         },
         loginTest: function(name, password){
             return loginTest(name, password);
+        },
+        logout: function(){
+            return logout()
         }
     }
         
