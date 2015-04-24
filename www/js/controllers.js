@@ -54,7 +54,7 @@
                         case 83 :
                             $state.go('menu.pallet',{palletId : scanId});
                             break;
-                };}
+                }}
                 else{
                 alert("Scan cancelled");
                 }}
@@ -132,18 +132,19 @@
     $scope.$on('$ionicView.beforeEnter', function () {
         //For navigation, clearHistory
         $ionicHistory.clearHistory();
+        $ionicHistory.clearCache();
         
         //Check if previously checked in
         var loggedIn = window.localStorage['loggedIn'] || false;
         var user = JSON.parse(window.localStorage['user'] || '{}');
-        
+    
         if(loggedIn == 'true'){
             
             if(typeof user.username != 'undefined' && typeof user.password != 'undefined')
             {
                 //Previously checked in, goes direct to home and picks up new authToken via loginTest
-                //$state.go('menu.home');
-                SigninService.loginTest(user.username, user.password);
+                $state.go('menu.home');
+                SigninService.login(user.username, user.password);
             }
             
         }
@@ -151,13 +152,15 @@
     
     $scope.$on('$ionicView.leave', function(){
         $ionicHistory.clearHistory();
+        $ionicHistory.clearCache();
     });
 
-    
+    //Event fires when the login is confirmed
     $scope.$on('event:auth-loginConfirmed', function() {
         $state.go('menu.home');
     });
     
+    //Event fires when username and pw are not found by server
     $scope.$on('event:auth-login-failed', function(e, status) {  
 
         var error = "Login failed.";
@@ -165,7 +168,12 @@
           error = "Invalid Username or Password.";
         }
         alert(error);
-        });   
-
+        });
+    
+    //Event fires when server returns http 401 (unAuthenticated), login the user
+    $scope.$on('event:auth-loginRequired', function(e, rejection) {
+        var user = JSON.parse(window.localStorage['user'] || '{}');
+        SigninService.login(user.username, user.password);
+  });
 });
 }());

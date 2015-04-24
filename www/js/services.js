@@ -1,6 +1,21 @@
 (function() {
-    angular.module('app.services', ['http-auth-interceptor'])
+    angular.module('app.services', [])
     
+// Intercepts 401 https statuses
+.factory('AuthInterceptor', function ($rootScope, $q) {
+  return {
+    responseError: function (response) {
+      $rootScope.$broadcast({
+        401: 'event:auth-loginRequired',
+      }[response.status], response);
+      return $q.reject(response);
+    }
+  };
+})
+ 
+.config(function ($httpProvider) {
+  $httpProvider.interceptors.push('AuthInterceptor');
+})
 
 .factory('MenuService', function(){
     var userName = "";
@@ -72,7 +87,7 @@
     }
 
 })
-.factory('SigninService',  function(MenuService, $window, $http, authService,$rootScope){
+.factory('SigninService',  function(MenuService, $window, $http, $rootScope){
     
     var LOCAL_TOKEN_KEY = 'token';
     var isAuthenticated = false;
@@ -87,19 +102,13 @@
             //if the user data is correct, set it in localStorage(for now)
             var user =  { username: name, password: password};
             window.localStorage['user'] = JSON.stringify(user);
-            
+
             authToken = data.authorizationToken;
             storeToken(authToken)
             
             // Sets the token as header for all requests
             $http.defaults.headers.common.Authorization = authToken;
-            $rootScope.$broadcast('event:auth-loginConfirmed', status);
-            /*
-            authService.loginConfirmed(data, function(config){
-                config.headers.Authorization = data.authorizationToken;
-                return config;
-            }); */
-                
+            $rootScope.$broadcast('event:auth-loginConfirmed', status);         
             
         })
         .error(function(data, status, headers, config){
@@ -110,15 +119,19 @@
     var storeToken = function(authToken){
         window.localStorage.setItem(LOCAL_TOKEN_KEY, authToken);
         isAuthenticated = true;
-        window.localStorage['loggedIn'] = true;
+        window.localStorage['loggedIn'] = 'true';
     }
         
     var logout = function(){
         authToken = undefined;
         isAuthenticated = false;
-        window.localStorage.removeItem(LOCAL_TOKEN_KEY);
+        
+        
+        //Cant remove more than 1 item at a time? 
+        window.localStorage.removeItem(LOCAL_TOKEN_KEY, ' ');
         window.localStorage.removeItem('user');
         window.localStorage.setItem('loggedIn', 'false');
+        
         delete $http.defaults.headers.common.Authorization;
     }
     
