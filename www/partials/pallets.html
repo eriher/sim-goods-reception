@@ -3,10 +3,10 @@
       <p></p>
       <h1>{{message}}</h1>
       <ion-list>
-      <div class='card' ng-repeat = 'item in orderItems'>
+      <div class='card' ng-repeat = 'pallet in pallets'>
           <div class='item item-divider'>
                    <button class="button button-full button-positive" ng-click='goTo(item.id)'>
-                      {{item.id}}</button>
+                      {{pallet.id}}</button>
                 <i class="icon ion-checkmark-circled" id ='icon_red' ng-show='item.status=="checked with errors"'></i>
                 <i class="icon ion-checkmark-circled" id ='icon_yellow' ng-show='item.status=="partially checked"'></i>
                 <i class="icon ion-checkmark-circled" id ='icon_green' ng-show='item.status=="checked"'></i>
@@ -18,9 +18,9 @@
                     <td>Quantity</td><td>Weight</td><td>Status</td>
                     </tr>
                 </thead>
-                <td>{{item.quantity}}</td>
-                <td>{{item.weight}}</td>
-                <td>{{item.status}}</td>
+                <td>{{pallet.quantity}}</td>
+                <td>{{pallet.weight}}</td>
+                <td>{{pallet.status}}</td>
               </table>
             </div>
           </div>

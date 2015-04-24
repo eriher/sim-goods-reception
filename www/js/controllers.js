@@ -46,11 +46,10 @@
                 var scanId = result.text;
                 switch(scanId.charCodeAt(0)) {
                         case 78 :
-                        
-                            $state.go('menu.orders', {dispatchId : scanId });
+                            $state.go('menu.pallets', {dispatchId : scanId });
                             break;
                         case 65 :
-                            $state.go('menu.order', {dispatchId : 5, orderId : scanId});
+                            $state.go('menu.pallet', {dispatchId : 5, palletId : scanId});
                             break;
                         case 83 :
                             $state.go('menu.pallet',{palletId : scanId});
@@ -63,39 +62,39 @@
     }
 })
 
-.controller('OrderCtrl', function($scope, $stateParams, $ionicHistory) {
-    $scope.navTitle= 'Order Id: '+$stateParams.orderId;
-    $scope.id = $stateParams.orderId;
+.controller('PalletCtrl', function($scope, $stateParams, $ionicHistory) {
+    $scope.navTitle= 'Pallet nr: '+$stateParams.palletId;
+    $scope.id = $stateParams.palletId;
 })
 
-.controller('OrdersCtrl', function($scope, $stateParams, OrdersService, $state) {
+.controller('PalletsCtrl', function($scope, $stateParams, $state, DBService) {
     var id = $stateParams.dispatchId;
     
     $scope.navTitle= 'Dispatch Id: '+id;
     
-    $scope.message = OrdersService.name(id);
+    $scope.message = id;
     
-    $scope.orderItems = OrdersService.items(id).then(
-        function(success){console.log("orderservice success:"+JSON.stringify(success));
-                          $scope.orderItems = success},
-        function(fail){console.log("orderservice fail:"+fail)});;
+    $scope.pallets = DBService.getPallets(id).then(
+        function(success){console.log("palletsctrl success:"+JSON.stringify(success));
+                          $scope.pallets = success},
+        function(fail){console.log("palletsctrl fail:"+fail)});
     
     $scope.goTo = function(id2) {
-        $state.go('menu.order', {dispatchId: id, orderId : id2 });
+        $state.go('menu.pallet', {dispatchId: id, palletId : id2 });
     }
     
 })
 
-.controller('HomeCtrl', function($scope, HomeService, $state, $location,DBService) {
+.controller('HomeCtrl', function($scope, $state, $location,DBService) {
     $scope.navTitle = 'Home';
     
-    $scope.dispatchNotes =  HomeService.dispatchNotes().then(
+    $scope.dispatchNotes =  DBService.getDispatches().then(
         function(success){console.log("homeservice success:"+JSON.stringify(success));
                           $scope.dispatchNotes = success},
         function(fail){console.log("homeservice fail:"+fail)});
     
     $scope.goTo = function(id) {
-        $state.go('menu.orders', {dispatchId : id });
+        $state.go('menu.pallets', {dispatchId : id });
     }
                                      
 
@@ -143,7 +142,7 @@
             if(typeof user.username != 'undefined' && typeof user.password != 'undefined')
             {
                 //Previously checked in, goes direct to home and picks up new authToken via loginTest
-                $state.go('menu.home');
+                //$state.go('menu.home');
                 SigninService.loginTest(user.username, user.password);
             }
             
@@ -160,11 +159,13 @@
     });
     
     $scope.$on('event:auth-login-failed', function(e, status) {  
+
         var error = "Login failed.";
         if (status == 400) {
           error = "Invalid Username or Password.";
         }
         alert(error);
         });   
+
 });
 }());
