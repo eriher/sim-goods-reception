@@ -25,6 +25,7 @@
         } 
     });
     
+    
     $httpBackend.whenGET(/.*/).passThrough();
     
 })
@@ -97,21 +98,21 @@
           }
       }
   })
-  .state('menu.orders', {
+  .state('menu.pallets', {
       url: '/home/:dispatchId',
       views: {
           'menuContent': {
-              templateUrl: 'partials/orders.html',
-              controller: 'OrdersCtrl'
+              templateUrl: 'partials/pallets.html',
+              controller: 'PalletsCtrl'
           }
       }
   })
-  .state('menu.order', {
-      url: '/home/:dispatchId/:orderId',
+  .state('menu.pallet', {
+      url: '/home/:dispatchId/:palletId',
       views: {
           'menuContent': {
-              templateUrl: 'partials/order.html',
-              controller: 'OrderCtrl'
+              templateUrl: 'partials/pallet.html',
+              controller: 'PalletCtrl'
           }
       } 
   })
