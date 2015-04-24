@@ -8,20 +8,26 @@
 
 // HTTPBACKEND: This is for testning http calls only!
 .run(function($rootScope, $ionicPlatform, $httpBackend, $http) {
+    var token = "NjMwNjM4OTQtMjE0Mi00ZWYzLWEzMDQtYWYyMjkyMzNiOGIy";
     
     $httpBackend.whenGET('https://test').respond(function(method, url, data, headers){
-        return [200, {test: 'success'}];
+        alert(headers.Authorization);
+        if(headers.Authorization == token){
+            return [200, {test: 'success'}];
+        }
+        else{
+            return [401];
+        }
+        
     });
     
     $httpBackend.whenPOST('https://login').respond(function(method, url, data) {
         var data = angular.fromJson(data);
         
         if(data.username == 'admin' && data.password =='admin'){
-            console.log('if-statement')
-            return  [200 , { authorizationToken: "NjMwNjM4OTQtMjE0Mi00ZWYzLWEzMDQtYWYyMjkyMzNiOGIy" } ];
+            return  [200 , { authorizationToken: token } ];
         }
         else{ 
-            console.log('else');
             return [400];
         } 
     });

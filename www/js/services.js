@@ -126,57 +126,63 @@
 })
 .factory('SigninService',  function(MenuService, $window, $http, authService,$rootScope){
     
-    var login = function(name, password) {
-        var login;
-        if(name =='admin' && password =='admin'){
-            login = true;
-            MenuService.userName = name;
-        }
-        else {
-            login = false;
-        }
-        return login;  
-    }
+    var LOCAL_TOKEN_KEY = 'token';
+    var isAuthenticated = false;
+    var authToken;
     
-    var loginTest = function(name, password){
+    var login = function(name, password){
         
-        var access = false;
         $http.post('https://login', {username : name , password: password})
         .success(function(data){
             console.log('success');
-            
+
             //if the user data is correct, set it in localStorage(for now)
             var user =  { username: name, password: password};
             window.localStorage['user'] = JSON.stringify(user);
             
-            $http.defaults.headers.common.Authorization = data.authorizationToken;
+            authToken = data.authorizationToken;
+            storeToken(authToken)
+            
+            // Sets the token as header for all requests
+            $http.defaults.headers.common.Authorization = authToken;
+            $rootScope.$broadcast('event:auth-loginConfirmed', status);
+            /*
             authService.loginConfirmed(data, function(config){
                 config.headers.Authorization = data.authorizationToken;
                 return config;
-            });
+            }); */
                 
             
         })
         .error(function(data, status, headers, config){
             $rootScope.$broadcast('event:auth-login-failed', status);
         })
-
     }
     
+    var storeToken = function(authToken){
+        window.localStorage.setItem(LOCAL_TOKEN_KEY, authToken);
+        isAuthenticated = true;
+        window.localStorage['loggedIn'] = true;
+    }
+        
     var logout = function(){
+        authToken = undefined;
+        isAuthenticated = false;
+        window.localStorage.removeItem(LOCAL_TOKEN_KEY);
+        window.localStorage.removeItem('user');
+        window.localStorage.setItem('loggedIn', 'false');
         delete $http.defaults.headers.common.Authorization;
-        $rootScope.$broadcast('event:auth-logout-complete');
     }
     
     return{
         login: function(name, password){
             return login(name, password);
         },
-        loginTest: function(name, password){
-            return loginTest(name, password);
-        },
         logout: function(){
             return logout()
+        },
+        isAuthenticated: function(){
+            return isAuthenticated;
         }
     }
         

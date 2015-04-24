@@ -109,26 +109,25 @@
     $scope.navTitle = 'About';
 })
 
-.controller('HistoryCtrl', function($scope) {
+.controller('HistoryCtrl', function($scope, $http) {
     $scope.navTitle = 'History';
+    
+    $scope.test = function(){
+        $http.get('https://test')
+        .success(function(data){
+            console.log('testSuccess');
+            alert(data.test);
+        })
+        .error(function(data, status, headers, config){
+            console.log('testError');
+        })
+    }
 })
 
 .controller('SigninCtrl', function($scope, $state, SigninService, $ionicHistory) {
 
     $scope.signIn = function(user){
-        if(SigninService.login(user.Name, user.Password))
-        {  
-            $state.go('menu.home');
-        }
-        else
-        {
-            alert('Username/password was incorrect!');
-        }
-    };
-    
-    $scope.test = function(user){
-        SigninService.loginTest(user.Name, user.Password);
-        
+        SigninService.login(user.name, user.password);  
     }
     
     $scope.$on('$ionicView.beforeEnter', function () {
@@ -138,6 +137,7 @@
         //Check if previously checked in
         var loggedIn = window.localStorage['loggedIn'] || false;
         var user = JSON.parse(window.localStorage['user'] || '{}');
+        
         if(loggedIn == 'true'){
             
             if(typeof user.username != 'undefined' && typeof user.password != 'undefined')
@@ -156,22 +156,15 @@
 
     
     $scope.$on('event:auth-loginConfirmed', function() {
-        window.localStorage['loggedIn'] = true;
         $state.go('menu.home');
     });
     
     $scope.$on('event:auth-login-failed', function(e, status) {  
-        
-    var error = "Login failed.";
-    if (status == 400) {
-      error = "Invalid Username or Password.";
-    }
-    alert(error);
-    });
-    
-    $scope.$on('event:auth-logout-complete', function() {
-        localStorage.clear();
-    });  
-        
+        var error = "Login failed.";
+        if (status == 400) {
+          error = "Invalid Username or Password.";
+        }
+        alert(error);
+        });   
 });
 }());
