@@ -131,29 +131,32 @@
 })
 
 .factory('DBService', function($q){
-                window.shimIndexedDB.__useShim();
+                //window.shimIndexedDB.__useShim();
                 window.shimIndexedDB.__debug(true);
                 var db = new Dexie("localSIM");
-                db.version(1).stores({ dispatchNotes: "id", pallet: "id,did,[did+id],relation", article:"id,oid,[oid+id]relation"});
+                db.version(1).stores({ dispatch: "id", pallet: "id", article:"id", order:"id", palletHas:"++,pid,aid,[pid,aid],order"});
                 //test data
-                console.log("no database exists");
                 db.on('ready', function () {
-                    db.dispatchNotes.add({id: "N104", description: "CJ-TUBE-0140", date: "P4/2/2015", status:"incoming"});
-                    db.dispatchNotes.add({id: "N105", description: "CJ-TUBE-0141", date: "P4/2/2015", status:"checked with errors"});
-                    db.dispatchNotes.add({id: "N106", description: "CJ-TUBE-0142", date: "P4/2/2015", status:"partially checked"});
-                    db.dispatchNotes.add({id: "N107", description: "CJ-TUBE-0143", date: "P4/2/2015", status:"checked"});
-                    db.pallet.add({did:"N104", id:"AK029250", quantity: "5", weight: "30", status:"unchecked"});
-                    db.pallet.add({did:"N104", id:"AK028890", quantity: "10", weight: "300", status:"unchecked"});
-                    db.pallet.add({did:"N105", id:"AK029255", quantity: "1", weight: "320", status:"unchecked"});
-                    db.pallet.add({did:"N105", id:"AK028896", quantity: "14", weight: "34", status:"unchecked"});
-                    db.article.add({id:"376", oid:"AK029250"});
-                    db.article.add({id:"377", oid:"AK028890"});
+                    db.dispatch.add({id: "N104", description: "CJ-TUBE-0140", date: "D040915", status: "incoming"});
+                    db.dispatch.add({id: "N105", description: "CJ-TUBE-0141", date: "D040915", status: "checked with errors"});
+                    db.dispatch.add({id: "N106", description: "CJ-TUBE-0142", date: "D040915", status: "partially checked"});
+                    db.dispatch.add({id: "N107", description: "CJ-TUBE-0143", date: "D040915", status: "checked"});
+                    db.pallet.add({id:"S376", did:"N104", quantity: "5", weight: "30", status: "unchecked"});
+                    db.pallet.add({id:"S377", did:"N104", quantity: "10", weight: "300", status: "unchecked"});
+                    db.pallet.add({id:"S380", did:"N105", quantity: "1", weight: "320", status: "unchecked"});
+                    db.pallet.add({id:"S381", did:"N105", quantity: "14", weight: "34", status: "unchecked"});
+                    db.article.add({id: "P407300"});
+                    db.article.add({id: "P407305"});
+                    db.order.add({id:"AK029250"});
+                    db.order.add({id:"AK028890"});
+                    db.palletHas().add({pid:"S376", aid:"P407300", count:"5", order:"AK029250"});
+                    db.palletHas().add({pid:"S376", aid:"P407300", count:"8", order:"AK028890"});
                 });
                 db.open();
 
         var getDispatches = function(){
         var deferred = $q.defer();
-        db.dispatchNotes.toArray(function(result) {
+        db.dispatch.toArray(function(result) {
                             console.log(JSON.stringify(result));
                             deferred.resolve(result);
                             }); 
@@ -163,9 +166,9 @@
         };
         
         var getPallets = function(id){
-            console.log("idtype:"+id);
+            console.log("in pallets"+id);
             var deferred = $q.defer();
-           db.pallet.where("did").equals(id).toArray(function(result) {
+            db.pallet.where("did").equals(id).toArray(function(result) {
                             console.log(JSON.stringify(result));
                             deferred.resolve(result);
                             });                   
@@ -175,7 +178,7 @@
         var getDispatch =  function(scanId){
             console.log("idtype:"+scanId);
             var deferred = $q.defer();
-            db.dispatchNotes.get(scanId).then(function(result) {
+            db.dispatch.get(scanId).then(function(result) {
                 
                 if(result){
                         alert(JSON.stringify(result));

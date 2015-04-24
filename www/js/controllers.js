@@ -142,7 +142,7 @@
             if(typeof user.username != 'undefined' && typeof user.password != 'undefined')
             {
                 //Previously checked in, goes direct to home and picks up new authToken via loginTest
-                $state.go('menu.home');
+                //$state.go('menu.home');
                 SigninService.loginTest(user.username, user.password);
             }
             
@@ -169,7 +169,8 @@
     });
     
     $scope.$on('event:auth-logout-complete', function() {
-        localStorage.clear();
+        localStorage.removeItem('loggedIn');
+        localStorage.removeItem('user');
     });  
         
 });
