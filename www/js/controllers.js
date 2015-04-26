@@ -46,13 +46,15 @@
                 var scanId = result.text;
                 switch(scanId.charCodeAt(0)) {
                         case 78 :
-                            $state.go('menu.pallets', {dispatchId : scanId });
+                            DBService.scanDispatch(scanid).then(function(success){$state.go('menu.pallets', {dispatchId : success.dispatchId });})
                             break;
+                        /*order not used..
                         case 65 :
+                            DBService
                             $state.go('menu.pallet', {dispatchId : 5, palletId : scanId});
-                            break;
+                            break;*/
                         case 83 :
-                            $state.go('menu.pallet',{palletId : scanId});
+                            DBService.scanPallet(scanid).then(function(success){$state.go('menu.pallet',{dispatchId: success.dispatchId, palletId : success.palletId});});
                             break;
                 };}
                 else{
@@ -62,12 +64,18 @@
     }
 })
 
-.controller('PalletCtrl', function($scope, $stateParams, $ionicHistory) {
-    $scope.navTitle= 'Pallet nr: '+$stateParams.palletId;
-    $scope.id = $stateParams.palletId;
+.controller('PalletCtrl', function(DBService, $scope, $stateParams, $ionicHistory) {
+    var id = $stateParams.palletId;
+    $scope.navTitle= 'Pallet nr: '+id;
+    $scope.id = id;
+    $scope.pallet = DBService.getPallet(id).then(
+        function(success){console.log("palletctrl success:"+JSON.stringify(success));
+                          $scope.pallet = success},
+        function(fail){console.log("palletctrl fail:"+fail)});;
 })
 
 .controller('PalletsCtrl', function($scope, $stateParams, $state, DBService) {
+    
     var id = $stateParams.dispatchId;
     
     $scope.navTitle= 'Dispatch Id: '+id;
@@ -80,6 +88,7 @@
         function(fail){console.log("palletsctrl fail:"+fail)});
     
     $scope.goTo = function(id2) {
+        console.log(id2);
         $state.go('menu.pallet', {dispatchId: id, palletId : id2 });
     }
     
