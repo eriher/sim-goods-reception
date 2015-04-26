@@ -1,20 +1,33 @@
 <ion-view view-title={{navTitle}}>
   <ion-content class='has-header'>
-    <p></p>
-    <ion-list>
         <table class="table">
-          <div class='item item-text-wrap'>
                 <thead>
-                    <td>Article nr.</td><td>Quantity</td>
+                    <td>Article nr.</td><td>Quantity</td><td>Order</td>
                 </thead>
-                  <a ng-repeat = 'article in articles'>
-                    <tr>
-                    <td>{{article.id}}</td>
-                    <td>{{article.quantity}}</td>
+            </table>
+        </ion-content>
+    <ion-content class='has-header' id="tabul">
+        <table class="table">
+                    <tr ng-repeat = 'article in pallet'>
+                        <td>{{article.aid}}</td>
+                        <td>{{article.quantity}}</td>
+                        <td>{{article.order}}</td>
                     </tr>
-                </a>
+                                <tr ng-repeat = 'article in pallet'>
+                        <td>{{article.aid}}</td>
+                        <td>{{article.quantity}}</td>
+                        <td>{{article.order}}</td>
+                    </tr>
+                                <tr ng-repeat = 'article in pallet'>
+                        <td>{{article.aid}}</td>
+                        <td>{{article.quantity}}</td>
+                        <td>{{article.order}}</td>
+                    </tr>
+                                <tr ng-repeat = 'article in pallet'>
+                        <td>{{article.aid}}</td>
+                        <td>{{article.quantity}}</td>
+                        <td>{{article.order}}</td>
+                    </tr>
               </table>
-            </div>
-      </ion-list>
   </ion-content>
 </ion-view>
