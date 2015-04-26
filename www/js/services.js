@@ -259,7 +259,7 @@
             {id: "N105", description: "CJ-TUBE-0141", date: "D040915", status: "checked with errors"},
             {id: "N106", description: "CJ-TUBE-0142", date: "D040915", status: "partially checked"},
             {id: "N107", description: "CJ-TUBE-0143", date: "D040915", status: "checked"}
-        ];
+        ]
         var palletrows = [
             {id:"S376", did:"N104", quantity: "5", weight: "30", status: "unchecked"},
             {id:"S377", did:"N104", quantity: "10", weight: "300", status: "unchecked"},
