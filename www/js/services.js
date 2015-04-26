@@ -149,7 +149,7 @@
         
 })
 
-.factory('DBService', function($q){
+.factory('IDBService', function($q){
             //window.shimIndexedDB.__debug(true);
             var db = new Dexie("localSIM");
             db.version(1).stores({ dispatch: "id", pallet: "id, did", article:"id", order:"id", palletHas:"++,pid,aid,[pid,aid],order"});
@@ -236,48 +236,98 @@
             },
              getPallets: function(id){
                  return getPallets(id);
-         },
+            },
              getPallet: function(id){
                  return getPallet(id);
              },
              scanDispatch: function(id){
                  return scanDispatch(id);
-         },   
+            },   
              scanPallet: function(id){
                  return scanPallet(id);
-         }
+            }
          }
 })
-.factory('LSService', function($q){
+.factory('DBService', function($q){
         
-            var N104 =  { 
-                id: "N104",
-                description: "CJ-TUBE-0140",
-                date: "D040915",
-                status: "checked with errors",
-                pallets: [{
-                        id:"S376",
-                        quantity: "5",
-                        weight: "30",
-                        status: "unchecked",
-                        articles:  [{
-                            id: "P407300",
-                            quantity: "5"
-                        }]
-                    },
-                    {
-                        id:"S377",
-                        quantity: "8",
-                        weight: "40",
-                        status: "unchecked",
-                        articles:  [
-                        {
-                            id: "P407305",
-                            quantity: "8"
-                        }]
-                    }]      
+        
+        var db = new localStorageDB("LocalSIM", localStorage);
+            
+        // rows with thest data
+        var dispatchrows = [
+            {id: "N104", description: "CJ-TUBE-0140", date: "D040915", status: "incoming"},
+            {id: "N105", description: "CJ-TUBE-0141", date: "D040915", status: "checked with errors"},
+            {id: "N106", description: "CJ-TUBE-0142", date: "D040915", status: "partially checked"},
+            {id: "N107", description: "CJ-TUBE-0143", date: "D040915", status: "checked"}
+        ];
+        var palletrows = [
+            {id:"S376", did:"N104", quantity: "5", weight: "30", status: "unchecked"},
+            {id:"S377", did:"N104", quantity: "10", weight: "300", status: "unchecked"},
+            {id:"S380", did:"N105", quantity: "1", weight: "320", status: "unchecked"},
+            {id:"S381", did:"N105", quantity: "14", weight: "34", status: "unchecked"}
+        ]
+        var palletHasrows = [
+            {pid:"S376", aid:"P407300", quantity:"5", order:"AK029250"},
+            {pid:"S376", aid:"P407305", quantity:"8", order:"AK028890"},
+            {pid:"S377", aid:"P407306", quantity:"1", order:"AK029295"},
+            {pid:"S377", aid:"P407307", quantity:"2", order:"AK028899"}
+        ]
+            
+        db.createTableWithData("dispatch", dispatchrows);
+        db.createTableWithData("pallet", palletrows);
+        db.createTableWithData("palletHas", palletHasrows);
+            
+        db.commit();
+
+        var getDispatches = function(){
+            var deferred = $q.defer();
+                deferred.resolve(db.queryAll("dispatch"));
+            return deferred.promise;
             };
-            window.localStorage['N104'] = JSON.stringify(user);
-    
+        
+        var getPallets = function(id){
+            var deferred = $q.defer();
+            deferred.resolve(db.queryAll("pallet", {
+                query:{did: id}}));            
+            return deferred.promise;
+        }
+        var getPallet = function (id){
+            var deferred = $q.defer();
+            deferred.resolve(db.queryAll("palletHas", {
+                query:{pid: id}}));
+            return deferred.promise;
+        }
+        var scanDispatch =  function(scanId){
+            var deferred = $q.defer();
+                deferred.resolve(db.queryAll("dispatch",{
+                    query:{id:id}}));
+            return deferred.promise;
+        }
+        var scanPallet = function(scanId){
+            var deferred = $q.defer();
+            deferred.resolve(db.queryAll("pallet", {
+                query:{id: id}}));            
+            return deferred.promise;
+        }
+        
+        
+         return {
+             getDispatches: function() {
+                 return getDispatches();
+            },
+             getPallets: function(id){
+                 return getPallets(id);
+            },
+             getPallet: function(id){
+                 return getPallet(id);
+             },
+             scanDispatch: function(id){
+                 return scanDispatch(id);
+            },   
+             scanPallet: function(id){
+                 return scanPallet(id);
+            }
+         }
+        
     })
 }());
