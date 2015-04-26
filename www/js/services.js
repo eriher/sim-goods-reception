@@ -234,4 +234,36 @@
          }
          }
 })
+.factory('LSService', function($q){
+        
+            var N104 =  { 
+                id: "N104",
+                description: "CJ-TUBE-0140",
+                date: "D040915",
+                status: "checked with errors",
+                pallets: [{
+                        id:"S376",
+                        quantity: "5",
+                        weight: "30",
+                        status: "unchecked",
+                        articles:  [{
+                            id: "P407300",
+                            quantity: "5"
+                        }]
+                    },
+                    {
+                        id:"S377",
+                        quantity: "8",
+                        weight: "40",
+                        status: "unchecked",
+                        articles:  [
+                        {
+                            id: "P407305",
+                            quantity: "8"
+                        }]
+                    }]      
+            };
+            window.localStorage['N104'] = JSON.stringify(user);
+    
+    })
 }());
