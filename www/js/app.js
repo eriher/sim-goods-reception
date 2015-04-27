@@ -70,7 +70,7 @@
             $location.path(url).replace();
             $rootScope.$apply();
         }
-    }, 500);
+    }, 140);
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
