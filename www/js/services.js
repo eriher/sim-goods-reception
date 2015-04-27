@@ -53,7 +53,7 @@
             );
         }
         catch (exc) {
-            deferred.rejet({'error':true, 'result': 'exception: ' + exc.toString()});
+            deferred.reject({'error':true, 'result': 'exception: ' + exc.toString()});
         }
         return deferred.promise;
         }
@@ -67,7 +67,7 @@
         var toast = function(message){
             var deferred = $q.defer();
         try {
-            $window.plugins.toast.showShortCenter(message, 
+            $window.plugins.toast.showShortTop(message, 
                 function (result) {
                     deferred.resolve(result);
                 }, 
@@ -149,7 +149,7 @@
         
 })
 
-.factory('IDBService', function($q){
+/*.factory('IDBService', function($q){
             //window.shimIndexedDB.__debug(true);
             var db = new Dexie("localSIM");
             db.version(1).stores({ dispatch: "id", pallet: "id, did", article:"id", order:"id", palletHas:"++,pid,aid,[pid,aid],order"});
@@ -247,8 +247,8 @@
                  return scanPallet(id);
             }
          }
-})
-.factory('DBService', function($q){
+})*/
+.factory('DBService', function($q, ToastService){
         
         
         var db = new localStorageDB("LocalSIM", localStorage);
@@ -261,24 +261,15 @@
             {id: "N107", description: "CJ-TUBE-0143", date: "D040915", status: "checked"}
         ]
         var palletrows = [
-            {id:"S376", did:"N104", quantity: "5", weight: "30", status: "unchecked"},
-            {id:"S377", did:"N104", quantity: "10", weight: "300", status: "unchecked"},
-            {id:"S380", did:"N105", quantity: "1", weight: "320", status: "unchecked"},
-            {id:"S381", did:"N105", quantity: "14", weight: "34", status: "unchecked"}
+            {id:"S376", did:"N104", quantity: "15", weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S377", did:"N104", quantity: "80", weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
         ]
-        var palletHasrows = [
-            {pid:"S376", aid:"P407300", quantity:"5", order:"AK029250"},
-            {pid:"S376", aid:"P407305", quantity:"8", order:"AK028890"},
-            {pid:"S377", aid:"P407306", quantity:"1", order:"AK029295"},
-            {pid:"S377", aid:"P407307", quantity:"2", order:"AK028899"}
-        ]
-            
+        if(db.isNew()){    
         db.createTableWithData("dispatch", dispatchrows);
         db.createTableWithData("pallet", palletrows);
-        db.createTableWithData("palletHas", palletHasrows);
             
         db.commit();
-
+        }
         var getDispatches = function(){
             var deferred = $q.defer();
                 deferred.resolve(db.queryAll("dispatch"));
@@ -297,17 +288,51 @@
                 query:{pid: id}}));
             return deferred.promise;
         }
-        var scanDispatch =  function(scanId){
+        var scanDispatch =  function(id){
             var deferred = $q.defer();
-                deferred.resolve(db.queryAll("dispatch",{
-                    query:{id:id}}));
+            console.log("in scandispatch: "+id)
+            var result = db.queryAll("dispatch",{
+                    query:{id:id}});
+            console.log(result[0]);
+            deferred.resolve({'dispatchId': result[0].id});
             return deferred.promise;
         }
-        var scanPallet = function(scanId){
+        var scanPallet = function(id){
+            alert("in scan pallet");
             var deferred = $q.defer();
-            deferred.resolve(db.queryAll("pallet", {
-                query:{id: id}}));            
+            var result = db.queryAll("pallet", {
+                query:{id: id}});
+            alert(result);
+            deferred.resolve({'dispatchId':result[0].did,'palletId':result[0].id});
             return deferred.promise;
+        }
+        var setChecked = function(table,item){
+            console.log(table,item.id)
+            db.update(table,{id: item.id},
+                     function(row){
+                row.status = "checked  "
+                return row;
+            })
+            //emulate trigger
+            if(table == "pallet")
+            {
+                console.log("table is a pallet")
+                var pallets = db.queryAll(table,{query:{did:item.did}});
+                console.log(pallets[0].status);
+                var count = 0;
+                for(var pallet in pallets){
+                    console.log("inside pallets");
+                    if (pallets[pallet].status == "checked"){
+                        count++;
+                    }      
+                }
+                if(count==pallets.length){
+                    console.log("count==pallets.length")
+                    var item2 = {id: item.did}
+                    setChecked("dispatch", item2);
+                    ToastService.toast("Dispatch: "+item.did+" marked as checked").then(function(success){console.log("toast success")},function(fail){console.log("toast fail")});
+                }
+            }
         }
         
         
@@ -326,7 +351,10 @@
             },   
              scanPallet: function(id){
                  return scanPallet(id);
-            }
+            },
+             setChecked: function(table,item){
+                 return setChecked(table,item);
+             }
          }
         
     })

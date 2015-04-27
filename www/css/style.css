@@ -12,12 +12,9 @@
     font-size: 32px;
     color : green;
 }
-
-.col {
-    text-align: center;
-}
-.row {
-    text-align: center;
+#icon_white{
+    font-size: 32px;
+    color : white;
 }
 
 #signin_card1 {

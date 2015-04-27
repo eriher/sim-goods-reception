@@ -44,17 +44,15 @@
             //scan not cancelled by 
             if(!result.cancelled){
                 var scanId = result.text;
+                alert(scanId);
                 switch(scanId.charCodeAt(0)) {
                         case 78 :
+                            alert(scanid);
                             DBService.scanDispatch(scanid).then(function(success){$state.go('menu.pallets', {dispatchId : success.dispatchId });})
                             break;
-                        /*order not used..
-                        case 65 :
-                            DBService
-                            $state.go('menu.pallet', {dispatchId : 5, palletId : scanId});
-                            break;*/
                         case 83 :
-                            DBService.scanPallet(scanid).then(function(success){$state.go('menu.pallet',{dispatchId: success.dispatchId, palletId : success.palletId});});
+                            alert(scanid);
+                            DBService.scanPallet(scanid).then(function(success){$state.go('menu.pallet',{dispatchId: success.dispatchId, palletId: success.palletId});});
                             break;
                 }}
                 else{
@@ -82,7 +80,11 @@
     
     $scope.message = id;
     
-    $scope.pallets = DBService.getPallets(id).then(
+    $scope.setChecked = function(id){
+        DBService.setChecked("pallet", id);
+    }
+    
+    DBService.getPallets(id).then(
         function(success){console.log("palletsctrl success:"+JSON.stringify(success));
                           $scope.pallets = success},
         function(fail){console.log("palletsctrl fail:"+fail)});
@@ -94,14 +96,16 @@
     
 })
 
-.controller('HomeCtrl', function($scope, $state, $location,DBService) {
+.controller('HomeCtrl', function($scope, $state, $location,DBService, $ionicLoading) {
     $scope.navTitle = 'Home';
     
-    $scope.dispatchNotes =  DBService.getDispatches().then(
+    $scope.$on('$ionicView.beforeEnter', function () {
+        
+    DBService.getDispatches().then(
         function(success){console.log("homeservice success:"+JSON.stringify(success));
                           $scope.dispatchNotes = success},
         function(fail){console.log("homeservice fail:"+fail)});
-    
+    })
     $scope.goTo = function(id) {
         $state.go('menu.pallets', {dispatchId : id });
     }

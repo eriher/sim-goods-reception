@@ -1,29 +1,34 @@
 <ion-view view-title={{navTitle}}>
-  <ion-content class='has-header'>
+  <ion-content class='has-header padding'>
       <p></p>
-      <h1>{{message}}</h1>
-      <ion-list>
-      <div class='card' ng-repeat = 'pallet in pallets'>
-          <div class='item item-divider'>
-                   <button class="button button-full button-positive" ng-click='goTo(pallet.id)'>
-                      {{pallet.id}}</button>
-                <i class="icon ion-checkmark-circled" id ='icon_red' ng-show='item.status=="checked with errors"'></i>
-                <i class="icon ion-checkmark-circled" id ='icon_yellow' ng-show='item.status=="partially checked"'></i>
-                <i class="icon ion-checkmark-circled" id ='icon_green' ng-show='item.status=="checked"'></i>
-          </div>
-          <div class='item item-text-wrap'>
+      <h1>Pallets</h1>
+        <div class="row">
+            <div class="col"><a href="" ng-click="sort='id'; reverse=!reverse">Id</a> </div>
+            <div class="col"><a href="" ng-click="sort='quantity'; reverse=!reverse">Quantity</a></div>
+            <div class="col"><a href="" ng-click="sort='weight'; reverse=!reverse">Weight</a></div>
+            <div class="col"><a href="" ng-click="sort='status'; reverse=!reverse">Status</a></div>
+        </div>
+      <div class='card' ng-repeat = "pallet in pallets | orderBy:sort:reverse">
+          <div class="item item-divider">
+                      Pallet: {{pallet.id}}
+                <i class="icon ion-checkmark-circled" id ='icon_white' ng-show='pallet.status=="unchecked"'></i>
+                <i class="icon ion-checkmark-circled" id ='icon_red' ng-show='pallet.status=="checked with errors"'></i>
+                <i class="icon ion-checkmark-circled" id ='icon_yellow' ng-show='pallet.status=="partially checked"'></i>
+                <i class="icon ion-checkmark-circled" id ='icon_green' ng-show='pallet.status=="checked"'></i>
+              </div>
               <table class="table">
                 <thead>
                     <tr>
-                    <td>Quantity</td><td>Weight</td><td>Status</td>
+                    <td>Article id</td><td>Quantity</td><td>Weight</td><td>Status</td><td>Order id</td>
                     </tr>
                 </thead>
+                  <td>{{pallet.aid}}</td>
                 <td>{{pallet.quantity}}</td>
                 <td>{{pallet.weight}}</td>
                 <td>{{pallet.status}}</td>
+                  <td>{{pallet.order}}</td>
               </table>
-            </div>
-          </div>
-      </ion-list>
+          <button ng-click="setChecked(pallet);pallet.status = 'checked'">Mark as checked</button>
+      </div>
     </ion-content>
 </ion-view>
