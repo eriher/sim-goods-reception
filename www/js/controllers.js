@@ -2,6 +2,8 @@
 
 .controller('AppCtrl', function($scope, $state, MenuService, ScanService, ToastService, $ionicHistory, $location, DBService, SigninService) {
     
+    $scope.test = true;
+    
     $scope.menuItems = MenuService.items();
     
     $scope.userName = MenuService.userName;
@@ -119,6 +121,7 @@
 
 .controller('AboutCtrl', function($scope) {
     $scope.navTitle = 'About';
+    $scope.test = true;
 })
 
 .controller('HistoryCtrl', function($scope, $http) {

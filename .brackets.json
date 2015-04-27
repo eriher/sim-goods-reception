@@ -1,0 +1,7 @@
+{
+    "jscodehints.detectedExclusions": [
+        "C:/Users/Olof/Documents/Chalmers kurser/Exjobb/sim-goods-reception/platforms/windows/www/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js",
+        "C:/Users/Olof/Documents/Chalmers kurser/Exjobb/sim-goods-reception/platforms/windows/www/lib/bootstrap-3.3.4-dist/js/bootstrap.js",
+        "C:/Users/Olof/Documents/Chalmers kurser/Exjobb/sim-goods-reception/platforms/windows/www/lib/bootstrap-3.3.4-dist/js/npm.js"
+    ]
+}
