@@ -67,7 +67,7 @@
         var toast = function(message){
             var deferred = $q.defer();
         try {
-            $window.plugins.toast.showShortTop(message, 
+            $window.plugins.toast.showLongTop(message, 
                 function (result) {
                     deferred.resolve(result);
                 }, 
@@ -263,6 +263,24 @@
         var palletrows = [
             {id:"S376", did:"N104", quantity: "15", weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
             {id:"S377", did:"N104", quantity: "80", weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S378", did:"N104", quantity: "15", weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S379", did:"N104", quantity: "80", weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S380", did:"N104", quantity: "15", weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S381", did:"N104", quantity: "80", weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S382", did:"N104", quantity: "15", weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S383", did:"N104", quantity: "80", weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S384", did:"N104", quantity: "15", weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S385", did:"N104", quantity: "80", weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S386", did:"N104", quantity: "15", weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S387", did:"N104", quantity: "80", weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S388", did:"N104", quantity: "15", weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S389", did:"N104", quantity: "80", weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S390", did:"N104", quantity: "15", weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S391", did:"N104", quantity: "80", weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S392", did:"N104", quantity: "15", weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S393", did:"N104", quantity: "80", weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S394", did:"N104", quantity: "15", weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S395", did:"N104", quantity: "80", weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"}
         ]
         if(db.isNew()){    
         db.createTableWithData("dispatch", dispatchrows);

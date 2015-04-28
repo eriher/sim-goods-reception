@@ -112,13 +112,14 @@
       }
   })
   .state('menu.pallets', {
-      url: '/home/:dispatchId',
+      url: '/home/:dispatchId?palletId',
       views: {
           'menuContent': {
               templateUrl: 'partials/pallets.html',
-              controller: 'PalletsCtrl'
+              controller: 'PalletsCtrl',
           }
       }
+      
   })
   .state('menu.pallet', {
       url: '/home/:dispatchId/:palletId',
