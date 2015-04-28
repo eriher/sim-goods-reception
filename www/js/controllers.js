@@ -9,22 +9,15 @@
     $scope.userName = MenuService.userName;
     
     $scope.back = function() {
-        var url = $location.path();
-        url = url.slice(0,url.lastIndexOf('/'));
-        if(url == '/menu/home'){
+
             $ionicHistory.nextViewOptions({
                 disableAnimate: true,
                 disableBack: true,
                 historyRoot: true
                 });
-        }
-        else{
-            $ionicHistory.nextViewOptions({
-                disableAnimate: true,
-            });
-        }
+ 
             
-            $location.path(url).replace();
+            $location.path('/menu/home').replace();
         }
     
     $scope.menuClick = function(dest){
@@ -49,12 +42,16 @@
                 alert(scanId);
                 switch(scanId.charCodeAt(0)) {
                         case 78 :
-                            alert(scanid);
-                            DBService.scanDispatch(scanid).then(function(success){$state.go('menu.pallets', {dispatchId : success.dispatchId });})
+                            DBService.scanDispatch(scanId).then(function(success){$state.go('menu.pallets', {dispatchId : success.dispatchId })},
+                                                                function(fail){console.log(fail)});
+                            break;
+                        case 65 :
+                            DBService.scanDispatch(scanId).then(function(success){$state.go('menu.pallets', {dispatchId : success.dispatchId })},
+                                                                function(fail){console.log(fail)});
                             break;
                         case 83 :
-                            alert(scanid);
-                            DBService.scanPallet(scanid).then(function(success){$state.go('menu.pallet',{dispatchId: success.dispatchId, palletId: success.palletId});});
+                            DBService.scanPallet(scanId).then(function(success){$state.go('menu.pallet',{dispatchId: success.dispatchId, palletId: success.palletId})},
+                                                             function(fail){console.log(fail)});
                             break;
                 }}
                 else{
@@ -79,6 +76,32 @@
     var id = $stateParams.dispatchId;
     
     $scope.navTitle= 'Dispatch Id: '+id;
+    
+    $scope.items =  
+        [{
+            value: "id",
+            label: "Pallet id"},
+        {
+            value: "aid",
+            label: "Article id"
+         },
+          {
+             value: "order",
+             label: "Order id"
+          },
+         {
+            value: "quantity",
+            label: "Quantity"
+          },
+          {
+             value: "weight",
+             label: "Weight"
+          },
+         {
+             value: "status",
+             label: "Status"
+         }
+         ]
     
     $scope.message = id;
     

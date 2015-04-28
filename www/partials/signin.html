@@ -1,16 +1,20 @@
 <ion-view view-title="Sign In" ng-controller='SigninCtrl'>
     <ion-content>
-        <div class="card" id='signin_card1'>
-            <div class="item item-text-wrap" id='signin_card2'>
-                <form>
-                    <p>Username</p>
-                    <input type="text" ng-model="user.name" placeholder="Username" align='center'>
-                    <p>Password</p>
-                    <input type="password" ng-model="user.password" placeholder="Password" align='center'>
-                    <button class="button button-balanced" ng-click="signIn(user)">Sign In</button>
-                    <button class="button button-positive" ng-click="">Forgot your password?</button>
-                </form>
+        <div class="card signin_card1">
+            <div class="item item-text-wrap signin_card2">
+                <div class="list" id="icon_white">
+                    <label class="item item-input item-floating-label">
+                        <span class="input-label">Username</span>
+                        <input type="text" ng-model="user.name" placeholder="Username">
+                    </label>
+                    <label class="item item-input item-floating-label">
+                        <span class="input-label">Password</span>
+                        <input ng-model="user.password" type="password" placeholder="Password">
+                    </label>
+                </div>
+                <button class="button button-balanced" ng-click="signIn(user)">Sign In</button>
+                <button class="button button-positive" ng-click="">Forgot your password?</button>
             </div>
         </div>
-  </ion-content>
+      </ion-content>
 </ion-view>

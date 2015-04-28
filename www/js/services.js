@@ -272,19 +272,28 @@
         }
         var getDispatches = function(){
             var deferred = $q.defer();
-                deferred.resolve(db.queryAll("dispatch"));
+            var result = db.queryAll("dispatch");
+            console.log(result.length);
+            if(result.length > 0)
+                deferred.resolve(result);
+            else
+                deferred.reject("no local dispatches found")
             return deferred.promise;
             };
         
         var getPallets = function(id){
             var deferred = $q.defer();
-            deferred.resolve(db.queryAll("pallet", {
-                query:{did: id}}));            
+            var result = db.queryAll("pallet", {
+                query:{did: id}});
+            if(result.length>0)
+                deferred.resolve(result);
+            else
+                deferred.reject("no pallets found");         
             return deferred.promise;
         }
         var getPallet = function (id){
             var deferred = $q.defer();
-            deferred.resolve(db.queryAll("palletHas", {
+            deferred.resolve(db.queryAll("pallet", {
                 query:{pid: id}}));
             return deferred.promise;
         }
@@ -294,7 +303,10 @@
             var result = db.queryAll("dispatch",{
                     query:{id:id}});
             console.log(result[0]);
-            deferred.resolve({'dispatchId': result[0].id});
+            if(result.length)
+                deferred.resolve({'dispatchId': result[0].id});
+            else
+                deferred.reject("Dispatch not found")
             return deferred.promise;
         }
         var scanPallet = function(id){
@@ -303,14 +315,29 @@
             var result = db.queryAll("pallet", {
                 query:{id: id}});
             alert(result);
-            deferred.resolve({'dispatchId':result[0].did,'palletId':result[0].id});
+            if(result.length>0)
+                deferred.resolve({'dispatchId':result[0].did,'palletId':result[0].id});
+            else
+                deferred.reject("Pallet not found")
+            return deferred.promise;
+        }
+        var scanOrder = function(id){
+            alert("in scan order");
+            var deferred = $q.defer();
+            var result = db.queryAll("pallet", {
+                query:{order: id}});
+            alert(result);
+            if(result.length>0)
+                deferred.resolve({'dispatchId':result[0].did,'palletId':result[0].id});
+            else
+                deferred.reject("Order not found")
             return deferred.promise;
         }
         var setChecked = function(table,item){
             console.log(table,item.id)
             db.update(table,{id: item.id},
                      function(row){
-                row.status = "checked  "
+                row.status = "checked"
                 return row;
             })
             //emulate trigger
@@ -326,6 +353,7 @@
                         count++;
                     }      
                 }
+                console.log(count,pallets.length);
                 if(count==pallets.length){
                     console.log("count==pallets.length")
                     var item2 = {id: item.did}

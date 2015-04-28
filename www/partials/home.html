@@ -1,6 +1,5 @@
 <ion-view view-title={{navTitle}}>
   <ion-content class='has-header'>
-        <h1>Home</h1>
         <ion-refresher on-refresh='refresh()'></ion-refresher>
         <ion-list>
          <div class="card" ng-repeat = 'note in dispatchNotes'>
@@ -12,9 +11,11 @@
                 <i class="icon ion-checkmark-circled" id ='icon_green' ng-show='note.status=="checked"'></i>
             </div>
             <div class='item item-text-wrap'>
-                Description:{{note.description}}
-                Date:{{note.date}}
-                Status:{{note.status}}
+                <div class="row responsive-sm">
+                    <div class="col">Description:{{note.description}}</div>
+                    <div class="col">Date:{{note.date}}</div>
+                    <div class="col">Status:{{note.status}}</div>
+                </div>
             </div>
          </div> 
         </ion-list>
