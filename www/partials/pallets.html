@@ -1,13 +1,13 @@
 <ion-view view-title={{navTitle}}>
-  <ion-content class='has-header padding'>
+  <ion-content class="has-header padding" overflow-scroll="true">
       <label class="item item-input item-select">
     <div class="input-label">
-      Sorting :
+      Sorting : <button ng-click="bot()">go bot</button>
     </div>
         <select ng-options="item.label for item in items" ng-model="sort">
             </select>
   </label>
-      <div class='card' ng-repeat = "pallet in pallets | orderBy:sort.value:reverse">
+      <div class="card" ng-repeat = "pallet in pallets | orderBy:sort.value:reverse" id="{{pallet.id}}">
           <div class="item item-divider">
                       Pallet: {{pallet.id}}
                 <i class="icon ion-checkmark-circled" id ='icon_white' ng-show='pallet.status=="unchecked"'></i>

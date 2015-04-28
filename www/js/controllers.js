@@ -38,7 +38,6 @@
             //scan not cancelled by 
             if(!result.cancelled){
                 var scanId = result.text;
-                alert(scanId);
                 switch(scanId.charCodeAt(0)) {
                         case 78 :
                             DBService.scanDispatch(scanId).then(function(success){$state.go('menu.pallets', {dispatchId : success.dispatchId })},
@@ -49,7 +48,7 @@
                                                                 function(fail){console.log(fail)});
                             break;
                         case 83 :
-                            DBService.scanPallet(scanId).then(function(success){$state.go('menu.pallet',{dispatchId: success.dispatchId, palletId: success.palletId})},
+                            DBService.scanPallet(scanId).then(function(success){$state.go('menu.pallets',{dispatchId: success.dispatchId, palletId: success.palletId})},
                                                              function(fail){console.log(fail)});
                             break;
                 }}
@@ -70,12 +69,27 @@
         function(fail){console.log("palletctrl fail:"+fail)});;
 })
 
-.controller('PalletsCtrl', function($scope, $stateParams, $state, DBService) {
+.controller('PalletsCtrl', function($scope, $stateParams, $state, DBService, $location, $ionicScrollDelegate) {
     
+        $scope.$on('$ionicView.beforeEnter', function () {
+                DBService.getPallets(id).then(
+        function(success){console.log("palletsctrl success:"+JSON.stringify(success));
+                          $scope.pallets = success;},
+        function(fail){console.log("palletsctrl fail:"+fail)});
+        })
+        $scope.$on('$ionicView.afterEnter', function () {
+            if(pid)
+                    document.getElementById(pid).scrollIntoView()
+    })
+                        
+    $scope.bot = function(){
+            console.log("bot"+pid);
+            document.getElementById(pid).scrollIntoView();
+    }
     var id = $stateParams.dispatchId;
-    
+    var pid = $stateParams.palletId;
+
     $scope.navTitle= 'Dispatch Id: '+id;
-    
     $scope.items =  
         [{
             value: "id",
@@ -101,17 +115,13 @@
              label: "Status"
          }
          ]
+    $scope.sort = {value: "-id"}
     
-    $scope.message = id;
     
     $scope.setChecked = function(id){
         DBService.setChecked("pallet", id);
     }
     
-    DBService.getPallets(id).then(
-        function(success){console.log("palletsctrl success:"+JSON.stringify(success));
-                          $scope.pallets = success},
-        function(fail){console.log("palletsctrl fail:"+fail)});
     
     $scope.goTo = function(id2) {
         console.log(id2);
