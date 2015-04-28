@@ -15,6 +15,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+        
         '../www/lib/localstoragedb.min.js',
         '../www/lib/ionic/js/ionic.bundle.js',
       '../www/js/*.js',
