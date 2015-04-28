@@ -84,7 +84,7 @@
   })
   
   .state('menu.home', {
-    url: '/home',
+    url: '/home/',
     views :{
         'menuContent': {
             templateUrl: 'partials/home.html',
@@ -94,7 +94,7 @@
   })
   
   .state('menu.history', {
-      url: '/history',
+      url: '/history/',
       views: {
           'menuContent':{
               templateUrl: 'partials/history.html',
@@ -103,7 +103,7 @@
       }
   })
   .state('menu.about', {
-      url: '/about',
+      url: '/about/',
       views: {
           'menuContent': {
               templateUrl: 'partials/about.html',
@@ -131,11 +131,11 @@
   })
   .state('signin', {
       cache: false,
-      url: '/signin',
+      url: '/signin/',
       templateUrl: 'partials/signin.html',
       controller: 'SigninCtrl'
   })
   
-  $urlRouterProvider.otherwise('/signin');
+  $urlRouterProvider.otherwise('/signin/');
 });
            }());

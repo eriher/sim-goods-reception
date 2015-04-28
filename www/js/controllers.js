@@ -2,11 +2,10 @@
 
 .controller('AppCtrl', function($scope, $state, MenuService, ScanService, ToastService, $ionicHistory, $location, DBService, SigninService) {
     
-    $scope.test = true;
-    
     $scope.menuItems = MenuService.items();
     
     $scope.userName = MenuService.userName;
+    
     
     $scope.back = function() {
 
@@ -123,7 +122,6 @@
 
 .controller('HomeCtrl', function($scope, $state, $location,DBService, $ionicLoading) {
     $scope.navTitle = 'Home';
-    
     $scope.$on('$ionicView.beforeEnter', function () {
         
     DBService.getDispatches().then(
@@ -131,7 +129,7 @@
                           $scope.dispatchNotes = success},
         function(fail){console.log("homeservice fail:"+fail)});
     })
-    $scope.goTo = function(id) {
+    $scope.goTo = function(id) { 
         $state.go('menu.pallets', {dispatchId : id });
     }
                                      
@@ -144,7 +142,6 @@
 
 .controller('AboutCtrl', function($scope) {
     $scope.navTitle = 'About';
-    $scope.test = true;
 })
 
 .controller('HistoryCtrl', function($scope, $http) {
