@@ -87,10 +87,11 @@ describe('Controllers', function(){
             $controller('PalletsCtrl', {
                 $scope: scope,
             });
+        }))
        
         // ==== Tests start here =====
 
         // Unit tests:
-        it('',function(){
-        });
+        
+     });
 });

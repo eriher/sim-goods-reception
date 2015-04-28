@@ -26,7 +26,7 @@
          { text: 'About',iconClass: 'icon ion-information-circled', link: 'menu.about'},
          { text: 'Sign out', iconClass:  'icon ion-log-out', link: 'signin'}
         ];
-    
+        
     return {
         items: function() {
             return menuItems;
@@ -92,9 +92,15 @@
     var LOCAL_TOKEN_KEY = 'token';
     var isAuthenticated = false;
     var authToken;
-    
+    var info = 'hej';
+        
     var login = function(name, password){
         
+        $http.get('https://login').then(function(response) {
+            info = response.name;
+
+    })
+        /*
         $http.post('https://login', {username : name , password: password})
         .success(function(data){
             console.log('success');
@@ -113,7 +119,7 @@
         })
         .error(function(data, status, headers, config){
             $rootScope.$broadcast('event:auth-login-failed', status);
-        })
+        }) */
     }
     
     var storeToken = function(authToken){
@@ -136,6 +142,9 @@
     }
     
     return{
+        getInfo: function(){
+            return info;
+        },
         login: function(name, password){
             return login(name, password);
         },
