@@ -3,14 +3,18 @@ describe('Controllers', function(){
 
     // load the controller's module
     beforeEach(module('app.controllers'));
+    beforeEach(module('app.services'));
+    beforeEach(module('ionic'));
+    
+   
 
-    beforeEach(inject(function($rootScope, $controller) {
+    beforeEach(inject(function($rootScope, $controller, $state) {
         scope = $rootScope.$new();
-        $controller('AboutCtrl', {$scope: scope});
+        $controller('AppCtrl', {$scope: scope});
     }));
 
     // tests start here
-    it('should have enabled friends to be true', function(){
+    it('Test should be true', function(){
         expect(scope.test).toEqual(true);
     });
 });
