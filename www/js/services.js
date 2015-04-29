@@ -117,7 +117,6 @@
             deferred.reject("error");
             $rootScope.$broadcast('event:auth-login-failed', status);
         }) 
-        
         return deferred.promise;
     }
     
@@ -367,8 +366,18 @@
             if(table == "pallet")
             {
                 console.log("table is a pallet")
-                var pallets = db.queryAll(table,{query:{did:item.did}});
-                console.log(pallets[0].status);
+                var count = countCheckedPallet(item.did);
+                if(count[0]==count[1]){
+                    console.log("count==pallets.length")
+                    var item2 = {id: item.did}
+                    setChecked("dispatch", item2);
+                    ToastService.toast("Dispatch: "+item.did+" marked as checked").then(function(success){console.log("toast success")},function(fail){console.log("toast fail")});
+                }
+            }
+        }
+        var countCheckedPallet = function(id){
+            var pallets = db.queryAll("pallet",{query:{did:id}});
+                //console.log(pallets[0].status);
                 var count = 0;
                 for(var pallet in pallets){
                     console.log("inside pallets");
@@ -376,14 +385,16 @@
                         count++;
                     }      
                 }
-                console.log(count,pallets.length);
-                if(count==pallets.length){
-                    console.log("count==pallets.length")
-                    var item2 = {id: item.did}
-                    setChecked("dispatch", item2);
-                    ToastService.toast("Dispatch: "+item.did+" marked as checked").then(function(success){console.log("toast success")},function(fail){console.log("toast fail")});
-                }
+            return [count,pallets.length];
+        }
+        var dispatchesForPallets = function(dispatches){
+            var pallets = [];
+            for(var dispatch in dispatches)
+            {
+                pallets.push(countCheckedPallet(dispatches[dispatch].id))
+                console.log(pallets)
             }
+            return pallets;
         }
         
         
@@ -405,6 +416,12 @@
             },
              setChecked: function(table,item){
                  return setChecked(table,item);
+             },
+             countCheckedPallet: function(id){
+                 return countCheckedPallet(id);
+             },
+             dispatchesForPallets: function(dispatches){
+                 return dispatchesForPallets(dispatches);
              }
          }
         
