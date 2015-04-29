@@ -1,8 +1,11 @@
 <ion-view view-title={{navTitle}}>
-  <ion-content class="has-header padding" overflow-scroll="true">
-      <label class="item item-input item-select">
+    <div class="bar bar-subheader">
+        Checked pallets: {{checked[0]}}/{{pallets.length}}
+    </div>
+  <ion-content class="has-subheader padding" overflow-scroll="true">
+     <label class="item item-input item-select">
     <div class="input-label">
-      Sorting : <button ng-click="bot()">go bot</button>
+      Sorting :
     </div>
         <select ng-options="item.label for item in items" ng-model="sort">
             </select>

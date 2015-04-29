@@ -76,19 +76,20 @@
         function(success){console.log("palletsctrl success:"+JSON.stringify(success));
                           $scope.pallets = success;},
         function(fail){console.log("palletsctrl fail:"+fail)});
+            
         })
         $scope.$on('$ionicView.afterEnter', function () {
             if(pid)
                     document.getElementById(pid).scrollIntoView()
+            checked();
     })
-                        
-    $scope.bot = function(){
-            console.log("bot"+pid);
-            document.getElementById(pid).scrollIntoView();
+    var checked = function() {
+        $scope.checked = DBService.countCheckedPallet(id)
     }
+        
     var id = $stateParams.dispatchId;
     var pid = $stateParams.palletId;
-
+    
     $scope.navTitle= 'Dispatch Id: '+id;
     $scope.items =  
         [{
@@ -120,6 +121,7 @@
     
     $scope.setChecked = function(id){
         DBService.setChecked("pallet", id);
+        checked();
     }
     
     
@@ -136,7 +138,8 @@
         
     DBService.getDispatches().then(
         function(success){console.log("homeservice success:"+JSON.stringify(success));
-                          $scope.dispatchNotes = success},
+                          $scope.dispatchNotes = success;
+                         $scope.pallets = DBService.dispatchesForPallets(success)},
         function(fail){console.log("homeservice fail:"+fail)});
     })
     $scope.goTo = function(id) { 
