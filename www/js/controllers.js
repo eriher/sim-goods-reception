@@ -172,7 +172,7 @@
 .controller('SigninCtrl', function($scope, $state, SigninService, $ionicHistory) {
 
     $scope.signIn = function(user){
-        SigninService.login(user.name, user.password);  
+        SigninService.login(user.name, user.password); 
     }
     
     $scope.$on('$ionicView.beforeEnter', function () {
@@ -191,6 +191,7 @@
                 //Previously checked in, goes direct to home and picks up new authToken via loginTest
                 $state.go('menu.home');
                 SigninService.login(user.username, user.password);
+                
             }
             
         }

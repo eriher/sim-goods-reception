@@ -10,6 +10,9 @@
 .run(function($rootScope, $ionicPlatform, $httpBackend, $http) {
     var token = "NjMwNjM4OTQtMjE0Mi00ZWYzLWEzMDQtYWYyMjkyMzNiOGIy";
     
+     $httpBackend.whenGET('https://login').respond([{id:1, name: "hej"}]);
+            
+    
     //Dummy backend, always return 401
     $httpBackend.whenGET('https://test').respond(function(method, url, data, headers){
         if(headers.Authorization == 'test'){

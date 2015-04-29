@@ -87,23 +87,19 @@
     }
 
 })
-.factory('SigninService',  function(MenuService, $window, $http, $rootScope){
+.factory('SigninService',  function(MenuService, $q, $window, $http, $rootScope){
     
     var LOCAL_TOKEN_KEY = 'token';
     var isAuthenticated = false;
     var authToken;
-    var info = 'hej';
+    var info;
         
     var login = function(name, password){
+        var deferred = $q.defer();
         
-        $http.get('https://login').then(function(response) {
-            info = response.name;
-
-    })
-        /*
         $http.post('https://login', {username : name , password: password})
         .success(function(data){
-            console.log('success');
+            deferred.resolve(data);
 
             //if the user data is correct, set it in localStorage(for now)
             var user =  { username: name, password: password};
@@ -118,8 +114,11 @@
             
         })
         .error(function(data, status, headers, config){
+            deferred.reject("error");
             $rootScope.$broadcast('event:auth-login-failed', status);
-        }) */
+        }) 
+        
+        return deferred.promise;
     }
     
     var storeToken = function(authToken){
@@ -142,9 +141,6 @@
     }
     
     return{
-        getInfo: function(){
-            return info;
-        },
         login: function(name, password){
             return login(name, password);
         },
