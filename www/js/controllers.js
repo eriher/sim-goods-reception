@@ -69,8 +69,9 @@
         function(fail){console.log("palletctrl fail:"+fail)});;
 })
 
-.controller('PalletsCtrl', function($scope, $stateParams, $state, DBService, $location, $ionicScrollDelegate, $ionicActionSheet, $ionicPopup) {
-    
+
+.controller('PalletsCtrl', function($scope, $stateParams, $state, DBService, $location, $ionicActionSheet, $ionicPopup) {
+
         $scope.$on('$ionicView.beforeEnter', function () {
                 DBService.getPallets(id).then(
         function(success){console.log("palletsctrl success:"+JSON.stringify(success));
@@ -79,8 +80,10 @@
             
         })
         $scope.$on('$ionicView.afterEnter', function () {
-            if(pid)
-                    document.getElementById(pid).scrollIntoView()
+            if(pid){
+                document.getElementById(pid).scrollIntoView();
+                document.getElementById("button_"+pid).click();
+            }
             checked();
     })
         
