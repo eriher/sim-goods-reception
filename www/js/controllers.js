@@ -208,7 +208,7 @@
              label: "Status"
          }
          ]
-    $scope.sort = {value: "-id"}
+    $scope.sort = $scope.items[0];
     
     
     $scope.setChecked = function(id){

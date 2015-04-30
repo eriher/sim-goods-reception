@@ -2,7 +2,7 @@
     <div class="bar bar-subheader">
         Checked pallets: {{checked[0]}}/{{pallets.length}}
     </div>
-  <ion-content class="has-subheader padding" overflow-scroll="true">
+  <ion-content class="has-subheader" overflow-scroll="true">
      <label class="item item-input item-select">
     <div class="input-label">
       Sorting :
@@ -10,12 +10,13 @@
         <select ng-options="item.label for item in items" ng-model="sort">
             </select>
   </label>
-      <div class="card" ng-repeat = "pallet in pallets | orderBy:sort.value:reverse" id="{{pallet.id}}">
+      <div class="item-divider"></div>
+    <ion-list ng-repeat = "pallet in pallets | orderBy:sort.value:reverse" id="{{pallet.id}}">
           <div class="item item-divider" ng-class="pallet.status">
                       Pallet: {{pallet.id}}
               <button id='button_{{pallet.id}}' class="button button-icon button-clear ion-plus-circled" ng-click= "showDetails = !showDetails"></button>
           </div>
-          <div class="item item-text-wrap animate-show" ng-show='showDetails'>
+          <div class="item item-text-wrap" ng-show='showDetails'>
                 <div class="row responsive-sm">
                     <div class="col">Article id: {{pallet.aid}}</div>
                     <div class="col">Order id: {{pallet.order}}</div>
@@ -23,8 +24,8 @@
                     <div class="col">Weight: {{pallet.weight}}</div>
                     <div class="col">Status: {{pallet.status}}</div> 
                 </div>
-          <button ng-click="show(pallet)">Adjust</button>
+          <button class="button button-positive" ng-click="show(pallet)">Adjust</button>
               </div>
-      </div>
+      </ion-list>
     </ion-content>
 </ion-view>
