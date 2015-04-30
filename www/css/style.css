@@ -1,14 +1,17 @@
 .adjusted {
-    background-color: yellow;
+    background-color: #ffc900;
 }
 .confirmed {
-    background-color: green;
+    background-color: #33cd5f;
 }
 .lost {
-    background-color: red;
+    background-color: #ef473a;
 }
 .unchecked {
-    background-color: white;
+    background-color: #fff;
+}
+.background, .background .pane, .background , .background {
+    background-image: url(http://i.imgur.com/07t2mb2.gif)
 }
 
 #icon_red {
@@ -30,7 +33,7 @@
     color : white;
 }
 
-.signin_card1 {
+.card1 {
     vertical-align:middle;
     width: 80%;
     margin-left: auto;
@@ -39,11 +42,17 @@
     border-top-right-radius: 10px !important;
     border-bottom-left-radius: 10px !important;
     border-bottom-right-radius: 10px !important;
-    box-shadow: 5px 5px 5px 5px gray;
 }
 
-.signin_card2 {
-    
+.card2 {
+    vertical-align:middle;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
 }
 #clap {
         text-align: center;

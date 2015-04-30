@@ -1,8 +1,7 @@
 <ion-view view-title={{navTitle}}>
   <ion-content class='has-header'>
         <ion-refresher on-refresh='refresh()'></ion-refresher>
-        <ion-list>
-         <div class="card" ng-repeat = 'note in dispatchNotes'>
+         <div class="card card2" ng-repeat = 'note in dispatchNotes'>
             <div class='item item-divider'>
                 <button class="button button-full button-positive" ng-click='goTo(note.id)'>
                 {{note.id}}</button>
@@ -19,6 +18,5 @@
                 </div>
             </div>
          </div> 
-        </ion-list>
       </ion-content>
 </ion-view>
