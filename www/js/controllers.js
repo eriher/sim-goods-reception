@@ -69,7 +69,7 @@
         function(fail){console.log("palletctrl fail:"+fail)});;
 })
 
-.controller('PalletsCtrl', function($scope, $stateParams, $state, DBService, $location, $ionicScrollDelegate) {
+.controller('PalletsCtrl', function($scope, $stateParams, $state, DBService, $location, $ionicScrollDelegate, $ionicActionSheet, $ionicPopup) {
     
         $scope.$on('$ionicView.beforeEnter', function () {
                 DBService.getPallets(id).then(
@@ -83,6 +83,95 @@
                     document.getElementById(pid).scrollIntoView()
             checked();
     })
+        
+        var adjustPopup = function() {$ionicPopup.show({
+                template: '<input type="number" ng-model="pallet.quantity" placeholder="pallet.quantity">',
+                title: 'Adjust pallet',
+                subTitle: 'Adjust the quantity',
+                scope: $scope,
+                buttons: [
+                  { text: 'Cancel' },
+                  {
+                    text: '<b>Confirm</b>',
+                    type: 'button-positive',
+                    onTap: function(e) {
+                      if (!$scope.data.wifi) {
+                        //don't allow the user to close unless he enters wifi password
+                        e.preventDefault();
+                      } else {
+                        return $scope.pallet.quantity;
+                      }
+                    }
+                  }
+                ]
+        });}
+        $scope.show = function(pallet) {
+            var quantity = pallet.quantity;
+            $scope.adjust = quantity;
+               // Show the action sheet
+           var hideSheet = $ionicActionSheet.show({
+                     buttons: [
+                       { text: 'Confirm' },
+                       { text: 'Adjust' }
+                     ],
+                     destructiveText: 'Lost',
+                     titleText: 'Status of pallet: '+pallet.id,
+                     cancelText: 'Cancel',
+                     cancel: function() {
+                          hideSheet();
+                        },
+                     buttonClicked: function(index) {
+                         switch(index){
+                                 case 0:
+                                        console.log("confirmed");
+                                        DBService.setStatus("pallet", pallet,"confirmed");
+                                        pallet.status = 'confirmed';
+                                        checked();
+                                        break;
+                                 case 1:
+                                        console.log("adjust");
+                                        $ionicPopup.show({
+                                                template: '<input type="number" min="0" ng-model="$parent.adjust">',
+                                                title: 'Adjust pallet',
+                                                subTitle: 'Adjust the quantity',
+                                                scope: $scope,
+                                                buttons: [
+                                                  { text: 'Cancel' },
+                                                  {
+                                                    text: '<b>Confirm</b>',
+                                                    type: 'button-positive',
+                                                    onTap: function(e) {
+                                                        console.log("tapped"+$scope.adjust);
+                                                      if ($scope.adjust == pallet.quantity) {
+                                                           console.log("prevent");
+                                                        //don't allow the user to close unless he enters wifi password
+                                                        e.preventDefault();
+                                                      } else {
+                                                          console.log("adjusted");
+                                                          pallet.weight = (pallet.weight/pallet.quantity)*$scope.adjust;
+                                                          pallet.quantity = $scope.adjust;
+                                                          DBService.setStatus("pallet", pallet,"adjusted");
+                                                          pallet.status = 'adjusted';
+                                                          checked();
+                                                      }
+                                                    }
+                                                  }
+                                                ]
+                                        })
+                                        break;
+                                    
+                         }
+                       return true;
+                     },
+                    destructiveButtonClicked: function(){
+                        console.log("lost");
+                        DBService.setStatus("pallet", pallet,"lost");
+                        pallet.status="lost";
+                        checked();
+                        return true
+                    }
+           });
+        }
     var checked = function() {
         $scope.checked = DBService.countCheckedPallet(id)
     }

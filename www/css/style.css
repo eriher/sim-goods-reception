@@ -1,3 +1,16 @@
+.adjusted {
+    background-color: yellow;
+}
+.confirmed {
+    background-color: green;
+}
+.lost {
+    background-color: red;
+}
+.unchecked {
+    background-color: white;
+}
+
 #icon_red {
     font-size: 32px;
     color : red;
