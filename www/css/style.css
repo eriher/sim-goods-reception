@@ -64,9 +64,10 @@
     margin-top: 30px;
     text-align: center;
 }
+/*  
+REMOVED FOR NOW, DOES NOT WORK WELL ON MOBILE PLATFORM
+Courtesy of the fine people at AnuglarJS
 
-/*  Courtesy of the fine people at AnuglarJS
-*/
 .animate-show.ng-hide-add.ng-hide-add-active,
 .animate-show.ng-hide-remove.ng-hide-remove-active {
   -webkit-transition: all linear 0.5s;
@@ -78,7 +79,7 @@
   opacity: 0;
   padding: 0 10px;
 }
-
+*/
 .ion-plus-circled {
     font-size: 32px;
     float: right;

@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-(function(){angular.module('app', ['ionic', 'ngMockE2E', 'app.controllers', 'app.services'])
+(function(){angular.module('app', ['ionic', 'ngMockE2E','app.translate', 'app.controllers', 'app.services'])
 
 // HTTPBACKEND: This is for testning http calls only!
 .run(function($rootScope, $ionicPlatform, $httpBackend, $http) {
@@ -28,7 +28,7 @@
     $httpBackend.whenPOST('https://login').respond(function(method, url, data) {
         var data = angular.fromJson(data);
         
-        if(data.username == 'admin' && data.password =='admin'){
+        if(data.username == 'a' && data.password =='a'){
             return  [200 , { authorizationToken: token } ];
         }
         else{ 

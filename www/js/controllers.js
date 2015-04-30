@@ -1,10 +1,10 @@
-(function(){angular.module('app.controllers', [])
+(function(){angular.module('app.controllers', ['app.translate'])
 
-.controller('AppCtrl', function($scope, $state, MenuService, ScanService, ToastService, $ionicHistory, $location, DBService, SigninService) {
+.controller('AppCtrl', function($scope, $state, MenuService, ScanService, ToastService, $ionicHistory, $location, DBService, SigninService, $window) {
     
     $scope.menuItems = MenuService.items();
     
-    $scope.userName = MenuService.userName;
+    $scope.userName = JSON.parse(window.localStorage['user']).username;
     
     
     $scope.back = function() {
@@ -245,8 +245,11 @@
     };
 })
 
-.controller('AboutCtrl', function($scope) {
+.controller('AboutCtrl', function($scope, $translate) {
     $scope.navTitle = 'About';
+    $scope.changeLanguage = function (langKey) {
+    $translate.use(langKey);
+  };
 })
 
 .controller('HistoryCtrl', function($scope, $http) {

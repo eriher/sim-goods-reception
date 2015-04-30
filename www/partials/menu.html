@@ -28,10 +28,11 @@
     <ion-content>
       <ion-list>
 
-        <ion-item nav-clear menu-close ng-click="menuClick(item.link)" class="item item-icon-left" ng-repeat="item in menuItems">
+        <ion-item nav-clear menu-close ng-click="menuClick(item.link)" class="item item-icon-left" ng-repeat="item in menuItems" >
 
         <i ng-class="item.iconClass"></i>
-        {{item.text}}
+            <div translate={{item.text}}>{{item.text}}</div>
+        </ion-item>
       </ion-list>
     </ion-content>
   </ion-side-menu>
