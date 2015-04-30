@@ -129,13 +129,8 @@
     var logout = function(){
         authToken = undefined;
         isAuthenticated = false;
-        
-        
-        //Cant remove more than 1 item at a time? 
-        window.localStorage.removeItem(LOCAL_TOKEN_KEY, ' ');
-        window.localStorage.removeItem('user');
-        window.localStorage.setItem('loggedIn', 'false');
-        
+         
+        window.localStorage.clear();
         delete $http.defaults.headers.common.Authorization;
     }
     

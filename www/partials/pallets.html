@@ -17,8 +17,10 @@
                 <i class="icon ion-checkmark-circled" id ='icon_red' ng-show='pallet.status=="checked with errors"'></i>
                 <i class="icon ion-checkmark-circled" id ='icon_yellow' ng-show='pallet.status=="partially checked"'></i>
                 <i class="icon ion-checkmark-circled" id ='icon_green' ng-show='pallet.status=="checked"'></i>
+              
+              <button id='button_{{pallet.id}}' class="button button-icon button-clear ion-plus-circled" ng-click= "showDetails = !showDetails"></button>
               </div>
-          <div class="item item-text-wrap">
+          <div class="item item-text-wrap animate-show" ng-show='showDetails'>
                 <div class="row responsive-sm">
                     <div class="col">Article id: {{pallet.aid}}</div>
                     <div class="col">Order id: {{pallet.order}}</div>
