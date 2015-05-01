@@ -19,6 +19,7 @@ module.exports = function(config) {
         '../www/lib/localstoragedb.min.js',
         '../www/lib/ionic/js/ionic.bundle.js',
       '../www/js/*.js',
+        '../www/lib/angular-translate.js',
       '../www/lib/angular-mocks.js',
       '**/*tests.js'
     ],

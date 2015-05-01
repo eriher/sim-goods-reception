@@ -4,6 +4,7 @@
     
     $scope.menuItems = MenuService.items();
     
+    // Kommentera bort userName för testning
     $scope.userName = JSON.parse(window.localStorage['user']).username;
     
     
