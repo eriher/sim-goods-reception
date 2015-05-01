@@ -70,7 +70,7 @@
 })
 
 
-.controller('PalletsCtrl', function($scope, $stateParams, $state, DBService, $location, $ionicActionSheet, $ionicPopup) {
+.controller('PalletsCtrl', function($scope, $stateParams, $state, DBService, $location, $ionicActionSheet, $ionicPopup, $filter) {
 
         $scope.$on('$ionicView.beforeEnter', function () {
                 DBService.getPallets(id).then(
@@ -114,12 +114,12 @@
                // Show the action sheet
            var hideSheet = $ionicActionSheet.show({
                      buttons: [
-                       { text: 'Confirm' },
-                       { text: 'Adjust' }
+                       { text: $filter('translate')('BUTTON_PALLETS_CONFIRM')  },
+                       { text: $filter('translate')('BUTTON_PALLETS_ADJUST')  }
                      ],
-                     destructiveText: 'Lost',
-                     titleText: 'Status of pallet: '+pallet.id,
-                     cancelText: 'Cancel',
+                     destructiveText: $filter('translate')('BUTTON_PALLETS_LOST'),
+                     titleText: $filter('translate')('BUTTON_PALLETS_STATUS')+': '  +pallet.id,
+                     cancelText: $filter('translate')('BUTTON_PALLETS_CANCEL'),
                      cancel: function() {
                           hideSheet();
                         },
@@ -186,26 +186,26 @@
     $scope.items =  
         [{
             value: "id",
-            label: "Pallet id"},
+            label: "PALLETS_PALLET_ID"},
         {
             value: "aid",
-            label: "Article id"
+            label: "PALLETS_ARTICLE_ID"
          },
           {
              value: "order",
-             label: "Order id"
+             label: "PALLETS_ORDER_ID"
           },
          {
             value: "quantity",
-            label: "Quantity"
+            label: "PALLETS_QUANTITY"
           },
           {
              value: "weight",
-             label: "Weight"
+             label: "PALLETS_WEIGHT"
           },
          {
              value: "status",
-             label: "Status"
+             label: "PALLETS_STATUS"
          }
          ]
     $scope.sort = $scope.items[0];
@@ -224,8 +224,15 @@
     
 })
 
-.controller('HomeCtrl', function($scope, $state, $location,DBService, $ionicLoading) {
-    $scope.navTitle = 'Home';
+.controller('HomeCtrl', function($scope, $state, $location,DBService, $ionicLoading, $filter, $translate) {
+
+        /*
+    $scope.$watch(
+        function() { return $filter('translate')('NAVTITLE_HOME'); },
+        function(newval) { $scope.navTitle = newval; }
+    ); */
+    
+
     $scope.$on('$ionicView.beforeEnter', function () {
         
     DBService.getDispatches().then(
