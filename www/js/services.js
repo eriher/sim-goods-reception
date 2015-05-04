@@ -87,7 +87,7 @@
     }
 
 })
-.factory('SigninService',  function(MenuService, $q, $window, $http, $rootScope){
+.factory('SigninService',  function(MenuService, $q, $http, $rootScope){
     
     var LOCAL_TOKEN_KEY = 'token';
     var isAuthenticated = false;
