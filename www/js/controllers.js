@@ -70,7 +70,7 @@
 })
 
 
-.controller('PalletsCtrl', function($scope, $stateParams, $state, DBService, $location, $ionicActionSheet, $ionicPopup, $filter) {
+.controller('PalletsCtrl', function($scope, $stateParams, $state, NetworkService, DBService, $location, $ionicActionSheet, $ionicPopup, $filter) {
 
         $scope.$on('$ionicView.beforeEnter', function () {
                 DBService.getPallets(id).then(
@@ -87,28 +87,7 @@
             checked();
     })
         
-        var adjustPopup = function() {$ionicPopup.show({
-                template: '<input type="number" ng-model="pallet.quantity" placeholder="pallet.quantity">',
-                title: 'Adjust pallet',
-                subTitle: 'Adjust the quantity',
-                scope: $scope,
-                buttons: [
-                  { text: 'Cancel' },
-                  {
-                    text: '<b>Confirm</b>',
-                    type: 'button-positive',
-                    onTap: function(e) {
-                      if (!$scope.data.wifi) {
-                        //don't allow the user to close unless he enters wifi password
-                        e.preventDefault();
-                      } else {
-                        return $scope.pallet.quantity;
-                      }
-                    }
-                  }
-                ]
-        });}
-        
+
         $scope.show = function(pallet) {
             var quantity = pallet.quantity;
             $scope.adjust = quantity;
@@ -227,14 +206,21 @@
 
 .controller('HomeCtrl', function($scope, $state, $location,DBService, $ionicLoading, $filter, $translate) {
 
-    $scope.$on('$ionicView.beforeEnter', function () {
-        
+        var updDisp = function(){    
+
     DBService.getDispatches().then(
         function(success){console.log("homeservice success:"+JSON.stringify(success));
                           $scope.dispatchNotes = success;
                          $scope.pallets = DBService.dispatchesForPallets(success)},
-        function(fail){console.log("homeservice fail:"+fail)});
+        function(fail){console.log("homeservice fail:"+fail)});}
+    $scope.$on('dbupdated', function(event, args){
+              updDisp();}
+              )
+
+    $scope.$on('$ionicView.beforeEnter', function () {
+            updDisp();
     })
+    
     $scope.goTo = function(id) { 
         $state.go('menu.pallets', {dispatchId : id });
     }

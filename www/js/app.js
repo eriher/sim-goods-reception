@@ -9,7 +9,35 @@
 // HTTPBACKEND: This is for testning http calls only!
 .run(function($rootScope, $ionicPlatform, $httpBackend, $http) {
     var token = "NjMwNjM4OTQtMjE0Mi00ZWYzLWEzMDQtYWYyMjkyMzNiOGIy";
-    
+    var db =  {      // rows with test data
+        dispatchrows: [
+            {id: "N104", description: "CJ-TUBE-0140", date: "D040915", status: "incoming"},
+            {id: "N105", description: "CJ-TUBE-0141", date: "D040915", status: "checked with errors"},
+            {id: "N106", description: "CJ-TUBE-0142", date: "D040915", status: "partially checked"},
+            {id: "N107", description: "CJ-TUBE-0143", date: "D040915", status: "checked"}
+        ],
+        palletrows: [
+            {id:"S376", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S377", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S378", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S379", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S380", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S381", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S382", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S383", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S384", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S385", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S386", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S387", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S388", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S389", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S390", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S391", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S392", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S393", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S394", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S395", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"}]
+            }
      $httpBackend.whenGET('https://login').respond([{id:1, name: "hej"}]);
             
     
@@ -32,9 +60,22 @@
             return  [200 , { authorizationToken: token } ];
         }
         else{ 
-            return [400];
+            return [402];
         } 
     });
+    //Dummy backend for getting db
+    $httpBackend.whenGET('https://database').respond(function(method,url,data){
+        console.log("recieved dbtestdata request"+JSON.stringify(data));
+        console.log("stored token")
+        console.log(db);
+        if(data == token)
+        {
+            console.log("token==recieved.token")
+            return [200, {db: db}];
+        }
+        else
+            return [403];
+    })
     
 
     $httpBackend.whenGET('https://logout').respond(function(method, url, data) {
