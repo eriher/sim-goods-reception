@@ -247,45 +247,49 @@
             }
          }
 })*/
-.factory('DBService', function($q, ToastService){
+
+.factory('NetworkService', function($http, $q){
+        
+        var dbTestData = function(){
+            var deferred = $q.defer();
+            console.log("network service"+window.localStorage['token']);
+            $http.get('https://database', {data: window.localStorage['token']}).success(function(success){
+                console.log(success.db)
+                deferred.resolve(success.db);
+            })
+            .error(function(data, status, headers, config){
+                deferred.reject("error");
+            })
+            return deferred.promise;
+        }
+
+        
+        return{
+            dbTestData: function() {
+                 return dbTestData();
+            }
+        }
+}) 
+    
+.factory('DBService', function($q, ToastService, NetworkService, $rootScope){
         
         
         var db = new localStorageDB("LocalSIM", localStorage);
             
-        // rows with thest data
-        var dispatchrows = [
-            {id: "N104", description: "CJ-TUBE-0140", date: "D040915", status: "incoming"},
-            {id: "N105", description: "CJ-TUBE-0141", date: "D040915", status: "checked with errors"},
-            {id: "N106", description: "CJ-TUBE-0142", date: "D040915", status: "partially checked"},
-            {id: "N107", description: "CJ-TUBE-0143", date: "D040915", status: "checked"}
-        ]
-        var palletrows = [
-            {id:"S376", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S377", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S378", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S379", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S380", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S381", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S382", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S383", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S384", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S385", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S386", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S387", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S388", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S389", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S390", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S391", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S392", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S393", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S394", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S395", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"}
-        ]
-        if(db.isNew()){    
-        db.createTableWithData("dispatch", dispatchrows);
-        db.createTableWithData("pallet", palletrows);
-            
-        db.commit();
+        console.log("dbtestdata success");
+        if(db.isNew()){
+            console.log("DB is new");
+        NetworkService.dbTestData().then(function(success){
+            console.log("dbtestdata success"+success.dispatchrows);
+            var dispatchrows = success.dispatchrows;
+            var palletrows = success.palletrows;
+            db.createTableWithData("dispatch", dispatchrows);
+            db.createTableWithData("pallet", palletrows);
+            db.commit();
+            $rootScope.$broadcast('dbupdated', { any: {} });
+        },function(fail){
+            console.log("dbtestdata fail");
+        });
         }
         var getDispatches = function(){
             var deferred = $q.defer();

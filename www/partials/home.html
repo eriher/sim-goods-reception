@@ -1,7 +1,6 @@
 <ion-view title= "{{'NAVTITLE_HOME' | translate }}">
   <ion-content class='has-header'>
         <ion-refresher on-refresh='refresh()'></ion-refresher>
-      
          <div class="card card2" ng-repeat = 'note in dispatchNotes'>
             <div class='item item-divider'>
                 <button class="button button-full button-positive" ng-click='goTo(note.id)'>
