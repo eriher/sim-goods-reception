@@ -12,10 +12,10 @@
   </label>
       <div class="item-divider"></div>
     <ion-list ng-repeat = "pallet in pallets | orderBy:sort.value:reverse" id="{{pallet.id}}">
-          <div class="item item-divider" >
+          <div class="item item-divider" ng-click= "showDetails = !showDetails">
               <div ng-class="pallet.status"></div>
                       {{'PALLETS_PALLET'|translate}}: {{pallet.id}}
-              <button id='button_{{pallet.id}}' class="button button-icon button-clear ion-plus-circled" ng-click= "showDetails = !showDetails"></button>
+              <button id='button_{{pallet.id}}' class="button button-icon button-clear ion-plus-circled"></button>
           </div>
           <div class="item item-text-wrap" ng-show='showDetails'>
                 <div class="row responsive-sm">
@@ -24,8 +24,9 @@
                     <div class="col">{{'PALLETS_QUANTITY'|translate}}: {{pallet.quantity}}</div>
                     <div class="col">{{'PALLETS_WEIGHT'|translate}}: {{pallet.weight}}</div>
                     <div class="col">{{'PALLETS_STATUS'|translate}}: {{pallet.status}}</div> 
+                    <button class="button button-positive" ng-click="show(pallet)">{{'BUTTON_PALLETS_ADJUST'|translate}}</button>
                 </div>
-          <button class="button button-positive" ng-click="show(pallet)">{{'BUTTON_PALLETS_ADJUST'|translate}}</button>
+          
               </div>
       </ion-list>
     </ion-content>
