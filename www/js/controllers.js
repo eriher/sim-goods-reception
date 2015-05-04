@@ -1,6 +1,6 @@
 (function(){angular.module('app.controllers', ['app.translate'])
 
-.controller('AppCtrl', function($scope, $state, MenuService, ScanService, ToastService, $ionicHistory, $location, DBService, SigninService, $window) {
+.controller('AppCtrl', function($scope, $state, MenuService, ScanService, ToastService, $ionicHistory, $location, DBService, SigninService, $ionicViewSwitcher) {
     
     $scope.menuItems = MenuService.items();
     
@@ -9,15 +9,14 @@
     
     
     $scope.back = function() {
-
             $ionicHistory.nextViewOptions({
-                disableAnimate: true,
+                //disableAnimate: true,
                 disableBack: true,
                 historyRoot: true
                 });
  
-            
-            $location.path('/menu/home').replace();
+            $ionicViewSwitcher.nextDirection('back');
+            $state.go('menu.home')
         }
     
     $scope.menuClick = function(dest){
@@ -205,7 +204,13 @@
 })
 
 .controller('HomeCtrl', function($scope, $state, $location,DBService, $ionicLoading, $filter, $translate) {
+<<<<<<< HEAD
         var updDisp = function(){    
+=======
+
+    $scope.$on('$ionicView.beforeEnter', function () {
+        
+>>>>>>> bb28742a3a06f0f32fba0af1412a6def289bff91
     DBService.getDispatches().then(
         function(success){console.log("homeservice success:"+JSON.stringify(success));
                           $scope.dispatchNotes = success;

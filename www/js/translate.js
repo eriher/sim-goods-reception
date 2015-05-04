@@ -31,9 +31,14 @@
     PALLETS_STATUS:'Status',
     PALLETS_CONFIRM:'Confirm',
     PALLETS_LOST:'Lost',
+      
+    //Signin
+    SIGNIN_USERNAME: 'Username',
+    SIGNIN_PASSWORD:'Password',
     
       
     //Buttons
+    BUTTON_SIGNIN_SIGN_IN:'Sign in',
     BUTTON_PALLETS_CONFIRM:'Confirm',
     BUTTON_PALLETS_LOST:'Lost',
     BUTTON_PALLETS_STATUS:'Status for pallet',
@@ -73,7 +78,12 @@
     PALLETS_ORDER_ID:'Order id',
     PALLETS_STATUS:'Status',
       
+    //Signin
+    SIGNIN_USERNAME: 'Användarnamn',
+    SIGNIN_PASSWORD:'Lösenord',
+      
     //Buttons
+    BUTTON_SIGNIN_SIGN_IN:'Logga in',
     BUTTON_PALLETS_CONFIRM:'Godkänn',
     BUTTON_PALLETS_ADJUST:'Justera',
     BUTTON_PALLETS_LOST:'Borttappad',
@@ -81,7 +91,7 @@
     BUTTON_PALLETS_CANCEL:'Avbryt',
     BUTTON_LANG_EN: 'Engelska',
     BUTTON_LANG_SE: 'Svenska',
-    BUTTON_BACK: 'Tllbaka'
+    BUTTON_BACK: 'Tillbaka'
       
   });
   $translateProvider.preferredLanguage('en');

@@ -33,13 +33,14 @@ describe('Controllers', function(){
         it('Unit test: Back should not change url if view on home',function(){
             location.path('/menu/home/').replace();
             scope.back();
-            expect(location.path()).toEqual('/menu/home');
+            expect(location.path()).toEqual('/menu/home/');
         });
 
         it('Unit test: Back should change url if view not on home',function(){
-            location.path('/menu/home/N104').replace();
+            //location.path('/menu/home/N104').replace();
+            state.go('menu.about')
             scope.back();
-            expect(location.path()).toEqual('/menu/home');
+            expect(state.current.name).toEqual('menu.home');
         });
 
 

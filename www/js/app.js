@@ -102,19 +102,20 @@
     
     // For Android and Windows phone backbutton!
     $ionicPlatform.registerBackButtonAction(function () {
-        if ($state.is('menu.home') || $state.is('menu.history') || $state.is('menu.help') || $state.is('menu.about') || $state.is('signin')) {
+        if ($state.is('menu.home') || $state.is('signin') || $state.is('menu.history') || $state.is('menu.help') || $state.is('menu.about')) {
             navigator.app.exitApp();
         } 
         else {
-            var url = $location.path();
-            url = url.slice(0,url.lastIndexOf('/'));
             $ionicHistory.nextViewOptions({
                 disableAnimate: true,
-            });
-            $location.path(url).replace();
-            $rootScope.$apply();
+                disableBack: true,
+                historyRoot: true
+                });
+ 
+            
+            $state.go('menu.home');
         }
-    }, 140);
+    }, 101);
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
