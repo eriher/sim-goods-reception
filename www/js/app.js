@@ -46,7 +46,7 @@
     
 })
 
-.run(function($rootScope, $ionicPlatform, $ionicHistory, $state, $location) {
+.run(function($rootScope, $ionicPlatform, $ionicHistory, $state, $location, $translate) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -58,6 +58,21 @@
       StatusBar.styleDefault();
     }
   });
+    
+    //Get preferred Language and sets it to current language
+    document.addEventListener("deviceready", onDeviceReady, false);
+function onDeviceReady() {
+    navigator.globalization.getPreferredLanguage(
+    function (language) {
+        if(language.value == 'sv-SE' || language.value == 'en-US')
+        $translate.use(language.value)
+        alert('language: ' + language.value + '\n');
+    },
+    function () {
+        console.log ('Error getting language, using default..\n');
+    }
+    );
+}
     
     // For Android and Windows phone backbutton!
     $ionicPlatform.registerBackButtonAction(function () {

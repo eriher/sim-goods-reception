@@ -2,37 +2,31 @@
     position: absolute;
     top: 0px;
     left: 0px;
-    background-color: #ffc900; /* Use background-image or whatever suits you here */
-    width: 14px; /* Your width */
-    height: 100%; /* Your height */
-
-   /* background-color: #ffc900; */
+    background-color: #ffc900;
+    width: 14px;
+    height: 100%;
 }
 .confirmed {
         
     position: absolute;
     top: 0px;
     left: 0px;
-    background-color: #11e019; /* Use background-image or whatever suits you here */
-    width: 14px; /* Your 33cd5f */
-    height: 100%; /* Your height */
+    background-color: #11e019;
+    width: 14px;
+    height: 100%;
    
 }
 .lost {
     position: absolute;
     top: 0px;
     left: 0px;
-    background-color: #ef473a; /* Use background-image or whatever suits you here */
-    width: 14px; /* Your 33cd5f */
-    height: 100%; /* Your height */
-   
-   
-    /*background-color: #ef473a;*/
+    background-color: #ef473a;
+    width: 14px;
+    height: 100%;
 }
 .unchecked {
     background-color: #fff;
 }
-
 
 .background, .background .pane, .background , .background {
     background-image: url(http://i.imgur.com/07t2mb2.gif)
