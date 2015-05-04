@@ -112,8 +112,18 @@ Courtesy of the fine people at AnuglarJS
   padding: 0 10px;
 }
 */
-.ion-plus-circled {
+.icon ion-plus-circled {
     font-size: 32px;
-    float: right;
+    float: right !important;
     box-shadow: 0 5px 0 #006599;
+}
+
+.icon ion-minus-circled {
+    font-size: 32px;
+    float: right !important;
+    box-shadow: 0 5px 0 #006599;
+}
+
+#button_showDetails{
+    float: right;
 }
