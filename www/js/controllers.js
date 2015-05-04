@@ -108,6 +108,7 @@
                   }
                 ]
         });}
+        
         $scope.show = function(pallet) {
             var quantity = pallet.quantity;
             $scope.adjust = quantity;
