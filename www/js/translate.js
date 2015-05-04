@@ -1,7 +1,7 @@
 (function(){angular.module('app.translate', ['pascalprecht.translate'])
 
 .config(function ($translateProvider) {
-  $translateProvider.translations('en', {
+  $translateProvider.translations('en-US', {
       
     //Menu
     MENU_HOME: 'Home',
@@ -49,7 +49,7 @@
     BUTTON_BACK: 'Back'
       
   });
-  $translateProvider.translations('se', {
+  $translateProvider.translations('sv-SE', {
       
     //Menu
     MENU_HOME: 'Hem',
@@ -94,7 +94,7 @@
     BUTTON_BACK: 'Tillbaka'
       
   });
-  $translateProvider.preferredLanguage('en');
+  $translateProvider.preferredLanguage('en-US');
 });
 
 }());
