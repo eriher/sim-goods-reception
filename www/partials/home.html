@@ -3,11 +3,8 @@
         <ion-refresher on-refresh='refresh()'></ion-refresher>
          <div class="card card2" ng-repeat = 'note in dispatchNotes'>
             <div class='item item-divider'>
-                <button class="button button-full button-positive" ng-click='goTo(note.id)'>
+                <button class="button button-full button-dark" ng-click='goTo(note.id)'>
                 {{note.id}}</button>
-                <i class="icon ion-checkmark-circled" id ='icon_red' ng-show='note.status=="checked with errors"'></i>
-                <i class="icon ion-checkmark-circled" id ='icon_yellow' ng-show='note.status=="partially checked"'></i>
-                <i class="icon ion-checkmark-circled" id ='icon_green' ng-show='note.status=="checked"'></i>
             </div>
             <div class='item item-text-wrap'>
                 <div class="row responsive-sm">
