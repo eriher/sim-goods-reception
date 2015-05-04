@@ -87,6 +87,7 @@
             checked();
     })
         
+
         $scope.show = function(pallet) {
             var quantity = pallet.quantity;
             $scope.adjust = quantity;
@@ -204,13 +205,9 @@
 })
 
 .controller('HomeCtrl', function($scope, $state, $location,DBService, $ionicLoading, $filter, $translate) {
-<<<<<<< HEAD
-        var updDisp = function(){    
-=======
 
-    $scope.$on('$ionicView.beforeEnter', function () {
-        
->>>>>>> bb28742a3a06f0f32fba0af1412a6def289bff91
+        var updDisp = function(){    
+
     DBService.getDispatches().then(
         function(success){console.log("homeservice success:"+JSON.stringify(success));
                           $scope.dispatchNotes = success;
