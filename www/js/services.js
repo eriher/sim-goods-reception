@@ -252,9 +252,32 @@
         
         var dbTestData = function(){
             var deferred = $q.defer();
-            console.log("network service"+window.localStorage['token']);
-            $http.get('https://database', {data: window.localStorage['token']}).success(function(success){
-                console.log(success.db)
+            $http.get('https://database').success(function(success){
+                deferred.resolve(success.db);
+            })
+            .error(function(data, status, headers, config){
+                deferred.reject("error");
+            })
+            return deferred.promise;
+        }
+        var dbPost = function() {
+            $http.post('https://database', {id:"S376", status: "checked"}).success(function(success){
+                console.log("postsuccess")
+            })
+            .error(function(data, status, headers, config){
+                console.log("postfail")
+            })
+    }
+        var dbSync = function() {
+            console.log("sync");
+            var deferred = $q.defer();
+            dbPost();
+            return dbTestData2();
+            
+        }
+        var dbTestData2 = function(){
+            var deferred = $q.defer();
+            $http.get('https://database2', {data: window.localStorage['token']}).success(function(success){
                 deferred.resolve(success.db);
             })
             .error(function(data, status, headers, config){
@@ -267,6 +290,12 @@
         return{
             dbTestData: function() {
                  return dbTestData();
+            },
+            dbTestData2: function() {
+                return dbTestData2();
+            },
+            dbSync: function() {
+            return dbSync();
             }
         }
 }) 
@@ -290,6 +319,20 @@
         },function(fail){
             console.log("dbtestdata fail");
         });
+        }
+        var refreshDB = function(){
+            NetworkService.dbSync().then(function(success){
+                console.log("refreshing db");
+                var dispatchrows = success.dispatchrows;
+                var palletrows = success.palletrows;
+                console.log(dispatchrows)
+                for(i in dispatchrows)
+                    db.insertOrUpdate("dispatch",{id: dispatchrows[i].id}, dispatchrows[i])
+                for(i in palletrows)
+                    db.insertOrUpdate("pallet", {id: palletrows[i].id}, palletrows[i])
+                db.commit();
+                $rootScope.$broadcast('dbupdated', { any: {} });
+            })
         }
         var getDispatches = function(){
             var deferred = $q.defer();
@@ -395,9 +438,6 @@
             }
             return pallets;
         }
-        var setLost = function(type,item){
-            
-        }
         
         
          return {
@@ -424,6 +464,9 @@
              },
              dispatchesForPallets: function(dispatches){
                  return dispatchesForPallets(dispatches);
+             },
+             refreshDB: function(){
+                 return refreshDB();
              }
          }
         

@@ -38,6 +38,11 @@
             {id:"S394", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
             {id:"S395", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"}]
             }
+     var db2 =  {      // rows with test data
+        dispatchrows: [
+        ],
+        palletrows: []
+            }
      $httpBackend.whenGET('https://login').respond([{id:1, name: "hej"}]);
             
     
@@ -64,17 +69,32 @@
         } 
     });
     //Dummy backend for getting db
-    $httpBackend.whenGET('https://database').respond(function(method,url,data){
-        console.log("recieved dbtestdata request"+JSON.stringify(data));
-        console.log("stored token")
-        console.log(db);
-        if(data == token)
+    $httpBackend.whenGET('https://database').respond(function(method,url,data,headers){
+        if(headers.Authorization == token)
         {
-            console.log("token==recieved.token")
             return [200, {db: db}];
         }
         else
             return [403];
+    })
+    $httpBackend.whenGET('https://database2').respond(function(method,url,data,headers){
+        if(headers.Authorization == token)
+        {
+            return [200, {db: db2}];
+        }
+        else
+            return [404];
+    })
+    $httpBackend.whenPOST('https://database').respond(function(method,url,data,headers){
+        var data = angular.fromJson(data);
+        console.log("dbpost"+data.token+data.id)
+        if(headers.Authorization == token)
+        {
+            db2.palletrows.push({id:data.id, did:"N104", quantity: 15, weight: "7.5", status: data.status, aid:"P407300", order:"AK029250"});
+            return [200];
+        }
+        else
+            return [404];
     })
     
 

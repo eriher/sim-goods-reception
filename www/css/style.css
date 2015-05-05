@@ -2,6 +2,9 @@
   stroke: white;
   fill: #444;
 }
+.asicons{
+    margin-right: 25%;
+}
 
 .adjusted {
     position: absolute;
