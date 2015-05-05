@@ -100,6 +100,15 @@
 /*  
 REMOVED FOR NOW, DOES NOT WORK WELL ON MOBILE PLATFORM
 Courtesy of the fine people at AnuglarJS
+add animate-show to class:
+
+.animate-show {
+  line-height: 20px;
+  opacity: 1;
+  padding: 10px;
+  border: 1px solid black;
+  background: white;
+}
 
 .animate-show.ng-hide-add.ng-hide-add-active,
 .animate-show.ng-hide-remove.ng-hide-remove-active {
