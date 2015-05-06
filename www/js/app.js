@@ -62,10 +62,10 @@
         var data = angular.fromJson(data);
         
         if(data.username == 'a' && data.password =='a'){
-            return  [200 , { authorizationToken: token } ];
+            return  [200 , {authorizationToken: token } ];
         }
         else{ 
-            return [402];
+            return [406];
         } 
     });
     //Dummy backend for getting db
