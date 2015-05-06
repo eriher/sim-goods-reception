@@ -1,7 +1,7 @@
 (function(){angular.module('app.controllers', ['app.translate'])
 
 .controller('AppCtrl', function($scope, $state, MenuService, ScanService, ToastService, $ionicHistory, $location, DBService, SigninService, $ionicViewSwitcher) {
-    
+
     $scope.menuItems = MenuService.items();
     
     // Kommentera bort userName för testning
@@ -10,7 +10,6 @@
     
     $scope.back = function() {
             $ionicHistory.nextViewOptions({
-                //disableAnimate: true,
                 disableBack: true,
                 historyRoot: true
                 });
@@ -205,6 +204,15 @@
 })
 
 .controller('HomeCtrl', function($scope, $state, $location,DBService, $ionicLoading, $filter, $translate) {
+    
+    //Sets date every minute
+    $scope.today = new Date();
+    setInterval(showDate, 60000);
+    function showDate(){
+       $scope.today = new Date();
+        $scope.$apply();
+    } 
+    
 
         var updDisp = function(){    
 
@@ -232,11 +240,37 @@
     };
 })
 
-.controller('AboutCtrl', function($scope, $translate) {
+.controller('AboutCtrl', function($rootScope, $scope, $translate) {
     $scope.navTitle = 'About';
     $scope.changeLanguage = function (langKey) {
     $translate.use(langKey);
-  };
+    };
+        $scope.items =  
+        [{
+            value: "bar-light",
+            label: "Light"
+        },
+        {
+            value: "bar-stable",
+            label: "Stable"
+        },
+        {
+             value: "bar-positive",
+             label: "Positive"
+        },
+        {
+            value: "bar-calm",
+            label: "Calm"
+        },
+        {
+             value: "bar-balanced",
+             label: "Balanced"
+        },
+        {
+             value: "bar-energized",
+             label: "Energized"
+        }]
+    $scope.selectedItem = $scope.items[0];   
 })
 
 .controller('HistoryCtrl', function($scope, $http) {
@@ -280,11 +314,6 @@
             }
             
         }
-    });
-    
-    $scope.$on('$ionicView.leave', function(){
-        $ionicHistory.clearHistory();
-        $ionicHistory.clearCache();
     });
 
     //Event fires when the login is confirmed

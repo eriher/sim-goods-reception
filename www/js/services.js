@@ -92,7 +92,6 @@
     var LOCAL_TOKEN_KEY = 'token';
     var isAuthenticated = false;
     var authToken;
-    var info;
         
     var login = function(name, password){
         var deferred = $q.defer();
@@ -100,7 +99,7 @@
         $http.post('https://login', {username : name , password: password})
         .success(function(data){
             deferred.resolve(data);
-
+            
             //if the user data is correct, set it in localStorage(for now)
             var user =  { username: name, password: password};
             window.localStorage['user'] = JSON.stringify(user);
