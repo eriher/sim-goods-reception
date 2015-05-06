@@ -68,7 +68,7 @@
     $scope.pallets = pallets;
 })
 
-.controller('PalletsCtrl', function($scope, $stateParams, $state, NetworkService, DBService, $location, $ionicActionSheet, $ionicPopup, $filter, pallets) {
+.controller('PalletsCtrl', function($scope, $stateParams, $state, NetworkService, DBService, $location, $ionicActionSheet, $ionicPopup, $filter, pallets, count) {
 
         /*$scope.$on('$ionicView.beforeEnter', function () {
 =======
@@ -93,6 +93,7 @@
     })*/
         
         $scope.pallets = pallets;
+        $scope.count = count();
         $scope.testbutton = function() {
                 var bla = document.getElementById("S390");
                 bla.scrollIntoView();
@@ -117,9 +118,7 @@
                          switch(index){
                                  case 0:
                                         console.log("confirmed");
-                                        DBService.setStatus("pallet", pallet,"confirmed");
                                         pallet.status = 'confirmed';
-                                        checked();
                                         break;
                                  case 1:
                                         console.log("adjust");
@@ -143,7 +142,6 @@
                                                           console.log("adjusted");
                                                           pallet.weight = (pallet.weight/pallet.quantity)*$scope.adjust;
                                                           pallet.quantity = $scope.adjust;
-                                                          DBService.setStatus("pallet", pallet,"adjusted");
                                                           pallet.status = 'adjusted';
                                                           checked();
                                                       }
@@ -154,13 +152,13 @@
                                         break;
                                     
                          }
+                         $scope.count = count();
                        return true;
                      },
                     destructiveButtonClicked: function(){
                         console.log("lost");
-                        DBService.setStatus("pallet", pallet,"lost");
                         pallet.status="lost";
-                        checked();
+                        $scope.count = count();
                         return true
                     }
            });
@@ -214,8 +212,13 @@
     
 })
 
-.controller('HomeCtrl', function($scope, $state,DataStorage, $filter, $translate, data) {
+.controller('HomeCtrl', function($scope, $state,DataStorage, $filter, $translate, data, counts) {
+    $scope.$on('$ionicView.enter', function(){
+      $scope.counts =  counts();
+        console.log("hej"+counts);
+    })
     $scope.dispatches = data.dispatchrows;
+    
     $scope.goTo = function(id) { 
         $state.go('menu.pallets', {dispatchId : id});
     };
@@ -241,7 +244,7 @@
     }                              
 
     $scope.refresh= function(){
-        DBService.refreshDB();
+        DataStorage.sync();
         $scope.$broadcast('scroll.refreshComplete');
     };
 })

@@ -214,27 +214,38 @@
 }) 
 .factory('DataStorage', function($q, NetworkService){
         var data;
+        var updateLocalStorage = function() {
+        window.localStorage['data'] = JSON.stringify(data);
+        }
+
+        
     var getData = function() {
         return data;
     }
     var getCount = function(id) {
-        var pallets = [];
-        for(i in data.palletrows)
-        {
-            
-        }
+        var pallets = getPallets(id);
         var count = 0;
-        for(i in pallets)
-            if(pallets[i].status != unchecked)
-                count++
+                for(var pallet in pallets){
+                    if (pallets[pallet].status != "unchecked"){
+                        count++;
+                    }      
+                }
+        return [count,pallets.length];
+    }
+    var getDispatchesCount = function(){
+            var pallets = [];
+            for(var dispatch in data.dispatchrows)
+            {
+                pallets.push(getCount(data.dispatchrows[dispatch].id))
+            }
+        console.log(pallets[0])
+            return pallets;
     }
     var getPallets = function(id) {
-        console.log(id);
         var pallets= [];
         for(i in data.palletrows)
             if(data.palletrows[i].did == id)
                 pallets.push(data.palletrows[i])
-        console.log(pallets);
         return pallets;
     }
     var sync = function() {
@@ -244,14 +255,15 @@
             deferred.resolve();
             console.log("data storage success"+success.dispatchrows);
             data = success;
-            console.log(data);
+            updateLocalStorage();
         },function(fail){
             deferred.reject();
-            console.log("datastorage fail");
+            console.log("server responded some error");
         })
     else
         NetworkService.dbTestData2.then(function(success){
             data = success;
+            updateLocalStorage();
             deferred.resolve();
         },function(fail){
             data = localStorage.getItem['localsim'];
@@ -268,6 +280,12 @@
         },
         getPallets : function(id) {
             return getPallets(id);
+        },
+        getCount: function(id){
+            return getCount(id);
+        },
+        getDispatchesCount: function(){
+            return getDispatchesCount();
         }
     }
     

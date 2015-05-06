@@ -188,6 +188,9 @@
             resolve: {
                 data: function(dataReady, DataStorage){
                     return DataStorage.getData()
+                },
+                counts: function(dataReady, DataStorage){
+                    return function(){ return DataStorage.getDispatchesCount()}
                 }
             }
         }
@@ -223,6 +226,9 @@
                       var pallets = DataStorage.getPallets($stateParams.dispatchId);
                       console.log(pallets)
                       return pallets;
+                  },
+                  count: function(DataStorage, $stateParams){
+                      return function(){ return DataStorage.getCount($stateParams.dispatchId)};
                   }
               }
           }
