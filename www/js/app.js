@@ -67,7 +67,7 @@
             return  [200 , { authorizationToken: token } ];
         }
         else{ 
-            return [402];
+            return [406];
         } 
     });
     //Dummy backend for getting db
@@ -122,22 +122,28 @@
     }
   });
     
-    //Get preferred Language and sets it to current language
     document.addEventListener("deviceready", onDeviceReady, false);
-function onDeviceReady() {
-    navigator.globalization.getPreferredLanguage(
-    function (language) {
-        if(language.value == 'sv-SE' || language.value == 'en-US')
-        $translate.use(language.value)
-        alert('language: ' + language.value + '\n');
-    },
-    function () {
-        console.log ('Error getting language, using default..\n');
-    }
-    );
-}
+    //Get preferred Language and sets it to current language
+    //If preferred language not available in translate.js, use default
+    function onDeviceReady() {
+        
+        navigator.globalization.getPreferredLanguage(
+        function (language) {
+            if(language.value == 'sv-SE' || language.value == 'en-US')
+            {
+                $translate.use(language.value)
+                console.log('Preferred language' + language.value +' available')
+            }
+            else
+                console.log('Preferred language' + language.value +'not available, using default')
+        },
+        function () {
+            console.log ('Error getting language, using default..\n');
+        }
+        );
+    };
     
-    // For Android and Windows phone backbutton!
+    // For Android and Windows phone, controlling the backbutton!
     $ionicPlatform.registerBackButtonAction(function () {
         if ($state.is('menu.home') || $state.is('signin') || $state.is('menu.history') || $state.is('menu.help') || $state.is('menu.about')) {
             navigator.app.exitApp();
@@ -152,7 +158,7 @@ function onDeviceReady() {
             
             $state.go('menu.home');
         }
-    }, 101);
+    }, 201);
 })
 
 .config(function($stateProvider, $urlRouterProvider) {

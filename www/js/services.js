@@ -5,10 +5,11 @@
 .factory('AuthInterceptor', function ($rootScope, $q) {
   return {
     responseError: function (response) {
-      $rootScope.$broadcast({
-        401: 'event:auth-loginRequired',
-      }[response.status], response);
-      return $q.reject(response);
+        if (response.status === 401){
+            $rootScope.$broadcast({401: 'event:auth-loginRequired',}[response.status], response);
+              return $q.reject(response);
+        }
+        return $q.reject(response);
     }
   };
 })
@@ -87,37 +88,30 @@
     }
 
 })
-.factory('SigninService',  function(MenuService, $q, $http, $rootScope){
+.factory('SigninService',  function(MenuService, $http, NetworkService, $rootScope){
     
     var LOCAL_TOKEN_KEY = 'token';
     var isAuthenticated = false;
     var authToken;
-    var info;
-        
+    var user;
+    
     var login = function(name, password){
-        var deferred = $q.defer();
-        
-        $http.post('https://login', {username : name , password: password})
-        .success(function(data){
-            deferred.resolve(data);
-
+            NetworkService.login(name, password).then(function(data){
+            console.log('login success')
             //if the user data is correct, set it in localStorage(for now)
-            var user =  { username: name, password: password};
+            user =  { username: name, password: password};
             window.localStorage['user'] = JSON.stringify(user);
-
             authToken = data.authorizationToken;
+
             storeToken(authToken)
-            
             // Sets the token as header for all requests
             $http.defaults.headers.common.Authorization = authToken;
-            $rootScope.$broadcast('event:auth-loginConfirmed', status);         
-            
-        })
-        .error(function(data, status, headers, config){
-            deferred.reject("error");
+            $rootScope.$broadcast('event:auth-loginConfirmed', status); 
+        
+        },function(fail){
+            console.log("login fail");
             $rootScope.$broadcast('event:auth-login-failed', status);
-        }) 
-        return deferred.promise;
+        });
     }
     
     var storeToken = function(authToken){
@@ -129,7 +123,6 @@
     var logout = function(){
         authToken = undefined;
         isAuthenticated = false;
-         
         window.localStorage.clear();
         delete $http.defaults.headers.common.Authorization;
     }
@@ -144,10 +137,9 @@
         isAuthenticated: function(){
             return isAuthenticated;
         }
-    }
-        
+    }      
 })
-.factory('NetworkService', function($http, $q){
+.factory('NetworkService', function($http, $q, ToastService){
         
         var dbTestData = function(){
             var deferred = $q.defer();
@@ -156,6 +148,7 @@
                 deferred.resolve(success.db);
             })
             .error(function(data, status, headers, config){
+                ToastService.toast('dbTestData failed, HTTP-status: '+status)
                 deferred.reject("error");
             })
             return deferred.promise;
@@ -165,6 +158,7 @@
                 console.log("postsuccess")
             })
             .error(function(data, status, headers, config){
+                ToastService.toast('dbPost failed, HTTP-status: '+status)
                 console.log("postfail")
             })
     }
@@ -181,11 +175,27 @@
                 deferred.resolve(success.db);
             })
             .error(function(data, status, headers, config){
+                ToastService.toast('dbTestData2 failed, HTTP-status: '+status)
                 deferred.reject("error");
             })
             return deferred.promise;
         }
+        
+        var login = function(name, password){
+            var deferred = $q.defer();
+            $http.post('https://login', {username : name , password: password})
+            .success(function(success){
 
+                deferred.resolve(success);
+            })
+            .error(function(data, status, headers, config){
+                ToastService.toast('Login failed, HTTP-status: '+status)
+                alert('test toast')
+                deferred.reject("error");
+            }) 
+            return deferred.promise;
+        }
+    
         
         return{
             dbTestData: function() {
@@ -196,6 +206,9 @@
             },
             dbSync: function() {
             return dbSync();
+            },
+            login: function(name, password) {
+                return login(name, password);
             }
         }
 }) 

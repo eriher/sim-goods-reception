@@ -10,8 +10,8 @@
         <select ng-options="item.label | translate for item in items" ng-model="sort">
             </select>
   </label>
-    <ion-list ng-repeat = "pallet in pallets | orderBy:sort.value:reverse">
-          <div class="item item-divider" id="{{pallet.id}}" ng-click="showDetails=!showDetails">
+    <ion-list ng-repeat = "pallet in pallets | orderBy:sort.value:reverse" >
+          <div class="item item-divider" ng-click= "showDetails = !showDetails" id="{{pallet.id}}">
               <div ng-class="pallet.status"></div>
                       {{'PALLETS_PALLET'|translate}}: {{pallet.id}}
               <button id='button_showDetails' class="button button-icon button-clear">

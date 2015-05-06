@@ -1,16 +1,13 @@
 (function(){angular.module('app.controllers', ['app.translate'])
 
-.controller('AppCtrl', function($scope, $state, MenuService, ScanService, ToastService, $ionicHistory, $location, DBService, SigninService, $ionicViewSwitcher) {
-    
+.controller('AppCtrl', function($scope, $state, MenuService, ScanService, $ionicHistory, DBService, SigninService, $ionicViewSwitcher) {
+
     $scope.menuItems = MenuService.items();
-    
     // Kommentera bort userName för testning
     $scope.userName = JSON.parse(window.localStorage['user']).username;
     
-    
     $scope.back = function() {
             $ionicHistory.nextViewOptions({
-                //disableAnimate: true,
                 disableBack: true,
                 historyRoot: true
                 });
@@ -29,7 +26,6 @@
             SigninService.logout();
         }
         $state.go(dest);
-
     }
     
     $scope.scanBtn = function(){
@@ -75,6 +71,11 @@
 .controller('PalletsCtrl', function($scope, $stateParams, $state, NetworkService, DBService, $location, $ionicActionSheet, $ionicPopup, $filter, pallets) {
 
         /*$scope.$on('$ionicView.beforeEnter', function () {
+=======
+.controller('PalletsCtrl', function($scope, $stateParams, $state, DBService, $ionicActionSheet, $ionicPopup, $filter) {
+
+        $scope.$on('$ionicView.beforeEnter', function () {
+>>>>>>> 64246ecfbd5dad3082c894c14329ecf81298af9e
                 DBService.getPallets(id).then(
         function(success){console.log("palletsctrl success:"+JSON.stringify(success));
                           $scope.pallets = success;},
@@ -213,12 +214,31 @@
     
 })
 
-.controller('HomeCtrl', function($scope, $state, $location,DataStorage, $ionicLoading, $filter, $translate, data) {
+.controller('HomeCtrl', function($scope, $state,DataStorage, $filter, $translate, data) {
     $scope.dispatches = data.dispatchrows;
     $scope.goTo = function(id) { 
         $state.go('menu.pallets', {dispatchId : id});
     };
-                                     
+                                        
+    //Sets date every minute
+    var months = ['JANUARY', 'FEBUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
+    showDate();
+    setInterval(showDate, 60000);
+    function showDate(){
+        var date = new Date();
+        var day = date.getUTCDay() +1;
+        var month = date.getUTCMonth();
+        var year = date.getUTCFullYear();
+        if($translate.use() == 'en-US')
+            $scope.today = $filter('translate') (months[month]) + ' ' + day +', '+year;
+        else
+            $scope.today = day +' ' + $filter('translate')(months[month]) +  ', '+year;
+        $scope.$apply();
+    }
+    
+    $scope.goTo = function(id) { 
+        $state.go('menu.pallets', {dispatchId : id });
+    }                              
 
     $scope.refresh= function(){
         DBService.refreshDB();
@@ -227,15 +247,13 @@
 })
 
 .controller('AboutCtrl', function($scope, $translate) {
-    $scope.navTitle = 'About';
     $scope.changeLanguage = function (langKey) {
     $translate.use(langKey);
-  };
+    };   
 })
 
 .controller('HistoryCtrl', function($scope, $http) {
-    $scope.navTitle = 'History';
-    
+
     $scope.test = function(){
         $http.get('https://test')
         .success(function(data){
@@ -250,10 +268,6 @@
 
 .controller('SigninCtrl', function($scope, $state, SigninService, $ionicHistory) {
 
-    $scope.signIn = function(user){
-        SigninService.login(user.name, user.password); 
-    }
-    
     $scope.$on('$ionicView.beforeEnter', function () {
         //For navigation, clearHistory
         $ionicHistory.clearHistory();
@@ -264,39 +278,32 @@
         var user = JSON.parse(window.localStorage['user'] || '{}');
     
         if(loggedIn == 'true'){
-            
             if(typeof user.username != 'undefined' && typeof user.password != 'undefined')
             {
                 //Previously checked in, goes direct to home and picks up new authToken via loginTest
                 $state.go('menu.home');
-                SigninService.login(user.username, user.password);
-                
+                SigninService.login(user.username, user.password);   
             }
-            
         }
     });
     
-    $scope.$on('$ionicView.leave', function(){
-        $ionicHistory.clearHistory();
-        $ionicHistory.clearCache();
+    $scope.signIn = function(user){
+        SigninService.login(user.name, user.password); 
+    }
+    
+    //Event fires when the login has failed   
+    $scope.$on('event:auth-login-failed', function(e, status) {  
+        alert('SigninCtrl: login failed!');
+        $state.go('signin')
     });
-
+    
     //Event fires when the login is confirmed
     $scope.$on('event:auth-loginConfirmed', function() {
-        $state.go('menu.home');
+        if($state.is('signin'))
+            $state.go('menu.home');
     });
     
-    //Event fires when username and pw are not found by server
-    $scope.$on('event:auth-login-failed', function(e, status) {  
-
-        var error = "Login failed.";
-        if (status == 400) {
-          error = "Invalid Username or Password.";
-        }
-        alert(error);
-        });
-    
-    //Event fires when server returns http 401 (unAuthenticated), login the user
+    //Event fires when server returns http 401 (unAuthenticated), tries to login the user again
     $scope.$on('event:auth-loginRequired', function(e, rejection) {
         var user = JSON.parse(window.localStorage['user'] || '{}');
         SigninService.login(user.username, user.password);
