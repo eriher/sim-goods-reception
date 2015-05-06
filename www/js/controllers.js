@@ -68,11 +68,13 @@
                           $scope.pallet = success},
         function(fail){console.log("palletctrl fail:"+fail)});;
 })
+.controller('PalletsCtrl1', function($scope, $stateParams,pallets){
+    $scope.pallets = pallets;
+})
 
+.controller('PalletsCtrl', function($scope, $stateParams, $state, NetworkService, DBService, $location, $ionicActionSheet, $ionicPopup, $filter, pallets) {
 
-.controller('PalletsCtrl', function($scope, $stateParams, $state, NetworkService, DBService, $location, $ionicActionSheet, $ionicPopup, $filter) {
-
-        $scope.$on('$ionicView.beforeEnter', function () {
+        /*$scope.$on('$ionicView.beforeEnter', function () {
                 DBService.getPallets(id).then(
         function(success){console.log("palletsctrl success:"+JSON.stringify(success));
                           $scope.pallets = success;},
@@ -81,13 +83,20 @@
         })
         $scope.$on('$ionicView.afterEnter', function () {
             if(pid){
-                document.getElementById(pid).scrollIntoView();
-                document.getElementById("button_"+pid).click();
+                var bla = document.getElementById(pid);
+                bla.scrollIntoView();
+                bla.click();
+                //document.getElementById("button_"+pid).click();
             }
             checked();
-    })
+    })*/
         
-
+        $scope.pallets = pallets;
+        $scope.testbutton = function() {
+                var bla = document.getElementById("S390");
+                bla.scrollIntoView();
+                bla.click();
+        }
         $scope.show = function(pallet) {
             var quantity = pallet.quantity;
             $scope.adjust = quantity;
@@ -204,26 +213,11 @@
     
 })
 
-.controller('HomeCtrl', function($scope, $state, $location,DBService, $ionicLoading, $filter, $translate) {
-
-        var updDisp = function(){    
-
-    DBService.getDispatches().then(
-        function(success){console.log("homeservice success:"+JSON.stringify(success));
-                          $scope.dispatchNotes = success;
-                         $scope.pallets = DBService.dispatchesForPallets(success)},
-        function(fail){console.log("homeservice fail:"+fail)});}
-    $scope.$on('dbupdated', function(event, args){
-              updDisp();}
-              )
-
-    $scope.$on('$ionicView.beforeEnter', function () {
-            updDisp();
-    })
-    
+.controller('HomeCtrl', function($scope, $state, $location,DataStorage, $ionicLoading, $filter, $translate, data) {
+    $scope.dispatches = data.dispatchrows;
     $scope.goTo = function(id) { 
-        $state.go('menu.pallets', {dispatchId : id });
-    }
+        $state.go('menu.pallets', {dispatchId : id});
+    };
                                      
 
     $scope.refresh= function(){

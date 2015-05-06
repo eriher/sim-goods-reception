@@ -1,19 +1,19 @@
 <ion-view title= "{{'NAVTITLE_HOME' | translate }}">
   <ion-content class='has-header'>
         <ion-refresher on-refresh='refresh()'></ion-refresher>
-         <div class="card card2" ng-repeat = 'note in dispatchNotes'>
+         <div class="card card2" ng-repeat = 'dispatch in dispatches'>
             <div class='item item-divider'>
-                <button class="button button-full button-dark" ng-click='goTo(note.id)'>
-                {{note.id}}</button>
+                <button class="button button-full button-dark" ng-click='goTo(dispatch.id)'>
+                {{dispatch.id}}</button>
             </div>
             <div class='item item-text-wrap'>
                 <div class="row responsive-sm">
-                    <div class="col">{{'HOME_DESCRIPTION'|translate}}:{{note.description}}</div>
-                    <div class="col">{{'HOME_DATE'|translate}}:{{note.date}}</div>
-                    <div class="col">Status:{{note.status}}</div>
-                    <div class="col">{{'HOME_CHECKED_PALLETS'|translate}}:{{pallets[note.ID-1]}}</div>
+                    <div class="col">{{'HOME_DESCRIPTION'|translate}}:{{dispatch.description}}</div>
+                    <div class="col">{{'HOME_DATE'|translate}}:{{dispatch.date}}</div>
+                    <div class="col">Status:{{dispatch.status}}</div>
+                    <div class="col">{{'HOME_CHECKED_PALLETS'|translate}}:{{pallets[dispatch.ID-1]}}</div>
                 </div>
             </div>
-         </div> 
+         </div>
       </ion-content>
 </ion-view>
