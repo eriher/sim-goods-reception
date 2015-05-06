@@ -2,6 +2,20 @@
 
 .config(function ($translateProvider) {
   $translateProvider.translations('en-US', {
+    
+    //Months
+    JANUARY:'Jan',
+    FEBUARY:'Feb',
+    MARCH:'March',
+    APRIL:'April',
+    MAY:'May',
+    JUNE:'June',
+    JULY:'July',
+    AUGUST:'Aug',
+    SEPTEMBER:'Sep',
+    OCTOBER:'Oct',
+    NOVEMBER:'Nov',
+    DECEMBER:'Dec',
       
     //Menu
     MENU_HOME: 'Home',
@@ -50,6 +64,21 @@
       
   });
   $translateProvider.translations('sv-SE', {
+      
+    //Months
+    JANUARY:'Jan',
+    FEBUARY:'Feb',
+    MARCH:'Mars',
+    APRIL:'April',
+    MAY:'Maj',
+    JUNE:'Juni',
+    JULY:'Juli',
+    AUGUST:'Aug',
+    SEPTEMBER:'Sep',
+    OCTOBER:'Okt',
+    NOVEMBER:'Nov',
+    DECEMBER:'Dec',
+   
       
     //Menu
     MENU_HOME: 'Hem',

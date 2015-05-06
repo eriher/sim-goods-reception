@@ -1,12 +1,10 @@
 (function(){angular.module('app.controllers', ['app.translate'])
 
-.controller('AppCtrl', function($scope, $state, MenuService, ScanService, ToastService, $ionicHistory, $location, DBService, SigninService, $ionicViewSwitcher) {
+.controller('AppCtrl', function($scope, $state, MenuService, ScanService, $ionicHistory, DBService, SigninService, $ionicViewSwitcher) {
 
     $scope.menuItems = MenuService.items();
-    
     // Kommentera bort userName för testning
     $scope.userName = JSON.parse(window.localStorage['user']).username;
-    
     
     $scope.back = function() {
             $ionicHistory.nextViewOptions({
@@ -28,7 +26,6 @@
             SigninService.logout();
         }
         $state.go(dest);
-
     }
     
     $scope.scanBtn = function(){
@@ -57,19 +54,7 @@
                 ,function(reject){console.log("Scan failed:"+fail)})
     }
 })
-
-.controller('PalletCtrl', function(DBService, $scope, $stateParams, $ionicHistory) {
-    var id = $stateParams.palletId;
-    $scope.navTitle= 'Pallet nr: '+id;
-    $scope.id = id;
-    $scope.pallet = DBService.getPallet(id).then(
-        function(success){console.log("palletctrl success:"+JSON.stringify(success));
-                          $scope.pallet = success},
-        function(fail){console.log("palletctrl fail:"+fail)});;
-})
-
-
-.controller('PalletsCtrl', function($scope, $stateParams, $state, NetworkService, DBService, $location, $ionicActionSheet, $ionicPopup, $filter) {
+.controller('PalletsCtrl', function($scope, $stateParams, $state, DBService, $ionicActionSheet, $ionicPopup, $filter) {
 
         $scope.$on('$ionicView.beforeEnter', function () {
                 DBService.getPallets(id).then(
@@ -203,36 +188,47 @@
     
 })
 
-.controller('HomeCtrl', function($scope, $state, $location,DBService, $ionicLoading, $filter, $translate) {
+.controller('HomeCtrl', function($scope, $state, DBService, $filter, $translate) {
     
     //Sets date every minute
-    $scope.today = new Date();
+    var months = ['JANUARY', 'FEBUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
+    showDate();
     setInterval(showDate, 60000);
     function showDate(){
-       $scope.today = new Date();
+        var date = new Date();
+        var day = date.getUTCDay() +1;
+        var month = date.getUTCMonth();
+        var year = date.getUTCFullYear();
+        if($translate.use() == 'en-US')
+            $scope.today = $filter('translate') (months[month]) + ' ' + day +', '+year;
+        else
+            $scope.today = day +' ' + $filter('translate')(months[month]) +  ', '+year;
         $scope.$apply();
-    } 
+    }
     
+    
+    var updDisp = function(){    
 
-        var updDisp = function(){    
-
-    DBService.getDispatches().then(
-        function(success){console.log("homeservice success:"+JSON.stringify(success));
-                          $scope.dispatchNotes = success;
-                         $scope.pallets = DBService.dispatchesForPallets(success)},
-        function(fail){console.log("homeservice fail:"+fail)});}
+        DBService.getDispatches().then(
+            function(success){
+                console.log("homeservice success:"+JSON.stringify(success));
+                $scope.dispatchNotes = success;
+                $scope.pallets = DBService.dispatchesForPallets(success)},
+            function(fail){
+                console.log("homeservice fail:"+fail)});
+    }
+        
     $scope.$on('dbupdated', function(event, args){
-              updDisp();}
-              )
+        updDisp();
+    })
 
     $scope.$on('$ionicView.beforeEnter', function () {
-            updDisp();
+        updDisp();
     })
     
     $scope.goTo = function(id) { 
         $state.go('menu.pallets', {dispatchId : id });
-    }
-                                     
+    }                              
 
     $scope.refresh= function(){
         DBService.refreshDB();
@@ -240,42 +236,14 @@
     };
 })
 
-.controller('AboutCtrl', function($rootScope, $scope, $translate) {
-    $scope.navTitle = 'About';
+.controller('AboutCtrl', function($scope, $translate) {
     $scope.changeLanguage = function (langKey) {
     $translate.use(langKey);
-    };
-        $scope.items =  
-        [{
-            value: "bar-light",
-            label: "Light"
-        },
-        {
-            value: "bar-stable",
-            label: "Stable"
-        },
-        {
-             value: "bar-positive",
-             label: "Positive"
-        },
-        {
-            value: "bar-calm",
-            label: "Calm"
-        },
-        {
-             value: "bar-balanced",
-             label: "Balanced"
-        },
-        {
-             value: "bar-energized",
-             label: "Energized"
-        }]
-    $scope.selectedItem = $scope.items[0];   
+    };   
 })
 
 .controller('HistoryCtrl', function($scope, $http) {
-    $scope.navTitle = 'History';
-    
+
     $scope.test = function(){
         $http.get('https://test')
         .success(function(data){
@@ -313,6 +281,7 @@
         SigninService.login(user.name, user.password); 
     }
     
+    //Event fires when the login has failed   
     $scope.$on('event:auth-login-failed', function(e, status) {  
         alert('SigninCtrl: login failed!');
         $state.go('signin')

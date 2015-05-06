@@ -137,11 +137,10 @@
         isAuthenticated: function(){
             return isAuthenticated;
         }
-    }
-        
+    }      
 })
 
-.factory('NetworkService', function($http, $q){
+.factory('NetworkService', function($http, $q, ToastService){
         
         var dbTestData = function(){
             var deferred = $q.defer();
@@ -149,6 +148,7 @@
                 deferred.resolve(success.db);
             })
             .error(function(data, status, headers, config){
+                ToastService.toast('dbTestData failed, HTTP-status: '+status)
                 deferred.reject("error");
             })
             return deferred.promise;
@@ -158,6 +158,7 @@
                 console.log("postsuccess")
             })
             .error(function(data, status, headers, config){
+                ToastService.toast('dbPost failed, HTTP-status: '+status)
                 console.log("postfail")
             })
     }
@@ -174,6 +175,7 @@
                 deferred.resolve(success.db);
             })
             .error(function(data, status, headers, config){
+                ToastService.toast('dbTestData2 failed, HTTP-status: '+status)
                 deferred.reject("error");
             })
             return deferred.promise;
@@ -183,9 +185,12 @@
             var deferred = $q.defer();
             $http.post('https://login', {username : name , password: password})
             .success(function(success){
+
                 deferred.resolve(success);
             })
             .error(function(data, status, headers, config){
+                ToastService.toast('Login failed, HTTP-status: '+status)
+                alert('test toast')
                 deferred.reject("error");
             }) 
             return deferred.promise;
