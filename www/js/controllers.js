@@ -93,12 +93,12 @@
                // Show the action sheet
            var hideSheet = $ionicActionSheet.show({
                      buttons: [
-                       { text: $filter('translate')('BUTTON_PALLETS_CONFIRM')  },
-                       { text: $filter('translate')('BUTTON_PALLETS_ADJUST')  }
+                       { text: '<i class="icon ion-happy"></i>'+$filter('translate')('BUTTON_PALLETS_CONFIRM')  },
+                       { text: '<i class="icon ion-hammer"></i>'+$filter('translate')('BUTTON_PALLETS_ADJUST')  }
                      ],
-                     destructiveText: $filter('translate')('BUTTON_PALLETS_LOST'),
+                     destructiveText: '<i class="icon ion-nuclear"></i>'+$filter('translate')('BUTTON_PALLETS_LOST'),
                      titleText: $filter('translate')('BUTTON_PALLETS_STATUS')+': '  +pallet.id,
-                     cancelText: $filter('translate')('BUTTON_PALLETS_CANCEL'),
+                     cancelText: '<i class="icon ion-sad"></i>'+$filter('translate')('BUTTON_PALLETS_CANCEL'),
                      cancel: function() {
                           hideSheet();
                         },
@@ -235,7 +235,7 @@
                                      
 
     $scope.refresh= function(){
-        $scope.dispatchNotes = HomeService.test();
+        DBService.refreshDB();
         $scope.$broadcast('scroll.refreshComplete');
     };
 })
