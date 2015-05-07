@@ -205,9 +205,11 @@
     setInterval(showDate, 60000);
     function showDate(){
         var date = new Date();
-        var day = date.getUTCDay() +1;
+        var day = date.getUTCDate();
         var month = date.getUTCMonth();
         var year = date.getUTCFullYear();
+        //$scope.today = day+'/'+(month+1)+'-'+year;
+        
         if($translate.use() == 'en-US')
             $scope.today = $filter('translate') (months[month]) + ' ' + day +', '+year;
         else
@@ -231,7 +233,15 @@
     };   
 })
 
-.controller('HistoryCtrl', function($scope, $http) {
+.controller('TomorrowCtrl', function($scope) {
+   
+})
+
+.controller('HistoryCtrl', function($scope, $http, $state) {
+    
+    $scope.goTo = function(){
+        $state.go('menu.tomorrow');
+    }
 
     $scope.test = function(){
         $http.get('https://test')

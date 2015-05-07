@@ -225,6 +225,7 @@
         }
     }
   })
+
   .state('menu.history', {
       url: '/history/',
       views: {
