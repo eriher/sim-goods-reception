@@ -179,6 +179,16 @@
     }
   })
   
+  .state('menu.tomorrow', {
+    url: '/tomorrow/',
+    views :{
+        'menuContent': {
+            templateUrl: 'partials/tomorrow.html',
+            controller: 'TomorrowCtrl'
+        }
+    }
+  })
+  
   .state('menu.history', {
       url: '/history/',
       views: {
