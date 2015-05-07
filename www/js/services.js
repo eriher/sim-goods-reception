@@ -139,12 +139,12 @@
         }
     }      
 })
-
 .factory('NetworkService', function($http, $q, ToastService){
         
         var dbTestData = function(){
             var deferred = $q.defer();
             $http.get('https://database').success(function(success){
+                console.log("dbtestdata success")
                 deferred.resolve(success.db);
             })
             .error(function(data, status, headers, config){
@@ -212,22 +212,101 @@
             }
         }
 }) 
+.factory('DataStorage', function($q, NetworkService){
+        var data;
+        var updateLocalStorage = function() {
+        window.localStorage['data'] = JSON.stringify(data);
+        }
+
+        
+    var getData = function() {
+        return data;
+    }
+    var getCount = function(id) {
+        var pallets = getPallets(id);
+        var count = 0;
+                for(var pallet in pallets){
+                    if (pallets[pallet].status != "unchecked"){
+                        count++;
+                    }      
+                }
+        return [count,pallets.length];
+    }
+    var getDispatchesCount = function(){
+            var pallets = [];
+            for(var dispatch in data.dispatchrows)
+            {
+                pallets.push(getCount(data.dispatchrows[dispatch].id))
+            }
+        console.log(pallets[0])
+            return pallets;
+    }
+    var getPallets = function(id) {
+        var pallets= [];
+        for(i in data.palletrows)
+            if(data.palletrows[i].did == id)
+                pallets.push(data.palletrows[i])
+        return pallets;
+    }
+    var sync = function() {
+        var deferred = $q.defer();
+    if(!localStorage.getItem['uncommited'])
+        NetworkService.dbTestData().then(function(success){
+            deferred.resolve();
+            console.log("data storage success"+success.dispatchrows);
+            data = success;
+            updateLocalStorage();
+        },function(fail){
+            deferred.reject();
+            console.log("server responded some error");
+        })
+    else
+        NetworkService.dbTestData2.then(function(success){
+            data = success;
+            updateLocalStorage();
+            deferred.resolve();
+        },function(fail){
+            data = localStorage.getItem['localsim'];
+            deferred.reject();
+        })
+        return deferred.promise
+        }
+    return {
+        getData : function(){
+            return getData();
+        },
+        sync : function(){
+            return sync();
+        },
+        getPallets : function(id) {
+            return getPallets(id);
+        },
+        getCount: function(id){
+            return getCount(id);
+        },
+        getDispatchesCount: function(){
+            return getDispatchesCount();
+        }
+    }
     
+})
 .factory('DBService', function($q, ToastService, NetworkService, $rootScope){
         
         
         var db = new localStorageDB("LocalSIM", localStorage);
-            
+        
         console.log("dbtestdata success");
         if(db.isNew()){
             console.log("DB is new");
         NetworkService.dbTestData().then(function(success){
+           
             console.log("dbtestdata success"+success.dispatchrows);
             var dispatchrows = success.dispatchrows;
             var palletrows = success.palletrows;
             db.createTableWithData("dispatch", dispatchrows);
             db.createTableWithData("pallet", palletrows);
             db.commit();
+           
             $rootScope.$broadcast('dbupdated', { any: {} });
         },function(fail){
             console.log("dbtestdata fail");

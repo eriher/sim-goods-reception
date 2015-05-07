@@ -41,7 +41,9 @@
      var db2 =  {      // rows with test data
         dispatchrows: [
         ],
-        palletrows: []
+        palletrows: [
+            
+        ]
             }
      $httpBackend.whenGET('https://login').respond([{id:1, name: "hej"}]);
             
@@ -61,8 +63,8 @@
     $httpBackend.whenPOST('https://login').respond(function(method, url, data) {
         var data = angular.fromJson(data);
         
-        if(data.username == 'a' && data.password =='a'){
-            return  [200 , {authorizationToken: token } ];
+        if(data.username=='a' && data.password =='a'){
+            return  [200 , { authorizationToken: token } ];
         }
         else{ 
             return [406];
@@ -166,7 +168,15 @@
     url: '/menu',
     abstract: true,
     templateUrl: 'partials/menu.html',
-    controller: 'AppCtrl'
+    controller: 'AppCtrl',
+    resolve: {
+        dataReady: function($log, DataStorage){
+            return DataStorage.sync().then(function(){
+                $log.log(DataStorage.getData());
+                $log.log("database synced");
+            })
+        }
+    }
   })
   
   .state('menu.home', {
@@ -174,21 +184,19 @@
     views :{
         'menuContent': {
             templateUrl: 'partials/home.html',
-            controller: 'HomeCtrl'
+            controller: 'HomeCtrl',
+            resolve: {
+                data: function(dataReady, DataStorage){
+                    return DataStorage.getData()
+                },
+                counts: function(dataReady, DataStorage){
+                    return function(){ return DataStorage.getDispatchesCount()}
+                }
+            }
         }
     }
   })
-  
-  .state('menu.tomorrow', {
-    url: '/tomorrow/',
-    views :{
-        'menuContent': {
-            templateUrl: 'partials/tomorrow.html',
-            controller: 'TomorrowCtrl'
-        }
-    }
-  })
-  
+
   .state('menu.history', {
       url: '/history/',
       views: {
@@ -213,6 +221,17 @@
           'menuContent': {
               templateUrl: 'partials/pallets.html',
               controller: 'PalletsCtrl',
+              resolve: {
+                  pallets: function(DataStorage, $stateParams){
+                      console.log($stateParams.dispatchId)
+                      var pallets = DataStorage.getPallets($stateParams.dispatchId);
+                      console.log(pallets)
+                      return pallets;
+                  },
+                  count: function(DataStorage, $stateParams){
+                      return function(){ return DataStorage.getCount($stateParams.dispatchId)};
+                  }
+              }
           }
       }
       

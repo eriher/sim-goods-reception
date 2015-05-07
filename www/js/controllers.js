@@ -54,9 +54,28 @@
                 ,function(reject){console.log("Scan failed:"+fail)})
     }
 })
+
+.controller('PalletCtrl', function(DBService, $scope, $stateParams, $ionicHistory) {
+    var id = $stateParams.palletId;
+    $scope.navTitle= 'Pallet nr: '+id;
+    $scope.id = id;
+    $scope.pallet = DBService.getPallet(id).then(
+        function(success){console.log("palletctrl success:"+JSON.stringify(success));
+                          $scope.pallet = success},
+        function(fail){console.log("palletctrl fail:"+fail)});;
+})
+.controller('PalletsCtrl1', function($scope, $stateParams,pallets){
+    $scope.pallets = pallets;
+})
+
+.controller('PalletsCtrl', function($scope, $stateParams, $state, NetworkService, DBService, $location, $ionicActionSheet, $ionicPopup, $filter, pallets, count) {
+
+        /*$scope.$on('$ionicView.beforeEnter', function () {
+=======
 .controller('PalletsCtrl', function($scope, $stateParams, $state, DBService, $ionicActionSheet, $ionicPopup, $filter) {
 
         $scope.$on('$ionicView.beforeEnter', function () {
+>>>>>>> 64246ecfbd5dad3082c894c14329ecf81298af9e
                 DBService.getPallets(id).then(
         function(success){console.log("palletsctrl success:"+JSON.stringify(success));
                           $scope.pallets = success;},
@@ -65,13 +84,21 @@
         })
         $scope.$on('$ionicView.afterEnter', function () {
             if(pid){
-                document.getElementById(pid).scrollIntoView();
-                document.getElementById("button_"+pid).click();
+                var bla = document.getElementById(pid);
+                bla.scrollIntoView();
+                bla.click();
+                //document.getElementById("button_"+pid).click();
             }
             checked();
-    })
+    })*/
         
-
+        $scope.pallets = pallets;
+        $scope.count = count();
+        $scope.testbutton = function() {
+                var bla = document.getElementById("S390");
+                bla.scrollIntoView();
+                bla.click();
+        }
         $scope.show = function(pallet) {
             var quantity = pallet.quantity;
             $scope.adjust = quantity;
@@ -91,9 +118,7 @@
                          switch(index){
                                  case 0:
                                         console.log("confirmed");
-                                        DBService.setStatus("pallet", pallet,"confirmed");
                                         pallet.status = 'confirmed';
-                                        checked();
                                         break;
                                  case 1:
                                         console.log("adjust");
@@ -117,7 +142,6 @@
                                                           console.log("adjusted");
                                                           pallet.weight = (pallet.weight/pallet.quantity)*$scope.adjust;
                                                           pallet.quantity = $scope.adjust;
-                                                          DBService.setStatus("pallet", pallet,"adjusted");
                                                           pallet.status = 'adjusted';
                                                           checked();
                                                       }
@@ -128,13 +152,13 @@
                                         break;
                                     
                          }
+                         $scope.count = count();
                        return true;
                      },
                     destructiveButtonClicked: function(){
                         console.log("lost");
-                        DBService.setStatus("pallet", pallet,"lost");
                         pallet.status="lost";
-                        checked();
+                        $scope.count = count();
                         return true
                     }
            });
@@ -188,8 +212,17 @@
     
 })
 
-.controller('HomeCtrl', function($scope, $state, DBService, $filter, $translate) {
+.controller('HomeCtrl', function($scope, $state,DataStorage, $filter, $translate, data, counts) {
+    $scope.$on('$ionicView.enter', function(){
+      $scope.counts =  counts();
+        console.log("hej"+counts);
+    })
+    $scope.dispatches = data.dispatchrows;
     
+    $scope.goTo = function(id) { 
+        $state.go('menu.pallets', {dispatchId : id});
+    };
+                                        
     //Sets date every minute
     var months = ['JANUARY', 'FEBUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
     showDate();
@@ -208,32 +241,12 @@
         $scope.$apply();
     }
     
-    
-    var updDisp = function(){    
-
-        DBService.getDispatches().then(
-            function(success){
-                console.log("homeservice success:"+JSON.stringify(success));
-                $scope.dispatchNotes = success;
-                $scope.pallets = DBService.dispatchesForPallets(success)},
-            function(fail){
-                console.log("homeservice fail:"+fail)});
-    }
-        
-    $scope.$on('dbupdated', function(event, args){
-        updDisp();
-    })
-
-    $scope.$on('$ionicView.beforeEnter', function () {
-        updDisp();
-    })
-    
     $scope.goTo = function(id) { 
         $state.go('menu.pallets', {dispatchId : id });
     }                              
 
     $scope.refresh= function(){
-        DBService.refreshDB();
+        DataStorage.sync();
         $scope.$broadcast('scroll.refreshComplete');
     };
 })
