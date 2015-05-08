@@ -1,6 +1,6 @@
 (function(){angular.module('app.controllers', ['app.translate'])
 
-.controller('AppCtrl', function($scope, $state, MenuService, ScanService, $ionicHistory, DBService, SigninService, $ionicViewSwitcher) {
+.controller('AppCtrl', function($scope, $state, MenuService, ScanService, $ionicHistory, SigninService, $ionicViewSwitcher, DataStorage) {
 
     $scope.menuItems = MenuService.items();
     // Kommentera bort userName för testning
@@ -8,11 +8,11 @@
     
     $scope.back = function() {
             $ionicHistory.nextViewOptions({
+                disableAnimate: true,
                 disableBack: true,
                 historyRoot: true
                 });
  
-            $ionicViewSwitcher.nextDirection('back');
             $state.go('menu.home')
         }
     
@@ -29,76 +29,45 @@
     }
     
     $scope.scanBtn = function(){
-        ScanService.scan().then(
+        
+                ScanService.scan().then(
             function(result){
-            //scan not cancelled by 
             if(!result.cancelled){
                 var scanId = result.text;
-                switch(scanId.charCodeAt(0)) {
-                        case 78 :
-                            DBService.scanDispatch(scanId).then(function(success){$state.go('menu.pallets', {dispatchId : success.dispatchId })},
-                                                                function(fail){console.log(fail)});
-                            break;
-                        case 65 :
-                            DBService.scanDispatch(scanId).then(function(success){$state.go('menu.pallets', {dispatchId : success.dispatchId })},
-                                                                function(fail){console.log(fail)});
-                            break;
-                        case 83 :
-                            DBService.scanPallet(scanId).then(function(success){$state.go('menu.pallets',{dispatchId: success.dispatchId, palletId: success.palletId})},
-                                                             function(fail){console.log(fail)});
-                            break;
-                }}
-                else{
+                switch(scanId.charAt(0)) {
+                        case 'N' :
+                                    console.log("N")
+                                    if(DataStorage.dispatchExist(scanId) == scanId)
+                                        $state.go('menu.pallets', {dispatchId : scanId})
+                                    break;
+                        case 'S' :
+                                    var pallet = DataStorage.palletExist(scanId);    
+                                    if(pallet[0] == scanId)
+                                        $state.go('menu.pallets',{dispatchId: pallet[1], palletId: pallet[0]})
+                                    break;
+                }
+            }
+            else{
                 alert("Scan cancelled");
-                }}
-                ,function(reject){console.log("Scan failed:"+fail)})
+            }
+            },function(reject){console.log("Scan failed:"+reject)})
     }
 })
 
-.controller('PalletCtrl', function(DBService, $scope, $stateParams, $ionicHistory) {
-    var id = $stateParams.palletId;
-    $scope.navTitle= 'Pallet nr: '+id;
-    $scope.id = id;
-    $scope.pallet = DBService.getPallet(id).then(
-        function(success){console.log("palletctrl success:"+JSON.stringify(success));
-                          $scope.pallet = success},
-        function(fail){console.log("palletctrl fail:"+fail)});;
-})
-.controller('PalletsCtrl1', function($scope, $stateParams,pallets){
-    $scope.pallets = pallets;
-})
+.controller('PalletsCtrl', function($scope, $stateParams, $state, NetworkService, $location, $ionicActionSheet, $ionicPopup, $filter, pallets, count, dispatchCheck) {
 
-.controller('PalletsCtrl', function($scope, $stateParams, $state, NetworkService, DBService, $location, $ionicActionSheet, $ionicPopup, $filter, pallets, count) {
-
-        /*$scope.$on('$ionicView.beforeEnter', function () {
-=======
-.controller('PalletsCtrl', function($scope, $stateParams, $state, DBService, $ionicActionSheet, $ionicPopup, $filter) {
-
-        $scope.$on('$ionicView.beforeEnter', function () {
->>>>>>> 64246ecfbd5dad3082c894c14329ecf81298af9e
-                DBService.getPallets(id).then(
-        function(success){console.log("palletsctrl success:"+JSON.stringify(success));
-                          $scope.pallets = success;},
-        function(fail){console.log("palletsctrl fail:"+fail)});
-            
-        })
         $scope.$on('$ionicView.afterEnter', function () {
-            if(pid){
-                var bla = document.getElementById(pid);
+            if($stateParams.palletId){
+                var bla = document.getElementById($stateParams.palletId);
                 bla.scrollIntoView();
                 bla.click();
                 //document.getElementById("button_"+pid).click();
             }
-            checked();
-    })*/
+    })
         
         $scope.pallets = pallets;
         $scope.count = count();
-        $scope.testbutton = function() {
-                var bla = document.getElementById("S390");
-                bla.scrollIntoView();
-                bla.click();
-        }
+
         $scope.show = function(pallet) {
             var quantity = pallet.quantity;
             $scope.adjust = quantity;
@@ -117,11 +86,11 @@
                      buttonClicked: function(index) {
                          switch(index){
                                  case 0:
-                                        console.log("confirmed");
                                         pallet.status = 'confirmed';
+                                        $scope.count = count();
+                                        dispatchCheck(pallet.did);
                                         break;
                                  case 1:
-                                        console.log("adjust");
                                         $ionicPopup.show({
                                                 template: '<input type="number" min="0" ng-model="$parent.adjust">',
                                                 title: 'Adjust pallet',
@@ -143,7 +112,8 @@
                                                           pallet.weight = (pallet.weight/pallet.quantity)*$scope.adjust;
                                                           pallet.quantity = $scope.adjust;
                                                           pallet.status = 'adjusted';
-                                                          checked();
+                                                          $scope.count = count();
+                                                          dispatchCheck(pallet.did);
                                                       }
                                                     }
                                                   }
@@ -152,28 +122,21 @@
                                         break;
                                     
                          }
-                         $scope.count = count();
                        return true;
                      },
                     destructiveButtonClicked: function(){
-                        console.log("lost");
                         pallet.status="lost";
                         $scope.count = count();
+                        dispatchCheck(pallet.did);
                         return true
                     }
            });
         }
-    var checked = function() {
-        $scope.checked = DBService.countCheckedPallet(id)
-    }
-        
-    var id = $stateParams.dispatchId;
-    var pid = $stateParams.palletId;
     
-    $scope.navTitle= 'Dispatch Id: '+id;
+    $scope.navTitle= 'Dispatch Id: '+$stateParams.dispatchId;
     $scope.items =  
         [{
-            value: "id",
+            value: "-id",
             label: "PALLETS_PALLET_ID"},
         {
             value: "aid",
@@ -199,10 +162,7 @@
     $scope.sort = $scope.items[0];
     
     
-    $scope.setChecked = function(id){
-        DBService.setChecked("pallet", id);
-        checked();
-    }
+    
     
     
     $scope.goTo = function(id2) {
@@ -215,9 +175,25 @@
 .controller('HomeCtrl', function($scope, $state,DataStorage, $filter, $translate, data, counts) {
     $scope.$on('$ionicView.enter', function(){
       $scope.counts =  counts();
-        console.log("hej"+counts);
     })
-    $scope.dispatches = data.dispatchrows;
+    var init = 2;
+    $scope.dispatches = data.dispatchrows.slice(0,init+1);
+    
+    $scope.moreDataCanBeLoaded = function(){
+        return (init<data.dispatchrows.length-1)
+    }
+    $scope.loadMore = function(){
+        if($scope.moreDataCanBeLoaded()){
+            init = init + 1;
+            $scope.dispatches.push(data.dispatchrows[init]);
+        }
+        if($scope.moreDataCanBeLoaded()){
+            init = init + 1;
+            $scope.dispatches.push(data.dispatchrows[init]);
+        }
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    }
+
     
     $scope.goTo = function(id) { 
         $state.go('menu.pallets', {dispatchId : id});

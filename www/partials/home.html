@@ -4,7 +4,9 @@
     </div>
   <ion-content class='has-subheader'>
         <ion-refresher on-refresh='refresh()'></ion-refresher>
-         <div class="card card2" ng-repeat = 'dispatch in dispatches'>
+      <ion-list>
+          <ion-item ng-repeat = 'dispatch in dispatches'>
+         <div class="card">
             <div class='item item-divider'>
                 <button class="button button-full button-dark" ng-click='goTo(dispatch.id)'>
                 {{dispatch.id}}</button>
@@ -18,5 +20,11 @@
                 </div>
             </div>
          </div>
+              </ion-item>
+      </ion-list>
+        <ion-infinite-scroll immediate-check=false
+                             on-infinite="loadMore()"
+                             distance="20%">
+        </ion-infinite-scroll>
       </ion-content>
 </ion-view>

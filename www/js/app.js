@@ -12,9 +12,23 @@
     var db =  {      // rows with test data
         dispatchrows: [
             {id: "N104", description: "CJ-TUBE-0140", date: "D040915", status: "incoming"},
-            {id: "N105", description: "CJ-TUBE-0141", date: "D040915", status: "checked with errors"},
-            {id: "N106", description: "CJ-TUBE-0142", date: "D040915", status: "partially checked"},
-            {id: "N107", description: "CJ-TUBE-0143", date: "D040915", status: "checked"}
+            {id: "N105", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
+            {id: "N106", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
+            {id: "N107", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
+            {id: "N108", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
+            {id: "N109", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
+            {id: "N110", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
+            {id: "N111", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
+            {id: "N112", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
+            {id: "N113", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
+            {id: "N114", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
+            {id: "N115", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
+            {id: "N116", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
+            {id: "N117", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
+            {id: "N118", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
+            {id: "N119", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
+            {id: "N120", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
+            {id: "N121", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"}
         ],
         palletrows: [
             {id:"S376", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
@@ -36,7 +50,23 @@
             {id:"S392", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
             {id:"S393", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
             {id:"S394", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S395", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"}]
+            {id:"S395", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S999", did:"N105", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S998", did:"N105", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S997", did:"N105", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S996", did:"N105", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S1", did:"N106", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S2", did:"N106", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S3", did:"N107", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S4", did:"N107", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S5", did:"N108", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S6", did:"N109", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S7", did:"N109", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S8", did:"N110", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S9", did:"N111", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S10", did:"N111", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
+            {id:"S11", did:"N112", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
+            {id:"S12", did:"N113", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"}]
             }
      var db2 =  {      // rows with test data
         dispatchrows: [
@@ -155,7 +185,6 @@
                 historyRoot: true
                 });
  
-            
             $state.go('menu.home');
         }
     }, 201);
@@ -230,6 +259,9 @@
                   },
                   count: function(DataStorage, $stateParams){
                       return function(){ return DataStorage.getCount($stateParams.dispatchId)};
+                  },
+                  dispatchCheck: function(DataStorage){
+                      return function(id){return DataStorage.checkDispatchStatus(id)}
                   }
               }
           }

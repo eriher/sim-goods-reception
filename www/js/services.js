@@ -37,7 +37,6 @@
         }
     }
 })
-
 .factory('ScanService', function($q){
         
         var scan = function(){
@@ -45,11 +44,11 @@
         var deferred = $q.defer();
         try {
             cordova.plugins.barcodeScanner.scan(
-                function (result) {  // success
-                    deferred.resolve(result);
+                function (success) {
+                    deferred.resolve(success);
                 }, 
-                function (error) {  // failure
-                    deferred.rejet(error.toString());
+                function (fail) {
+                    deferred.reject(fail.toString());
                 }
             );
         }
@@ -212,7 +211,7 @@
             }
         }
 }) 
-.factory('DataStorage', function($q, NetworkService){
+.factory('DataStorage', function($q, NetworkService, ToastService){
         var data;
         var updateLocalStorage = function() {
         window.localStorage['data'] = JSON.stringify(data);
@@ -232,6 +231,18 @@
                 }
         return [count,pallets.length];
     }
+    var checkDispatchStatus = function(id) {
+        var count =  getCount(id);
+        if(count[0]==count[1])
+        {
+            for(dispatch in data.dispatchrows)
+                if(data.dispatchrows[dispatch].id == id)
+                {
+                    data.dispatchrows[dispatch].status = "checked";
+                    ToastService.toast("Dispatch:"+id+" marked as checked");
+                }
+        }
+    }
     var getDispatchesCount = function(){
             var pallets = [];
             for(var dispatch in data.dispatchrows)
@@ -248,6 +259,20 @@
                 pallets.push(data.palletrows[i])
         return pallets;
     }
+    var palletExist = function(id) {
+        var pallets = data.palletrows
+        for(pallet in pallets)
+            if(pallets[pallet].id == id)
+                return [id,pallets[pallet].did]
+        return null
+    }
+    var dispatchExist = function(id) {
+        var dispatches = data.dispatchrows
+        for(dispatch in dispatches)
+            if(dispatches[dispatch].id == id)
+                return id
+        return null
+    }
     var sync = function() {
         var deferred = $q.defer();
     if(!localStorage.getItem['uncommited'])
@@ -263,6 +288,7 @@
     else
         NetworkService.dbTestData2.then(function(success){
             data = success;
+            localStorage.setItem['uncommited'] = 'true';
             updateLocalStorage();
             deferred.resolve();
         },function(fail){
@@ -286,6 +312,15 @@
         },
         getDispatchesCount: function(){
             return getDispatchesCount();
+        },
+        checkDispatchStatus: function(id){
+            return checkDispatchStatus(id);
+        },
+        palletExist: function(id){
+            return palletExist(id);
+        },
+        dispatchExist: function(id){
+            return dispatchExist(id);
         }
     }
     
