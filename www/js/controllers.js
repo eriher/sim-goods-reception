@@ -257,10 +257,6 @@
     };   
 })
 
-.controller('TomorrowCtrl', function($scope) {
-   
-})
-
 .controller('HistoryCtrl', function($scope, $http, $state) {
     
     $scope.goTo = function(){
@@ -287,19 +283,19 @@
         $ionicHistory.clearCache();
         
         //Check if previously checked in
-        var loggedIn = window.localStorage['loggedIn'] || false;
+        var loggedIn = window.localStorage['loggedIn'] || 'false';
         var user = JSON.parse(window.localStorage['user'] || '{}');
     
         if(loggedIn == 'true'){
             if(typeof user.username != 'undefined' && typeof user.password != 'undefined')
             {
-                //Previously checked in, goes direct to home and picks up new authToken via loginTest
+                //Previously checked in, goes direct to home and picks up new authToken via login()
                 $state.go('menu.home');
                 SigninService.login(user.username, user.password);   
             }
         }
     });
-    
+    //If NOT previously checked in
     $scope.signIn = function(user){
         SigninService.login(user.name, user.password); 
     }
