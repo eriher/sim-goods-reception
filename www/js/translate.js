@@ -49,6 +49,9 @@
     //Signin
     SIGNIN_USERNAME: 'Username',
     SIGNIN_PASSWORD:'Password',
+      
+    //About
+    ABOUT_LICENSE:'Licenses',
     
       
     //Buttons
@@ -110,6 +113,9 @@
     //Signin
     SIGNIN_USERNAME: 'Användarnamn',
     SIGNIN_PASSWORD:'Lösenord',
+      
+    //About
+    ABOUT_LICENSE:'Licenser',
       
     //Buttons
     BUTTON_SIGNIN_SIGN_IN:'Logga in',

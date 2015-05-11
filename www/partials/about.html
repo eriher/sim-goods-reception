@@ -1,21 +1,42 @@
 <ion-view title= "{{'NAVTITLE_ABOUT' | translate }}">
   <ion-content class='has-header'>
-      <button ng-click="changeLanguage('en-US')" translate='BUTTON_LANG_EN'></button>
-      <button ng-click="changeLanguage('sv-SE')" translate='BUTTON_LANG_SE'></button>
       <div class="card">
         <div class="item item-divider" style="text-align: center;">
-            <h2>Licenses</h2>
+            <h1>{{'ABOUT_LICENSE' | translate }}</h1>
         </div>
         <div class="item item-text-wrap">
             <b>Apache License</b>
-            
-            
-            
+                <p></p>
+                <br>
+                <p>Apache license 2.0
+                    <br>
+                    <a href="http://www.apache.org/licenses/LICENSE-2.0.html">http://www.apache.org/licenses/LICENSE-2.0.html</a>
+                </p>
+            <br>
             <b>MIT License</b>
+                <p></p>
+                <br>
+                <p>
+                    Toast
+                    <br>
+                    <a href="https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin">https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin</a>
+                </p>
+                <br>
+                <p></p>
+                <p>
+                    Barcode scanner
+                    <br>
+                    <a href="https://github.com/wildabeast/BarcodeScanner">https://github.com/wildabeast/BarcodeScanner</a>
+                </p>
+                <br>
         </div>
         <div class="item item-divider">
-            I'm a Footer in a Card!
+            <small>Copyright 2015 Apper System AB</small>
         </div>
+      </div>
+      <div class="center_wrapper">
+        <button class="button button-calm" ng-click="changeLanguage('en-US')" translate='BUTTON_LANG_EN'></button>
+        <button class="button button-calm" ng-click="changeLanguage('sv-SE')" translate='BUTTON_LANG_SE'></button>
       </div>
   </ion-content>
 </ion-view>

@@ -131,3 +131,7 @@ add animate-show to class:
 #sortingButton{
     float:right;
 }
+
+.center_wrapper{
+    text-align: center;
+}
