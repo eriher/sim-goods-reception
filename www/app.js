@@ -23,7 +23,8 @@
     'app.homeCtrl',
     'app.signinCtrl',
     'app.aboutCtrl',
-    'app.menuCtrl'
+    'app.menuCtrl',
+    'app.helpCtrl'
 ])
 
 // HTTPBACKEND: This is for testning http calls only!
@@ -253,6 +254,15 @@
           }
       }
   })
+  .state('menu.help', {
+      url: '/help/',
+      views: {
+          'menuContent': {
+              templateUrl: 'help/help.html',
+              controller: 'HelpCtrl'
+          }
+      }
+  })
   .state('menu.pallets', {
       url: '/home/:dispatchId?palletId',
       views: {
@@ -271,6 +281,9 @@
                   },
                   dispatchCheck: function(DataStorage){
                       return function(id){return DataStorage.checkDispatchStatus(id)}
+                  },
+                  palletId: function($stateParams) {
+                      return $stateParams.palletId
                   }
               }
           }
@@ -283,6 +296,7 @@
       templateUrl: 'signin/signin.html',
       controller: 'SigninCtrl'
   })
+
   
   $urlRouterProvider.otherwise('/signin/');
 });

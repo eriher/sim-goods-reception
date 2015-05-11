@@ -1,13 +1,12 @@
 (function(){angular.module('app.palletsCtrl', [])
-.controller('PalletsCtrl', function($scope, $stateParams, $state, Network, $location, $ionicActionSheet, $ionicPopup, $filter, pallets, count, dispatchCheck) {
+.controller('PalletsCtrl', function($scope, $stateParams, $state, Network, $location, $ionicActionSheet, $ionicPopup, $filter, pallets, count, dispatchCheck, palletId) {
 
         $scope.$on('$ionicView.afterEnter', function () {
-            if($stateParams.palletId){
-                var scanned = document.getElementById($stateParams.palletId);
-                scanned.scrollIntoView();
-                angular.element(scanned).scope().showDetails = true;
+            if(palletId){
+                document.getElementById(palletId).scrollIntoView();
             }
-    })
+        })
+        $scope.palletId = palletId;
         $scope.pallets = pallets;
         $scope.count = count();
 

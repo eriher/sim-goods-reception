@@ -19,14 +19,14 @@
               <i ng-class="{'icon ion-minus-circled': showDetails, 'icon ion-plus-circled': !showDetails}"></i>
               </button>
           </div>
-          <div id="accordion" class="item item-text-wrap" ng-show='showDetails'>
+          <div id="accordion" class="item item-text-wrap" ng-show='showDetails || palletId == pallet.id'>
                 <div class="row responsive-sm">
                     <div class="col">{{'PALLETS_ARTICLE_ID'|translate}}: {{pallet.aid}}</div>
                     <div class="col">{{'PALLETS_ORDER_ID'|translate}}: {{pallet.order}}</div>
                     <div class="col">{{'PALLETS_QUANTITY'|translate}}: {{pallet.quantity}}</div>
                     <div class="col">{{'PALLETS_WEIGHT'|translate}}: {{pallet.weight}}</div>
                     <div class="col">{{'PALLETS_STATUS'|translate}}: {{pallet.status}}</div> 
-                    <button class="button button-positive" ng-click="show(pallet)">{{'BUTTON_PALLETS_ADJUST'|translate}}    </button>
+                    <button class="button button-positive" ng-click="show(pallet)">{{'BUTTON_PALLETS_ADJUST'|translate}}</button>
                 </div>
             </div>
         </item>
