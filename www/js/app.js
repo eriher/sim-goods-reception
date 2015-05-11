@@ -200,7 +200,7 @@
  
             $state.go('menu.home');
         }
-    }, 201);
+    }, 140);
 })
 
 .config(function($stateProvider, $urlRouterProvider) {

@@ -2,6 +2,10 @@
 
 .controller('AppCtrl', function($scope, $state, MenuService, ScanService, $ionicHistory, SigninService, $ionicViewSwitcher, DataStorage) {
 
+    $scope.sync = function(){
+        DataStorage.sync();
+        console.log("Syncing")
+    }
     $scope.menuItems = MenuService.items();
     // Kommentera bort userName för testning
     $scope.userName = JSON.parse(window.localStorage['user']).username;
@@ -248,9 +252,6 @@
 .controller('SigninCtrl', function($scope, $state, SigninService, $ionicHistory) {
 
     $scope.$on('$ionicView.beforeEnter', function () {
-        //For navigation, clearHistory
-        $ionicHistory.clearHistory();
-        $ionicHistory.clearCache();
         
         //Check if previously checked in
         var loggedIn = window.localStorage['loggedIn'] || 'false';
@@ -265,6 +266,12 @@
             }
         }
     });
+    
+    //For backbutton
+    $scope.$on('$ionicView.enter', function(){
+        $ionicHistory.clearHistory();
+        $ionicHistory.clearCache();
+    })
     //If NOT previously checked in
     $scope.signIn = function(user){
         SigninService.login(user.name, user.password); 

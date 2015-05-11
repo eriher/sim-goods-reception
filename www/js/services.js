@@ -189,7 +189,7 @@
             })
             .error(function(data, status, headers, config){
                 ToastService.toast('Login failed, HTTP-status: '+status)
-                alert('test toast')
+                alert('NetworkService: test toast')
                 deferred.reject("error");
             }) 
             return deferred.promise;
