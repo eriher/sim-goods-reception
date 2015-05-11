@@ -160,7 +160,7 @@
     
 })
 
-.run(function($rootScope, $ionicPlatform, $ionicHistory, $state, $location, $translate) {
+.run(function($rootScope, $ionicPlatform, $ionicHistory, $state, $location, $translate, $ionicPopup) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -197,7 +197,15 @@
     // For Android and Windows phone, controlling the backbutton!
     $ionicPlatform.registerBackButtonAction(function () {
         if ($state.is('menu.home') || $state.is('signin') || $state.is('menu.history') || $state.is('menu.help') || $state.is('menu.about')) {
-            navigator.app.exitApp();
+            var confirmPopup = $ionicPopup.confirm({
+            title: 'Exit',
+            template: 'Are you sure you want to exit?'
+            });
+            confirmPopup.then(function(res) {
+            if(res) {
+                navigator.app.exitApp();
+            } 
+            });
         } 
         else {
             $ionicHistory.nextViewOptions({
