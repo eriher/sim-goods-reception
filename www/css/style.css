@@ -135,3 +135,8 @@ add animate-show to class:
 .center_wrapper{
     text-align: center;
 }
+
+body.platform-windowsphone .scroll-content,
+body.platform-windowsphone8 .scroll-content {
+    overflow: auto;
+}
