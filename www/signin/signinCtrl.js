@@ -2,6 +2,8 @@
 .controller('SigninCtrl', function($scope, $state, Signin, $ionicHistory) {
 
     $scope.$on('$ionicView.beforeEnter', function () {
+        $ionicHistory.clearHistory();
+        $ionicHistory.clearCache();
         
         //Check if previously checked in
         var loggedIn = window.localStorage['loggedIn'] || 'false';
@@ -11,8 +13,11 @@
             if(typeof user.username != 'undefined' && typeof user.password != 'undefined')
             {
                 //Previously checked in, goes direct to home and picks up new authToken via login()
-                $state.go('menu.home');
-                SigninService.login(user.username, user.password);   
+                //alert("Previously checked in")
+                //$state.go('menu.home');
+                
+                //Something wrong, $state.go('menu.home')
+                Signin.login(user.username, user.password);   
             }
         }
     });
@@ -42,7 +47,7 @@
     //Event fires when server returns http 401 (unAuthenticated), tries to login the user again
     $scope.$on('event:auth-loginRequired', function(e, rejection) {
         var user = JSON.parse(window.localStorage['user'] || '{}');
-        SigninService.login(user.username, user.password);
+        Signin.login(user.username, user.password);
   })
 })
 }())
