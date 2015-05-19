@@ -4,25 +4,8 @@
     $scope.$on('$ionicView.enter', function(){
       $scope.counts =  counts();
     })
-    var init = 2;
-    $scope.dispatches = data.dispatchrows.slice(0,init+1);
-    
-    $scope.moreDataCanBeLoaded = function(){
-        return (init<data.dispatchrows.length-1)
-    }
-    $scope.loadMore = function(){
-        if($scope.moreDataCanBeLoaded()){
-            init = init + 1;
-            $scope.dispatches.push(data.dispatchrows[init]);
-        }
-        if($scope.moreDataCanBeLoaded()){
-            init = init + 1;
-            $scope.dispatches.push(data.dispatchrows[init]);
-        }
-        $scope.$broadcast('scroll.infiniteScrollComplete');
-    }
+    $scope.dispatches = data.dispatchrows;
 
-    
     $scope.goTo = function(id) { 
         $state.go('menu.pallets', {dispatchId : id});
     };

@@ -3,7 +3,10 @@
 
         $scope.$on('$ionicView.afterEnter', function () {
             if(palletId){
-                document.getElementById(palletId).scrollIntoView();
+                var element = document.getElementById(palletId);
+                var scope = angular.element(element).scope();
+                scope.showDetails = true;
+                element.scrollIntoView();
             }
         })
         $scope.palletId = palletId;
