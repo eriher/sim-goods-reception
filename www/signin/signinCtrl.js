@@ -1,6 +1,7 @@
 (function(){ angular.module('app.signinCtrl', [])
 .controller('SigninCtrl', function($scope, $state, Signin, $ionicHistory) {
-
+    
+    $scope.me = 5;
     $scope.$on('$ionicView.beforeEnter', function () {
         $ionicHistory.clearHistory();
         $ionicHistory.clearCache();
@@ -27,6 +28,7 @@
         $ionicHistory.clearHistory();
         $ionicHistory.clearCache();
     })
+    
     //If NOT previously checked in
     $scope.signIn = function(user){
         Signin.login(user.name, user.password); 

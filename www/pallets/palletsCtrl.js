@@ -76,6 +76,7 @@
         }
     
     $scope.navTitle= 'Dispatch Id: '+$stateParams.dispatchId;
+    $scope.mess = 5;
     $scope.items =  
         [{
             value: "id",

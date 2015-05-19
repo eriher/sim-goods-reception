@@ -1,99 +1,101 @@
-describe('Controllers', function(){
-    var scope, location, state, stateParams;
+describe('app', function(){
+    var scope, translate, controller, service, mockedFactory;
 
     // load the controller's module
     beforeEach(module('app'));
-    beforeEach(module('app.controllers'));
-    beforeEach(module('app.services'));
     beforeEach(module('app.translate'));
-    beforeEach(module('ionic'));
-    
-   describe('AppCtrl', function(){
+    beforeEach(module('app.services'));
 
-        beforeEach(inject(function($rootScope, $controller, $state, $location) {
+    
+   describe('MenuCtrl', function(){
+
+        beforeEach(inject(function($rootScope, $controller, Menu) {
             scope = $rootScope.$new();
-            $controller('AppCtrl', {$scope: scope});
-            state = $state;
-            location = $location;
+            $controller('MenuCtrl', {$scope: scope});
+            service = Menu;
+            
+            spyOn(Menu,'items').andCallThrough();
         }));
 
         // ==== Tests start here =====
 
 
         // Unit tests:
- 
+       
         it('Unit test: menuItems should be defined',function(){
             expect(scope.menuItems).toBeDefined();
         }); 
-/*
-        it('Unit test: userName should be defined', function(){
-           expect(scope.userName).toBeDefined();
-        });
-*/
-        it('Unit test: Back should not change url if view on home',function(){
-            location.path('/menu/home/').replace();
-            scope.back();
-            expect(location.path()).toEqual('/menu/home/');
-        });
-
-        it('Unit test: Back should change url if view not on home',function(){
-            //location.path('/menu/home/N104').replace();
-            state.go('menu.about')
-            scope.back();
-            expect(state.current.name).toEqual('menu.home');
-        });
-
-
-        // Under development ;)
-        it('Unit test: MenuClick should not change state if click on same', function(){
-            var dest = 'menu.home'
-            scope.menuClick(dest);
-            //console.log(state.current.name)
-            expect(true);
-        })
-    })
-    
-    describe('PalletsCtrl', function(){
-        
-        beforeEach(inject(function($rootScope, $controller) {
-            scope = $rootScope.$new();
-            stateParams = {};
-            stateParams.dispatchId = 5;
-            $controller('PalletsCtrl', {
-                $scope: scope,
-                $stateParams: stateParams
-            });
-           
-            
-        }));
-        
-        // ==== Tests start here =====
-
-
-        // Unit tests:
-        it('Unit test: message should be set',function(){
-            //expect(scope.message).toEqual(5);
-        });
-        
-        it('Unit test: ', function(){
-            
-        });
+       
+        it('Unit test: menuItems should be 5',function(){
+            expect(scope.menuItems.length).toBe(5);
+        }); 
  
-
-    })
-    
-     describe('HomeCtrl', function(){
+        it('Unit test: test toBe',function(){
+            expect(scope.me).toBe(5);
+        });
+       
+        it('Scanbtn should be defined',function(){
+            expect(scope.scanBtn).toBeDefined();
+        })
         
+        it('MenuClick should be defined', function(){
+            expect(scope.menuClick).toBeDefined();
+        })
+        
+        //Integration test
+        it('Integration test', function(){
+           
+            //expect(service.items).toHaveBeenCalled();
+            
+        })
+        
+        
+    })
+      describe('AboutCtrl', function(){
+
         beforeEach(inject(function($rootScope, $controller) {
             scope = $rootScope.$new();
-            $controller('PalletsCtrl', {
-                $scope: scope,
-            });
-        }))
+            $controller('AboutCtrl', {
+                $scope: scope 
+                                     });
+        }));
        
         // ==== Tests start here =====
 
-        // Unit tests:
-        
-     });
+            // Unit tests:
+       
+        it('Unit test: Test toBe',function(){
+            expect(scope.me).toBe(5);
+        }); 
+       
+       //Still needs some work
+        it('Unit test: Test language',function(){
+            expect(scope.changeLanguage).toBeDefined();
+            
+        });  
+   })
+        describe('SigninCtrl', function(){
+
+            beforeEach(inject(function($rootScope, $controller) {
+                scope = $rootScope.$new();
+                $controller('SigninCtrl', {$scope: scope});
+            }));
+
+            // ==== Tests start here =====
+
+
+            // Unit tests:
+            it('Unit test: test toBe',function(){
+                expect(scope.me).toBe(5);
+            });
+            it('Unit test: test toBe',function(){
+                expect(scope.signIn).toBeDefined;
+            }); 
+            
+            // Integration Tests
+            
+            it('Integration test: Login should be called in signin.js', function(){
+                
+            })
+    })
 });

@@ -1,9 +1,10 @@
 (function(){ angular.module('app.menuCtrl', [])
 .controller('MenuCtrl', function($scope, $state, Menu, Scan, $ionicHistory, Signin, $ionicViewSwitcher, DataStorage) {
 
+    $scope.me = 5;
     $scope.menuItems = Menu.items();
     // Kommentera bort userName för testning
-    $scope.userName = JSON.parse(window.localStorage['user']).username;
+    //$scope.userName = JSON.parse(window.localStorage['user']).username;
     
     $scope.back = function() {
             $ionicHistory.nextViewOptions({

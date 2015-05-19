@@ -1,5 +1,6 @@
 (function(){angular.module('app.homeCtrl', ['app.translate'])
 .controller('HomeCtrl', function($scope, $state, DataStorage, $filter, $translate, data, counts) {
+    
     $scope.$on('$ionicView.enter', function(){
       $scope.counts =  counts();
     })

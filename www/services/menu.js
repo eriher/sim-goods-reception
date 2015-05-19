@@ -3,6 +3,10 @@ angular.module('app.services.menu', [])
 
 .factory('Menu', function(){
     var userName = "";
+    
+    var test = function(){
+        return 'hej'
+    }
     var menuItems =
         [{ text: 'MENU_HOME', iconClass: 'icon ion-home', link: 'menu.home'},
          { text: 'MENU_HISTORY',iconClass: 'icon ion-filing', link: 'menu.history'},
@@ -14,6 +18,9 @@ angular.module('app.services.menu', [])
     return {
         items: function() {
             return menuItems;
+        },
+        test: function(){
+            return test;
         }
     }
 })}())
