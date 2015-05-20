@@ -5,6 +5,7 @@
     $scope.$on('$ionicView.beforeEnter', function () {
         $ionicHistory.clearHistory();
         $ionicHistory.clearCache();
+        /* Use for browser 
         
         //Check if previously checked in
         var loggedIn = window.localStorage['loggedIn'] || 'false';
@@ -21,6 +22,8 @@
                 Signin.login(user.username, user.password);   
             }
         }
+        */
+        
     });
     
     //For backbutton

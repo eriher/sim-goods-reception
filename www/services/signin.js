@@ -11,11 +11,27 @@
     var login = function(name, password){
             Network.login(name, password).then(function(data){
             console.log('login success')
-            //if the user data is correct, set it in localStorage(for now)
+            
             user =  { username: name, password: password};
+            //if the user data is correct, set it in localStorage(for now)
+            /* Use for browser
             window.localStorage['user'] = JSON.stringify(user);
+            */
+                
+                
+            //For Intel Security API
+            intel.security.secureStorage.write(    
+                function(){ 
+                    console.log('Intel API write: succesful login');
+                },
+                function(errorObj){
+                    console.log('Intel API write: fail code = '+errorObj.code+', message = '+errorObj.message);
+                },
+                {'id':'1', 'data': JSON.stringify(user)}
+            );  
+            //
+                
             authToken = data.authorizationToken;
-
             storeToken(authToken)
             // Sets the token as header for all requests
             $http.defaults.headers.common.Authorization = authToken;
@@ -34,9 +50,18 @@
     }
         
     var logout = function(){
+    
+        //For Intel Security API
+        intel.security.secureStorage.delete(    
+            function(){console.log('Intel API delete: success');},
+            function(errorObj){console.log('Intel API delete: fail code = '+errorObj.code+', message = '+errorObj.message);},
+            {'id':'1'} 
+        ); 
+        
         authToken = undefined;
         isAuthenticated = false;
-        window.localStorage.clear();
+        //Use for browser
+        //window.localStorage.clear();
         delete $http.defaults.headers.common.Authorization;
     }
     
