@@ -1,9 +1,14 @@
 (function(){angular.module('app.homeCtrl', ['app.translate'])
-.controller('HomeCtrl', function($scope, $state, DataStorage, $filter, $translate, data, counts) {
+.controller('HomeCtrl', function($scope, $state, DataStorage, $filter, $translate, $ionicLoading, data, counts) {
+    
+    $scope.$on('$ionicView.beforeEnter',function(){
+        $ionicLoading.hide()
+    });
     
     $scope.$on('$ionicView.enter', function(){
       $scope.counts =  counts();
-    })
+    });
+    
     $scope.dispatches = data.dispatchrows;
 
     $scope.goTo = function(id) { 

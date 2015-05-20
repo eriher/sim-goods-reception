@@ -1,7 +1,7 @@
 (function() {
     angular.module('app.services.signin', [])
     
-.factory('Signin',  function(Menu, $http, Network, $rootScope){
+.factory('Signin',  function(Menu, $http, Network, $rootScope, $ionicLoading){
     
     var LOCAL_TOKEN_KEY = 'token';
     var isAuthenticated = false;
@@ -11,13 +11,11 @@
     var login = function(name, password){
             Network.login(name, password).then(function(data){
             console.log('login success')
-            
             user =  { username: name, password: password};
             //if the user data is correct, set it in localStorage(for now)
             /* Use for browser
             window.localStorage['user'] = JSON.stringify(user);
             */
-                
                 
             //For Intel Security API
             intel.security.secureStorage.write(    
@@ -35,8 +33,8 @@
             storeToken(authToken)
             // Sets the token as header for all requests
             $http.defaults.headers.common.Authorization = authToken;
-            $rootScope.$broadcast('event:auth-loginConfirmed', status); 
-        
+            $rootScope.$broadcast('event:auth-loginConfirmed', status);
+                
         },function(fail){
             console.log("login fail");
             $rootScope.$broadcast('event:auth-login-failed', status);
@@ -57,11 +55,10 @@
             function(errorObj){console.log('Intel API delete: fail code = '+errorObj.code+', message = '+errorObj.message);},
             {'id':'1'} 
         ); 
-        
+        //
         authToken = undefined;
         isAuthenticated = false;
-        //Use for browser
-        //window.localStorage.clear();
+        window.localStorage.clear();
         delete $http.defaults.headers.common.Authorization;
     }
     

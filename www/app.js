@@ -174,8 +174,7 @@
   });
     
     document.addEventListener("deviceready", onDeviceReady, false);
-    //Get preferred Language and sets it to current language
-    //If preferred language not available in translate.js, use default
+
     function onDeviceReady() {
         
         //For Intel Security API
@@ -218,6 +217,8 @@
         }    
         //
         
+        //Get preferred Language and sets it to current language
+        //If preferred language not available in translate.js, use default
         navigator.globalization.getPreferredLanguage(
         function (language) {
             if(language.value == 'sv-SE' || language.value == 'en-US')

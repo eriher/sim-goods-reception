@@ -50,6 +50,10 @@
     font-size: 32px;
     color : white;
 }
+
+#div_center{
+    text-align: center;
+}
 /*
 .card1 {
     width: 80%;

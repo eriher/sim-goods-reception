@@ -1,5 +1,5 @@
 (function(){ angular.module('app.signinCtrl', [])
-.controller('SigninCtrl', function($scope, $state, Signin, $ionicHistory) {
+.controller('SigninCtrl', function($scope, $state, Signin, $ionicHistory, $ionicLoading) {
     
     $scope.me = 5;
     $scope.$on('$ionicView.beforeEnter', function () {
@@ -23,8 +23,8 @@
             }
         }
         */
-        
     });
+
     
     //For backbutton
     $scope.$on('$ionicView.enter', function(){
@@ -34,19 +34,25 @@
     
     //If NOT previously checked in
     $scope.signIn = function(user){
+        $ionicLoading.show({
+            template: '<p class="item-icon-left">Loading... <ion-spinner icon="spiral"/></p>'
+        })
         Signin.login(user.name, user.password); 
     }
     
     //Event fires when the login has failed   
-    $scope.$on('event:auth-login-failed', function(e, status) {  
+    $scope.$on('event:auth-login-failed', function(e, status) {
+        $ionicLoading.hide()
         alert('SigninCtrl: login failed!');
         $state.go('signin')
     });
     
     //Event fires when the login is confirmed
     $scope.$on('event:auth-loginConfirmed', function() {
-        if($state.is('signin'))
+        if($state.is('signin')){
             $state.go('menu.home');
+        }
+            
     });
     
     //Event fires when server returns http 401 (unAuthenticated), tries to login the user again
