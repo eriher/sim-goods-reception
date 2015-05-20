@@ -7,6 +7,12 @@
                 $scope.showSearch = true;
             }
         })
+        
+        
+        $scope.swipeRight = function(){
+            $scope.$parent.back();
+        }
+        
         $scope.palletId = palletId;
         $scope.pallets = pallets;
         $scope.count = count();
