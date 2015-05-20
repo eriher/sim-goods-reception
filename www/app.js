@@ -160,7 +160,7 @@
     
 })
 
-.run(function($rootScope, $ionicPlatform, $ionicHistory, $state, $location, $translate, $ionicPopup) {
+.run(function($rootScope, $ionicPlatform, $ionicHistory, $state, $location, $translate, $ionicPopup, Signin) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -178,6 +178,46 @@
     //If preferred language not available in translate.js, use default
     function onDeviceReady() {
         
+        //For Intel Security API
+        var instanceID = test;
+        
+        var test = function(){
+          intel.security.secureStorage.read(    
+            function(instanceID){ 
+                console.log('success: instanceID = '+instanceID);
+                var user = getData(instanceID)
+                return instanceID;
+            },
+            function(errorObj){ 
+                console.log('fail: code = '+errorObj.code+', message = '+errorObj.message);
+                return undefined;
+            },
+            {'id':'1'} 
+            );
+        }() 
+        
+        function getData(instanceID){
+            function test(instanceID){
+            intel.security.secureData.getData(    
+                function(data){
+                    var user = JSON.parse(data)
+                    console.log('success: user = '+user.username +' '+ user.password);
+                    console.log('redirect to home')
+                    Signin.login(user.username,user.password);
+                    //intel.xdk.device.hideSplashScreen();
+                    return user;
+                }, 
+                function(errorObj){ 
+                    console.log('fail: code = '+errorObj.code+', message = '+errorObj.message);
+                    return undefined;
+                }, 
+                instanceID // Valid secure data instance ID
+                );      
+            }
+            return test(instanceID);
+        }    
+        //
+        
         navigator.globalization.getPreferredLanguage(
         function (language) {
             if(language.value == 'sv-SE' || language.value == 'en-US')
@@ -192,6 +232,7 @@
             console.log ('Error getting language, using default..\n');
         }
         );
+
     };
     
     // For Android and Windows phone, controlling the backbutton!
