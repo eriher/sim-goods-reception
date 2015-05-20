@@ -1,11 +1,27 @@
 <ion-view title= "{{'NAVTITLE_HOME' | translate }}">
-    <div class="bar bar-subheader">
-        <h2 class="title">{{today | date: mediumDate}}</h2>
+    <div class="bar bar-subheader item-input-inset">
+          <i class="icon ion-search placeholder-icon" ng-click="showSearch= !showSearch; searchText = ''" f></i>
+        <div class="item-input-wrapper" ng-show="showSearch">
+            <input type="search" placeholder="Search" ng-model="searchText">
+            <i ng-show="searchText.length > 0" ng-click="searchText = ''" class="icon ion-close"></i>
+        </div>
+        <!--
+        <button class="button button-clear" ng-click="showSearch = !showSearch">
+            <i class="icon ion-search placeholder-icon"></i>
+          </button>
+        <h2 class="title" ng-show="!showSearch">{{today | date: mediumDate}}</h2>
+        <label class="item-input-wrapper" ng-show="showSearch">
+            <input type="search" placeholder="Search" ng-model="searchText">
+          </label>
+          <button class="button button-clear" ng-show="showSearch" ng-click="searchText=''">
+            Clear
+          </button>-->
     </div>
   <ion-content class='has-subheader'>
         <ion-refresher on-refresh='refresh()'></ion-refresher>
       <ion-list>
-         <div class="card" collection-repeat = 'dispatch in dispatches'>
+          <ion-item collection-repeat="dispatch in dispatches | filter:searchText">
+         <div class="card" >
             <div class='item item-divider'>
                 <button class="button button-full button-dark" ng-click='goTo(dispatch.id)'>
                 {{dispatch.id}}</button>
@@ -19,6 +35,7 @@
                 </div>
             </div>
          </div>
+          </ion-item>
       </ion-list>
       </ion-content>
 </ion-view>

@@ -1,25 +1,23 @@
 <ion-view view-title={{navTitle}}>
-    <div class="bar bar-subheader">
+    <div class="bar bar-subheader item-input-inset">
         {{'HOME_CHECKED_PALLETS'|translate}} {{count}}
+                <i class="icon ion-search placeholder-icon" ng-click="showSearch = !showSearch; searchText = ''"></i>
+        <div class="item-input-wrapper" ng-show="showSearch">
+            <input type="search" placeholder="Search" ng-model="searchText">
+            <i ng-show="searchText.length > 0" ng-click="searchText = ''" class="icon ion-close"></i>
+        </div>
     </div>
-  <ion-content class="has-subheader" overflow-scroll="true">
-     <div class="item item-input item-select">
-    <div class="input-label">
-      {{'PALLETS_SORTING'|translate}}
-    </div>
-        <button id="sortingButton" class="button button-icon button-clear" ng-click="reverse = !reverse"><i class="ion-arrow-down-b"></i><i class="ion-arrow-up-b"></i></button>
-        <select ng-options="item.label | translate for item in items" ng-model="sort"></select>
-  </div>
+  <ion-content class="has-subheader">
     <ion-list>
-        <item ng-repeat = "pallet in pallets | orderBy:sort.value:reverse" id="{{pallet.id}}">
+        <item ng-repeat = "pallet in pallets | filter:searchText" id="{{pallet.id}}">
           <div class="item item-divider" ng-click= "showDetails = !showDetails">
               <div ng-class="pallet.status"></div>
                       {{'PALLETS_PALLET'|translate}}: {{pallet.id}}
-              <button id='button_showDetails' class="button button-icon button-clear">
+              <button class="button button-icon button-clear float_right">
               <i ng-class="{'icon ion-minus-circled': showDetails, 'icon ion-plus-circled': !showDetails}"></i>
               </button>
           </div>
-          <div id="accordion" class="item item-text-wrap" ng-show='showDetails'>
+          <div id="accordion" class="item item-text-wrap" ng-if='showDetails'>
                 <div class="row responsive-sm">
                     <div class="col">{{'PALLETS_ARTICLE_ID'|translate}}: {{pallet.aid}}</div>
                     <div class="col">{{'PALLETS_ORDER_ID'|translate}}: {{pallet.order}}</div>

@@ -3,10 +3,8 @@
 
         $scope.$on('$ionicView.afterEnter', function () {
             if(palletId){
-                var element = document.getElementById(palletId);
-                var scope = angular.element(element).scope();
-                scope.showDetails = true;
-                element.scrollIntoView();
+                $scope.searchText = palletId;
+                $scope.showSearch = true;
             }
         })
         $scope.palletId = palletId;
@@ -80,37 +78,7 @@
     
     $scope.navTitle= 'Dispatch Id: '+$stateParams.dispatchId;
     $scope.mess = 5;
-    $scope.items =  
-        [{
-            value: "id",
-            label: "PALLETS_PALLET_ID"},
-        {
-            value: "aid",
-            label: "PALLETS_ARTICLE_ID"
-         },
-          {
-             value: "order",
-             label: "PALLETS_ORDER_ID"
-          },
-         {
-            value: "quantity",
-            label: "PALLETS_QUANTITY"
-          },
-          {
-             value: "weight",
-             label: "PALLETS_WEIGHT"
-          },
-         {
-             value: "status",
-             label: "PALLETS_STATUS"
-         }
-         ]
-    $scope.sort = $scope.items[0];
     
-    $scope.goTo = function(id2) {
-        console.log(id2);
-        $state.go('menu.pallet', {dispatchId: id, palletId : id2 });
-    }
     
 })
 }())
