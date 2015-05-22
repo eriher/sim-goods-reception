@@ -65,24 +65,27 @@
     }
     var sync = function() {
         var deferred = $q.defer();
+        console.log("sync");
+        var customerIDS = JSON.parse(window.localStorage['customerIDS']);
+        for(customer in customerIDS)
     if(!localStorage.getItem['uncommited'])
-        Network.dbTestData().then(function(success){
+        Network.dbTestData(customerIDS[customer]).then(function(success){
             deferred.resolve();
-            console.log("data storage success"+success.dispatchrows);
-            data = success;
+            for(item in success)
+            data.push(success[item]);
             updateLocalStorage();
         },function(fail){
             deferred.reject();
             console.log("server responded some error");
         })
     else
-        Network.dbTestData2.then(function(success){
+        Network.dbTestData().then(function(success){
             data = success;
             localStorage.setItem['uncommited'] = 'true';
             updateLocalStorage();
             deferred.resolve();
         },function(fail){
-            data = localStorage.getItem['localsim'];
+            data = localStorage.getItem['data'];
             deferred.reject();
         })
         return deferred.promise

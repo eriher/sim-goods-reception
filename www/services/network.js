@@ -3,7 +3,7 @@
 
 .factory('Network', function($http, $q, Toast){
         
-        var dbTestData = function(){
+        var dbTestData2 = function(){
             var deferred = $q.defer();
             $http.get('https://database').success(function(success){
                 console.log("dbtestdata success")
@@ -26,42 +26,48 @@
     }
         var dbSync = function() {
             console.log("sync");
-            var deferred = $q.defer();
-            dbPost();
+            //var deferred = $q.defer();
+            //dbPost();
             return dbTestData2();
             
         }
-        var dbTestData2 = function(){
+        var dbTestData = function(customerID){
             var deferred = $q.defer();
-            $http.get('https://database2', {data: window.localStorage['token']}).success(function(success){
-                deferred.resolve(success.db);
+            $http.get('http://sim.apper.se//wcf.sandbox/Test.svc/REST/Test/getDispatchInfo', {
+                params: {customerID: customerID, token: window.localStorage['token']}
+            }).success(function(success){
+                console.log(success);
+                deferred.resolve(success);
             })
             .error(function(data, status, headers, config){
-                Toast.toast('dbTestData2 failed, HTTP-status: '+status)
-                deferred.reject("error");
+                Toast.toast('getDispatchInfo failed '+status)
+                deferred.reject(status);
             })
             return deferred.promise;
         }
         
         var login = function(name, password){
             var deferred = $q.defer();
-            $http.post('https://login', {username : name , password: password})
+            $http.get('http://sim.apper.se/WCF.Sandbox/Test.svc/REST/Test/login', {
+                params: {username : name , Password: password}
+            })
             .success(function(success){
-
-                deferred.resolve(success);
+                console.log(success);
+                if(success.length > 0)
+                    deferred.resolve(success);
+                else
+                    deferred.reject("bad login");
             })
             .error(function(data, status, headers, config){
-                Toast.toast('Login failed, HTTP-status: '+status)
-                alert('test toast')
-                deferred.reject("error");
+                deferred.reject(status);
             }) 
             return deferred.promise;
         }
     
         
         return{
-            dbTestData: function() {
-                 return dbTestData();
+            dbTestData: function(customerID) {
+                 return dbTestData(customerID);
             },
             dbTestData2: function() {
                 return dbTestData2();

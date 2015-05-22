@@ -16,7 +16,6 @@
 */
 (function(){angular.module('app', [
     'ionic',
-    'ngMockE2E',
     'app.translate',
     'app.services',
     'app.palletsCtrl',
@@ -26,139 +25,6 @@
     'app.menuCtrl',
     'app.helpCtrl'
 ])
-
-// HTTPBACKEND: This is for testning http calls only!
-.run(function($rootScope, $ionicPlatform, $httpBackend, $http) {
-    var token = "NjMwNjM4OTQtMjE0Mi00ZWYzLWEzMDQtYWYyMjkyMzNiOGIy";
-    var db =  {      // rows with test data
-        dispatchrows: [
-            {id: "N104", description: "CJ-TUBE-0140", date: "D040915", status: "incoming"},
-            {id: "N105", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
-            {id: "N106", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
-            {id: "N107", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
-            {id: "N108", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
-            {id: "N109", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
-            {id: "N110", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
-            {id: "N111", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
-            {id: "N112", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
-            {id: "N113", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
-            {id: "N114", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
-            {id: "N115", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
-            {id: "N116", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
-            {id: "N117", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
-            {id: "N118", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
-            {id: "N119", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
-            {id: "N120", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"},
-            {id: "N121", description: "CJ-TUBE-0141", date: "D040915", status: "incoming"}
-        ],
-        palletrows: [
-            {id:"S376", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S377", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S378", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S379", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S380", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S381", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S382", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S383", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S384", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S385", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S386", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S387", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S388", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S389", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S390", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S391", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S392", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S393", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S394", did:"N104", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S395", did:"N104", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S999", did:"N105", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S998", did:"N105", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S997", did:"N105", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S996", did:"N105", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S1", did:"N106", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S2", did:"N106", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S3", did:"N107", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S4", did:"N107", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S5", did:"N108", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S6", did:"N109", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S7", did:"N109", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S8", did:"N110", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S9", did:"N111", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S10", did:"N111", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"},
-            {id:"S11", did:"N112", quantity: 15, weight: "7.5", status: "unchecked", aid:"P407300", order:"AK029250"},
-            {id:"S12", did:"N113", quantity: 80, weight: "40", status: "unchecked", aid:"P407305", order:"AK028890"}]
-            }
-     var db2 =  {      // rows with test data
-        dispatchrows: [
-        ],
-        palletrows: [
-            
-        ]
-            }
-     $httpBackend.whenGET('https://login').respond([{id:1, name: "hej"}]);
-            
-    
-    //Dummy backend, always return 401
-    $httpBackend.whenGET('https://test').respond(function(method, url, data, headers){
-        if(headers.Authorization == 'test'){
-            return [200, {test: 'success'}];
-        }
-        else{
-            return [401];
-        }
-        
-    });
-    
-    //Dummy backend, for login
-    $httpBackend.whenPOST('https://login').respond(function(method, url, data) {
-        var data = angular.fromJson(data);
-        
-        if(data.username=='a' && data.password =='a'){
-            return  [200 , { authorizationToken: token } ];
-        }
-        else{ 
-            return [406];
-        } 
-    });
-    //Dummy backend for getting db
-    $httpBackend.whenGET('https://database').respond(function(method,url,data,headers){
-        if(headers.Authorization == token)
-        {
-            return [200, {db: db}];
-        }
-        else
-            return [403];
-    })
-    $httpBackend.whenGET('https://database2').respond(function(method,url,data,headers){
-        if(headers.Authorization == token)
-        {
-            return [200, {db: db2}];
-        }
-        else
-            return [404];
-    })
-    $httpBackend.whenPOST('https://database').respond(function(method,url,data,headers){
-        var data = angular.fromJson(data);
-        console.log("dbpost"+data.token+data.id)
-        if(headers.Authorization == token)
-        {
-            db2.palletrows.push({id:data.id, did:"N104", quantity: 15, weight: "7.5", status: data.status, aid:"P407300", order:"AK029250"});
-            return [200];
-        }
-        else
-            return [404];
-    })
-    
-
-    $httpBackend.whenGET('https://logout').respond(function(method, url, data) {
-    return [200];
-    });
-
-
-    $httpBackend.whenGET(/.*/).passThrough();
-    
-})
 
 .run(function($rootScope, $ionicPlatform, $ionicHistory, $state, $location, $translate, $ionicPopup, Signin) {
   $ionicPlatform.ready(function() {
@@ -289,7 +155,8 @@
                     return DataStorage.getData()
                 },
                 counts: function(dataReady, DataStorage){
-                    return function(){ return DataStorage.getDispatchesCount()}
+                    return function() { return [0,0]}
+                    //return function(){ return DataStorage.getDispatchesCount()}
                 }
             }
         }

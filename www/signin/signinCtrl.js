@@ -42,6 +42,7 @@
     
     //Event fires when the login has failed   
     $scope.$on('event:auth-login-failed', function(e, status) {
+        console.log("login failed");
         $ionicLoading.hide()
         alert('SigninCtrl: login failed!');
         $state.go('signin')
@@ -49,6 +50,8 @@
     
     //Event fires when the login is confirmed
     $scope.$on('event:auth-loginConfirmed', function() {
+        $ionicLoading.hide();
+        console.log("login confirmed");
         if($state.is('signin')){
             $state.go('menu.home');
         }

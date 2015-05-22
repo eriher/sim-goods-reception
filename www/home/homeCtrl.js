@@ -9,7 +9,7 @@
       $scope.counts =  counts();
     });
     
-    $scope.dispatches = data.dispatchrows;
+    $scope.dispatches = data;
 
     $scope.goTo = function(id) { 
         $state.go('menu.pallets', {dispatchId : id});

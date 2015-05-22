@@ -28,15 +28,16 @@
                 {'id':'1', 'data': JSON.stringify(user)}
             );  
             //
-                
-            authToken = data.authorizationToken;
+            console.log("before storetoken:"+data[0].Token);
+            authToken = data[0].Token;
             storeToken(authToken)
+            window.localStorage.setItem("customerIDS", JSON.stringify(data[0].CustomerID));
             // Sets the token as header for all requests
             $http.defaults.headers.common.Authorization = authToken;
             $rootScope.$broadcast('event:auth-loginConfirmed', status);
                 
         },function(fail){
-            console.log("login fail");
+            console.log("login fail"+fail);
             $rootScope.$broadcast('event:auth-login-failed', status);
         });
     }
