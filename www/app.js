@@ -26,7 +26,7 @@
     'app.helpCtrl'
 ])
 
-.run(function($rootScope, $ionicPlatform, $ionicHistory, $state, $location, $translate, $ionicPopup, Signin) {
+.run(function($rootScope, $ionicPlatform, $ionicHistory, $state, $location, $translate, $ionicPopup, Signin, DataStorage) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -42,47 +42,15 @@
     document.addEventListener("deviceready", onDeviceReady, false);
 
     function onDeviceReady() {
+            //Event fires when server returns http 401 (unAuthenticated), tries to login the user again
         
+        DataStorage.getUserInfo().then(function(success) {
+            Signin.login(success.username, success.password)
+        });
         //For Intel Security API
-        var instanceID = test;
         
-        var test = function(){
-          intel.security.secureStorage.read(    
-            function(instanceID){ 
-                console.log('success: instanceID = '+instanceID);
-                var user = getData(instanceID)
-                return instanceID;
-            },
-            function(errorObj){ 
-                console.log('fail: code = '+errorObj.code+', message = '+errorObj.message);
-                return undefined;
-            },
-            {'id':'1'} 
-            );
-        }() 
-        
-        function getData(instanceID){
-            function test(instanceID){
-            intel.security.secureData.getData(    
-                function(data){
-                    var user = JSON.parse(data)
-                    console.log('success: user = '+user.username +' '+ user.password);
-                    console.log('redirect to home')
-                    Signin.login(user.username,user.password);
-                    //intel.xdk.device.hideSplashScreen();
-                    return user;
-                }, 
-                function(errorObj){ 
-                    console.log('fail: code = '+errorObj.code+', message = '+errorObj.message);
-                    return undefined;
-                }, 
-                instanceID // Valid secure data instance ID
-                );      
-            }
-            return test(instanceID);
-        }    
-        //
-        
+         
+        // 
         //Get preferred Language and sets it to current language
         //If preferred language not available in translate.js, use default
         navigator.globalization.getPreferredLanguage(
@@ -181,17 +149,14 @@
       }
   })
   .state('menu.pallets', {
-      url: '/home/:dispatchId?palletId',
+      url: '/home/:dispatch?palletId',
       views: {
           'menuContent': {
               templateUrl: 'pallets/pallets.html',
               controller: 'PalletsCtrl',
               resolve: {
                   pallets: function(DataStorage, $stateParams){
-                      console.log($stateParams.dispatchId)
-                      var pallets = DataStorage.getPallets($stateParams.dispatchId);
-                      console.log(pallets)
-                      return pallets;
+                      return JSON.parse($stateParams.dispatch);
                   },
                   count: function(DataStorage, $stateParams){
                       return function(){ return DataStorage.getCount($stateParams.dispatchId)};

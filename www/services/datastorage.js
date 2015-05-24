@@ -1,10 +1,32 @@
 (function() {
     angular.module('app.services.dataStorage', [])
 
-.factory('DataStorage', function($q, Network, Toast){
+.factory('DataStorage', function($q, $rootScope, Network, Toast){
         var data = [];
         var updateLocalStorage = function() {
         window.localStorage['data'] = JSON.stringify(data);
+        }
+        
+        var getUserInfo = function() {
+            var deferred = $q.defer();
+            intel.security.secureStorage.read(
+            function(instanceID){
+                return intel.security.secureData.getData(
+                    function(data){
+                        data = JSON.parse(data);
+                        deferred.resolve(data);
+                    }, 
+                    function(errorObj){
+                        console.log('fail: code = '+errorObj.code+', message = '+errorObj.message);
+                    }, instanceID
+
+                ); 
+            },
+            function(errorObj){
+                console.log('fail: code = '+errorObj.code+', message = '+errorObj.message);
+                return undefined;
+            },{'id':'1'})
+            return deferred.promise;
         }
 
         
@@ -65,18 +87,16 @@
     }
     var sync = function() {
         var deferred = $q.defer();
-        console.log("sync");
-        var customerIDS = JSON.parse(window.localStorage['customerIDS']);
-        for(customer in customerIDS)
     if(!localStorage.getItem['uncommited'])
-        Network.dbTestData(customerIDS[customer]).then(function(success){
-            deferred.resolve();
-            for(item in success)
-            data.push(success[item]);
+        Network.dbTestData().then(function(success){
+            console.log(success);
+            for(items in success)
+                for(item in success[items].data)
+                    data.push(success[items].data[item]);
             updateLocalStorage();
+            deferred.resolve();
         },function(fail){
-            deferred.reject();
-            console.log("server responded some error");
+            console.log("fail in datastorage");
         })
     else
         Network.dbTestData().then(function(success){
@@ -114,7 +134,10 @@
         },
         dispatchExist: function(id){
             return dispatchExist(id);
-        }
+        },
+        getUserInfo: function() {
+            return getUserInfo();
+        } 
     }
     
 })

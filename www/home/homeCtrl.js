@@ -34,7 +34,9 @@
     }
     
     $scope.goTo = function(id) { 
-        $state.go('menu.pallets', {dispatchId : id });
+        console.log(id);
+        
+        $state.go('menu.pallets', {dispatch : JSON.stringify(id) });
     }                              
 
     $scope.refresh= function(){

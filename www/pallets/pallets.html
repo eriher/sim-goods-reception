@@ -10,6 +10,7 @@
   <ion-content class="has-subheader">
     <ion-list>
         <item ng-repeat = "pallet in pallets | filter:searchText" id="{{pallet.id}}">
+            {{pallet}}
           <div class="item item-divider" ng-click= "showDetails = !showDetails">
               <div ng-class="pallet.status"></div>
                       {{'PALLETS_PALLET'|translate}}: {{pallet.id}}
