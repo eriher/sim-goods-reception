@@ -37,7 +37,7 @@
         $ionicLoading.show({
             template: '<p class="item-icon-left">Loading... <ion-spinner icon="spiral"/></p>'
         })
-        Signin.login(user.name, user.password); 
+        Signin.login(user.name, user.password);
     }
     
     //Event fires when the login has failed   
