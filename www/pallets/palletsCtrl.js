@@ -1,5 +1,5 @@
 (function(){angular.module('app.palletsCtrl', [])
-.controller('PalletsCtrl', function($scope, $stateParams, $state, Network, $location, $ionicActionSheet, $ionicPopup, $filter, pallets, count, dispatchCheck, palletId) {
+.controller('PalletsCtrl', function($scope, $stateParams, $state, Network, $location, $ionicActionSheet, $ionicPopup, $filter, dispatch, count, dispatchCheck, palletId) {
 
         $scope.$on('$ionicView.afterEnter', function () {
             if(palletId){
@@ -14,11 +14,10 @@
         }
         
         $scope.palletId = palletId;
-        $scope.pallets = pallets;
-        $scope.count = count();
+        $scope.dispatch = dispatch;
 
         $scope.show = function(pallet) {
-            var quantity = pallet.quantity;
+            var quantity = pallet.Item.Qty;
             $scope.adjust = quantity;
                // Show the action sheet
            var hideSheet = $ionicActionSheet.show({
@@ -27,7 +26,7 @@
                        { text: '<i class="icon ion-hammer"></i>'+$filter('translate')('BUTTON_PALLETS_ADJUST')  }
                      ],
                      destructiveText: '<i class="icon ion-nuclear"></i>'+$filter('translate')('BUTTON_PALLETS_LOST'),
-                     titleText: $filter('translate')('BUTTON_PALLETS_STATUS')+': '  +pallet.id,
+                     titleText: $filter('translate')('BUTTON_PALLETS_STATUS')+': '  +pallet.Item.StoolID,
                      cancelText: '<i class="icon ion-sad"></i>'+$filter('translate')('BUTTON_PALLETS_CANCEL'),
                      cancel: function() {
                           hideSheet();
@@ -35,9 +34,9 @@
                      buttonClicked: function(index) {
                          switch(index){
                                  case 0:
+                                        if(pallet.status == "unchecked")
+                                            dispatch.checkedPallets++;
                                         pallet.status = 'confirmed';
-                                        $scope.count = count();
-                                        dispatchCheck(pallet.did);
                                         break;
                                  case 1:
                                         $ionicPopup.show({
@@ -51,18 +50,13 @@
                                                     text: '<b>Confirm</b>',
                                                     type: 'button-positive',
                                                     onTap: function(e) {
-                                                        console.log("tapped"+$scope.adjust);
-                                                      if ($scope.adjust == pallet.quantity) {
-                                                           console.log("prevent");
-                                                        //don't allow the user to close unless he enters wifi password
+                                                      if ($scope.adjust == pallet.Item.Qty) {
                                                         e.preventDefault();
                                                       } else {
-                                                          console.log("adjusted");
-                                                          pallet.weight = (pallet.weight/pallet.quantity)*$scope.adjust;
-                                                          pallet.quantity = $scope.adjust;
+                                                          if(pallet.status == "unchecked")
+                                                            dispatch.checkedPallets++;
+                                                          pallet.Qty = $scope.adjust;
                                                           pallet.status = 'adjusted';
-                                                          $scope.count = count();
-                                                          dispatchCheck(pallet.did);
                                                       }
                                                     }
                                                   }
@@ -71,18 +65,28 @@
                                         break;
                                     
                          }
+                         if(dispatch.checkedPallets == dispatch.numPallets)
+                        {
+                            dispatch.status = "checked";
+                            alert("Dispatch: "+dispatch.dispatch+" has been marked as checked");
+                        }
                        return true;
                      },
                     destructiveButtonClicked: function(){
+                        if(pallet.status == "unchecked")
+                            dispatch.checkedPallets++;
                         pallet.status="lost";
-                        $scope.count = count();
-                        dispatchCheck(pallet.did);
+                        if(dispatch.checkedPallets == dispatch.numPallets)
+                            {
+                                dispatch.status = "checked";
+                                alert("Dispatch: "+dispatch.dispatch+" has been marked as checked");
+                            }
                         return true
                     }
            });
         }
     
-    $scope.navTitle= 'Dispatch Id: '+$stateParams.dispatchId;
+    $scope.navTitle= 'Dispatch Id: '+$stateParams.dispatch;
     $scope.mess = 5;
     
     

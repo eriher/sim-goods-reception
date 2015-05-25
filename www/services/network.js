@@ -3,18 +3,6 @@
 
 .factory('Network', function($http, $q, Toast){
         
-        var dbTestData2 = function(){
-            var deferred = $q.defer();
-            $http.get('https://database').success(function(success){
-                console.log("dbtestdata success")
-                deferred.resolve(success.db);
-            })
-            .error(function(data, status, headers, config){
-                Toast.toast('dbTestData failed, HTTP-status: '+status)
-                deferred.reject("error");
-            })
-            return deferred.promise;
-        }
         var dbPost = function() {
             $http.post('https://database', {id:"S376", status: "checked"}).success(function(success){
                 console.log("postsuccess")
@@ -31,19 +19,14 @@
             return dbTestData2();
             
         }
-        var dbTestData = function(customerID){
-            var deferred = $q.defer();
-            $http.get('http://sim.apper.se//wcf.sandbox/Test.svc/REST/Test/getDispatchInfo', {
-                params: {customerID: customerID, token: window.localStorage['token']}
-            }).success(function(success){
-                console.log(success);
-                deferred.resolve(success);
-            })
-            .error(function(data, status, headers, config){
-                Toast.toast('getDispatchInfo failed '+status)
-                deferred.reject(status);
-            })
-            return deferred.promise;
+        var dbTestData = function(){
+            var customerIDS = JSON.parse(window.localStorage['customerIDS']);
+            var promises = customerIDS.map(function(customerID) {
+                return $http.get('http://sim.apper.se//wcf.sandbox/Test.svc/REST/Test/getDispatchInfo', {
+                    params: {customerID: customerID, token: window.localStorage['token']}
+                })
+            });
+            return $q.all(promises);
         }
         
         var login = function(name, password){
@@ -66,8 +49,8 @@
     
         
         return{
-            dbTestData: function(customerID) {
-                 return dbTestData(customerID);
+            dbTestData: function() {
+                 return dbTestData();
             },
             dbTestData2: function() {
                 return dbTestData2();

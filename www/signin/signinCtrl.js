@@ -63,5 +63,6 @@
         var user = JSON.parse(window.localStorage['user'] || '{}');
         Signin.login(user.username, user.password);
   })
+
 })
 }())
