@@ -108,9 +108,9 @@ describe('app', function(){
             controller = $controller('PalletsCtrl', 
                             {$scope: scope,
                             count: function(){return 2},
-                            pallets:2,
                             dispatchCheck:2,
-                            palletId:2});
+                            palletId:2,
+                            dispatch:2});
         }));
 
         // ==== Tests start here =====
@@ -121,12 +121,6 @@ describe('app', function(){
         });
         it('Unit test: test palletId',function(){
             expect(scope.palletId).toBe(2);
-        });
-        it('Unit test: test pallets',function(){
-            expect(scope.pallets).toBe(2);
-        });
-        it('Unit test: test count',function(){
-            expect(scope.count).toBe(2);
         });
    })
 });
