@@ -10,6 +10,7 @@
     });
     
     $scope.dispatches = data;
+    
 
     $scope.goTo = function(id) { 
         $state.go('menu.pallets', {dispatchId : id});
@@ -35,8 +36,7 @@
     
     $scope.goTo = function(id) { 
         console.log(id);
-        
-        $state.go('menu.pallets', {dispatch : JSON.stringify(id) });
+        $state.go('menu.pallets', {dispatch : id });
     }                              
 
     $scope.refresh= function(){

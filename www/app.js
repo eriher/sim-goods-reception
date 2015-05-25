@@ -155,8 +155,8 @@
               templateUrl: 'pallets/pallets.html',
               controller: 'PalletsCtrl',
               resolve: {
-                  pallets: function(DataStorage, $stateParams){
-                      return JSON.parse($stateParams.dispatch);
+                  dispatch: function(DataStorage, $stateParams){
+                      return DataStorage.getDispatch($stateParams.dispatch);
                   },
                   count: function(DataStorage, $stateParams){
                       return function(){ return DataStorage.getCount($stateParams.dispatchId)};

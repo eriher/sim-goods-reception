@@ -22,13 +22,10 @@
         var dbTestData = function(){
             var customerIDS = JSON.parse(window.localStorage['customerIDS']);
             var promises = customerIDS.map(function(customerID) {
-
                 return $http.get('http://sim.apper.se//wcf.sandbox/Test.svc/REST/Test/getDispatchInfo', {
                     params: {customerID: customerID, token: window.localStorage['token']}
                 })
-
             });
-
             return $q.all(promises);
         }
         

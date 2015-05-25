@@ -64,12 +64,12 @@
         console.log(pallets[0])
             return pallets;
     }
-    var getPallets = function(id) {
-        var pallets= [];
-        for(i in data.palletrows)
-            if(data.palletrows[i].did == id)
-                pallets.push(data.palletrows[i])
-        return pallets;
+    var getDispatch = function(id) {
+        console.log("getpallets"+id)
+        for(var i = 0; i<data.length; i++)
+            if(data[i].dispatch == id)
+                return data[i];
+        return [];
     }
     var palletExist = function(id) {
         var pallets = data.palletrows
@@ -86,30 +86,76 @@
         return null
     }
     var sync = function() {
+        var syncData = [];
         var deferred = $q.defer();
-    if(!localStorage.getItem['uncommited'])
+    if(localStorage.getItem['uncommited'])
+        console.log("uncommited")
+        //Network.post().then(function(succes){return sync()})
+    else{
         Network.dbTestData().then(function(success){
-            console.log(success);
-            for(items in success)
-                for(item in success[items].data)
-                    data.push(success[items].data[item]);
-            updateLocalStorage();
-            deferred.resolve();
+            if(success[0].data[0].DeliveryNoteNumber == "Invalid token")
+            {
+                getUserInfo().then(function(success){
+                    Network.login(success.username, success.password).then(function(data){
+                        window.localStorage.setItem("token", data[0].Token)
+                        return sync()
+                    }, function(fail){
+                        console.log(fail);
+                    })
+                })
+            }
+            else{
+                for(items in success)
+                    for(item in success[items].data)
+                        syncData.push(success[items].data[item]);
+                console.log(syncData);
+                data = sort(syncData);
+                updateLocalStorage();
+                deferred.resolve();
+            }
         },function(fail){
             console.log("fail in datastorage");
         })
-    else
-        Network.dbTestData().then(function(success){
-            data = success;
-            localStorage.setItem['uncommited'] = 'true';
-            updateLocalStorage();
-            deferred.resolve();
-        },function(fail){
-            data = localStorage.getItem['data'];
-            deferred.reject();
-        })
+    }
         return deferred.promise
         }
+    
+        function sort(indata) {
+            console.log("hej");
+            var groups = {};
+
+            for(var i = 0; i < indata.length; i++) {
+                var item = indata[i];
+
+                if(!groups[item.DeliveryNoteNumber]) {
+                    groups[item.DeliveryNoteNumber] = [];
+                }
+
+                groups[item.DeliveryNoteNumber].push({
+                    Item: item,
+                    status: "unchecked"
+                });
+            }
+
+            var result = [];
+
+            for(var x in groups) {
+                if(groups.hasOwnProperty(x)) {
+                    var obj = {};
+                    obj["dispatch"] = x;
+                    obj["status"] = "unchecked";
+                    obj["checkedPallets"] = 0;
+                    obj["numPallets"] = groups[x].length;
+                    obj["customerID"] = (groups[x])[0].Item.CustomerID;
+                    obj["supplierID"] = (groups[x])[0].Item.SupplierID;
+                    obj["pallets"] = groups[x];
+                    result.push(obj);
+                }
+            }
+            console.log(result);
+            return result;
+    }
+    
     return {
         getData : function(){
             return getData();
@@ -117,8 +163,8 @@
         sync : function(){
             return sync();
         },
-        getPallets : function(id) {
-            return getPallets(id);
+        getDispatch : function(id) {
+            return getDispatch(id);
         },
         getCount: function(id){
             return getCount(id);

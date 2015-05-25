@@ -20,21 +20,19 @@
   <ion-content class='has-subheader'>
         <ion-refresher on-refresh='refresh()'></ion-refresher>
       <ion-list>
+          <button ng-click="sort()">Sort test</button>
           <ion-item collection-repeat="dispatch in dispatches | filter:searchText">
          <div class="card" >
             <div class='item item-divider'>
-                <button class="button button-full button-dark" ng-click='goTo(dispatch)'>
-                Delivery: {{dispatch.DeliveryNoteNumber}}</button>
+                <button class="button button-full button-dark" ng-click='goTo(dispatch.dispatch)'>
+                Delivery: {{dispatch.dispatch}}</button>
             </div>
             <div class='item item-text-wrap'>
                 <div class="row responsive-sm">
-                    <div class="col">{{'HOME_DESCRIPTION'|translate}}:{{}}</div>
-                    <div class="col">Supplier ID:{{dispatch.SupplierID}}</div>
-                    <div class="col">Customer ID:{{dispatch.CustomerID}}</div>
-                    <div class="col">{{'HOME_DATE'|translate}}:{{dispatch.date}}</div>
-                    <div class="col">Status:{{}}</div>
-                    <div class="col">{{'HOME_CHECKED_PALLETS'|translate}}:{{counts[$index]}}</div>
-                    <div class="col">{{'HOME_CHECKED_PALLETS'|translate}}:{{dispatch.StoolID}}</div>
+                    <div class="col">Supplier ID : {{dispatch.supplierID}}</div>
+                    <div class="col">Customer ID : {{dispatch.customerID}}</div>
+                    <div class="col">Status : {{dispatch.status}}</div>
+                    <div class="col">{{'HOME_CHECKED_PALLETS'|translate}} : {{dispatch.checkedPallets}} / {{dispatch.numPallets}}</div>
                 </div>
             </div>
          </div>
