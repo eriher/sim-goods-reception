@@ -158,19 +158,12 @@
                   dispatch: function(DataStorage, $stateParams){
                       return DataStorage.getDispatch($stateParams.dispatch);
                   },
-                  count: function(DataStorage, $stateParams){
-                      return function(){ return DataStorage.getCount($stateParams.dispatchId)};
-                  },
-                  dispatchCheck: function(DataStorage){
-                      return function(id){return DataStorage.checkDispatchStatus(id)}
-                  },
                   palletId: function($stateParams) {
                       return $stateParams.palletId
                   }
               }
-          }
-      }
-      
+            }
+        }
   })
   .state('signin', {
       cache: false,

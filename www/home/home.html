@@ -20,7 +20,6 @@
   <ion-content class='has-subheader'>
         <ion-refresher on-refresh='refresh()'></ion-refresher>
       <ion-list>
-          <button ng-click="sort()">Sort test</button>
           <ion-item collection-repeat="dispatch in dispatches | filter:searchText">
          <div class="card" >
             <div class='item item-divider'>

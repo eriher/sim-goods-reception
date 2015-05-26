@@ -34,6 +34,8 @@
     
     //If NOT previously checked in
     $scope.signIn = function(user){
+        $ionicHistory.clearHistory();
+        $ionicHistory.clearCache();
         $ionicLoading.show({
             template: '<p class="item-icon-left">Loading... <ion-spinner icon="spiral"/></p>'
         })

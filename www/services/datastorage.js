@@ -2,7 +2,8 @@
     angular.module('app.services.dataStorage', [])
 
 .factory('DataStorage', function($q, $rootScope, Network, Toast){
-        var data = [];
+        var data = JSON.parse(window.localStorage['data'] || '[]');
+        
         var updateLocalStorage = function() {
         window.localStorage['data'] = JSON.stringify(data);
         }
@@ -33,37 +34,6 @@
     var getData = function() {
         return data;
     }
-    var getCount = function(id) {
-        var pallets = getPallets(id);
-        var count = 0;
-                for(var pallet in pallets){
-                    if (pallets[pallet].status != "unchecked"){
-                        count++;
-                    }      
-                }
-        return [count,pallets.length];
-    }
-    var checkDispatchStatus = function(id) {
-        var count =  getCount(id);
-        if(count[0]==count[1])
-        {
-            for(dispatch in data.dispatchrows)
-                if(data.dispatchrows[dispatch].id == id)
-                {
-                    data.dispatchrows[dispatch].status = "checked";
-                    Toast.toast("Dispatch:"+id+" marked as checked");
-                }
-        }
-    }
-    var getDispatchesCount = function(){
-            var pallets = [];
-            for(var dispatch in data.dispatchrows)
-            {
-                pallets.push(getCount(data.dispatchrows[dispatch].id))
-            }
-        console.log(pallets[0])
-            return pallets;
-    }
     var getDispatch = function(id) {
         console.log("getpallets"+id)
         for(var i = 0; i<data.length; i++)
@@ -88,10 +58,9 @@
     var sync = function() {
         var syncData = [];
         var deferred = $q.defer();
-    if(localStorage.getItem['uncommited'])
-        console.log("uncommited")
+    if(window.localStorage['syncData'])
+        console.log("unsynced data")
         //Network.post().then(function(succes){return sync()})
-    else{
         Network.dbTestData().then(function(success){
             if(success[0].data[0].DeliveryNoteNumber == "Invalid token")
             {
@@ -108,20 +77,17 @@
                 for(items in success)
                     for(item in success[items].data)
                         syncData.push(success[items].data[item]);
-                console.log(syncData);
-                data = sort(syncData);
-                updateLocalStorage();
-                deferred.resolve();
+                structure(syncData);
+                deferred.resolve();     
             }
         },function(fail){
             console.log("fail in datastorage");
+            deferred.reject();
         })
-    }
         return deferred.promise
         }
     
-        function sort(indata) {
-            console.log("hej");
+        function structure(indata) {
             var groups = {};
 
             for(var i = 0; i < indata.length; i++) {
@@ -136,11 +102,17 @@
                     status: "unchecked"
                 });
             }
-
-            var result = [];
+            
+            for(var i = 0; i < data.length; i++){
+                if(groups[data[i].dispatch]){
+                    console.log("found existing dispatch")
+                    delete groups[data[i].dispatch]
+                }
+            }
 
             for(var x in groups) {
                 if(groups.hasOwnProperty(x)) {
+                    console.log("group has dispatch" + x);
                     var obj = {};
                     obj["dispatch"] = x;
                     obj["status"] = "unchecked";
@@ -149,13 +121,22 @@
                     obj["customerID"] = (groups[x])[0].Item.CustomerID;
                     obj["supplierID"] = (groups[x])[0].Item.SupplierID;
                     obj["pallets"] = groups[x];
-                    result.push(obj);
+                    data.push(obj);
                 }
             }
-            console.log(result);
-            return result;
     }
-    
+        var addSyncData = function(dispatch) {
+            console.log("addsyncdata"+dispatch.dispatch);
+            var syncData = JSON.parse(window.localStorage['syncData'] || '[]');
+            var obj = {};
+            obj["DeliveryNoteNumber"] = dispatch.dispatch;
+            obj["pallets"] = [];
+            for(var i = 0; i < dispatch.pallets.length; i++)
+                if(dispatch.pallets[i].status != "checked")
+                    obj.pallets.push({StoolID: dispatch.pallets[i].Item.StoolID, Qty: dispatch.pallets[i].Item.Qty})
+            syncData.push(obj)
+            window.localStorage["syncData"] =  JSON.stringify(syncData);
+        }
     return {
         getData : function(){
             return getData();
@@ -166,15 +147,6 @@
         getDispatch : function(id) {
             return getDispatch(id);
         },
-        getCount: function(id){
-            return getCount(id);
-        },
-        getDispatchesCount: function(){
-            return getDispatchesCount();
-        },
-        checkDispatchStatus: function(id){
-            return checkDispatchStatus(id);
-        },
         palletExist: function(id){
             return palletExist(id);
         },
@@ -183,7 +155,13 @@
         },
         getUserInfo: function() {
             return getUserInfo();
-        } 
+        },
+        addSyncData: function(dispatch) {
+            return addSyncData(dispatch);
+        },
+        updateLocalStorage: function(){
+            return updateLocalStorage();
+        }
     }
     
 })
