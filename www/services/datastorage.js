@@ -79,11 +79,10 @@
         return null
     }
     var dispatchExist = function(id) {
-        var dispatches = data.dispatchrows
-        for(dispatch in dispatches)
-            if(dispatches[dispatch].id == id)
-                return id
-        return null
+        if(getDispatch(id) != [])
+            return true;
+        else
+            return false;
     }
     var sync = function() {
         var syncData = [];
