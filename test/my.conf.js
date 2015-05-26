@@ -20,7 +20,7 @@ module.exports = function(config) {
       '../www/**/*.js',
         '../www/lib/angular-translate.js',
       '../www/lib/angular-mocks.js',
-        '**/controllers.tests.js'
+        '**/services.tests.js'
       //'**/*tests.js'
     ],
 

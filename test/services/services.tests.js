@@ -53,16 +53,17 @@ describe("Services", function(){
     
         });
         
-        it('dbTestData: Should fetch data', function(done) {
+        it('dbTestData: Should fetch item', function(done) {
+            window.localStorage.setItem("customerIDS", '["12323"]');   
             var testData = function(success) {
-              expect(success[1].data).toBe(data);
+              expect(success[0].data[0].item).toBe(data);
             };
 
             var failTest = function(error) {
               expect(error).toBeUndefined();
             };
 
-            httpBackend.expectGET('http://sim.apper.se//wcf.sandbox/Test.svc/REST/Test/getDispatchInfo?customerID=1').respond([200,{data: data}]);
+            httpBackend.expectGET('http://sim.apper.se//wcf.sandbox/Test.svc/REST/Test/getDispatchInfo?customerID=12323').respond([{item: data}]);
         
             service.dbTestData(1)
             .then(testData)
@@ -73,15 +74,17 @@ describe("Services", function(){
         });
         
         it('dbTestData: Should not fetch data', function(done) {
+            window.localStorage.setItem("customerIDS", '["12323"]');
+            
             var testData = function(success) {
-              expect(success[1].data).toBe(null);
+              expect(success[0].data[0].item).toBe(null);
             };
 
             var failTest = function(error) {
               expect(error).toBeUndefined();
             };
 
-            httpBackend.expectGET('http://sim.apper.se//wcf.sandbox/Test.svc/REST/Test/getDispatchInfo?customerID=4001').respond([200,{data: null}]);
+            httpBackend.expectGET('http://sim.apper.se//wcf.sandbox/Test.svc/REST/Test/getDispatchInfo?customerID=12323').respond([{item: null}]);
         
             service.dbTestData(4001)
             .then(testData)
