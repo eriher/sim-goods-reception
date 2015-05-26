@@ -41,11 +41,11 @@
         return [];
     }
     var palletExist = function(id) {
-        var pallets = data.palletrows
-        for(pallet in pallets)
-            if(pallets[pallet].id == id)
-                return [id,pallets[pallet].did]
-        return null
+        for(var i = 0; i<data.length; i++)
+            for(var j = 0; i<data[i].pallets.length; i++)
+                if(id == data[i].pallets[j].Item.StoolID)
+                    return data[i].dispatch;
+        return false;
     }
     var dispatchExist = function(id) {
         if(getDispatch(id) != [])

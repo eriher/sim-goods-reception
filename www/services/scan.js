@@ -15,9 +15,9 @@ angular.module('app.services.scan', [])
                                         $state.go('menu.pallets', {dispatchId : scanId})
                                     break;
                         case 'S' :
-                                    var pallet = DataStorage.palletExist(scanId);    
-                                    if(pallet[0] == scanId)
-                                        $state.go('menu.pallets',{dispatchId: pallet[1], palletId: pallet[0]})
+                                    var result = DataStorage.palletExist(scanId);    
+                                    if(result)
+                                        $state.go('menu.pallets',{dispatchId: result, palletId: scanId})
                                     break;
                 }
             }
