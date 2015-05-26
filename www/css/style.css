@@ -136,3 +136,7 @@ add animate-show to class:
     text-align: center;
 }
 
+.image-blurred-edge {
+    box-shadow: 0 0 8px 8px white inset;
+}
+

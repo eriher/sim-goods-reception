@@ -28,6 +28,7 @@
     NAVTITLE_HOME: 'Home',
     NAVTITLE_HISTORY: 'History',
     NAVTITLE_ABOUT: 'About',
+    NAVTITLE_HELP: 'Help',
       
     //Home --DispatchNotes
     HOME_DESCRIPTION:'Description',
@@ -52,7 +53,22 @@
       
     //About
     ABOUT_LICENSE:'Licenses',
-    
+      
+    //Help
+    HELP_HELP_GUIDE:'Help Guide',
+    HELP_SCANNING: 'Scanning',
+    HELP_SCAN: 'Scan',
+    HELP_CAMERA_BUTTON: 'Camera button',
+    HELP_CHECKING: 'Checking',
+    HELP_CHECK: 'Check',
+    HELP_SYNCING: 'Syncing',
+    HELP_SYNC_BUTTON: 'Sync button',
+    HELP_SYNC_BY_DRAG: 'Sync by drag',
+    HELP_1_1: 'To scan, please press the camera icon in the upper right corner.',
+    HELP_1_2: 'Place the barcode in the center of the view. If unsuccessful, try moving your device back and forth.',
+    HELP_2_1: 'To check a pallet, navigate to the intended pallet and press adjust. Then select the appropriate status.',
+    HELP_3_1: 'To sync, simply press the sync button in the upper left corner.',
+    HELP_3_2: 'To sync, simply drag the content of the home view downwards.',
       
     //Buttons
     BUTTON_SIGNIN_SIGN_IN:'Sign in',
@@ -94,6 +110,7 @@
     NAVTITLE_HOME: 'Hem',
     NAVTITLE_HISTORY: 'Historik',
     NAVTITLE_ABOUT: 'Info',
+    NAVTITLE_HELP: 'Hjälp',
       
     //Home --DispatchNotes
     HOME_DESCRIPTION:'Beskrivning',
@@ -116,6 +133,22 @@
       
     //About
     ABOUT_LICENSE:'Licenser',
+      
+    //Help
+    HELP_HELP_GUIDE:'Hjälp Guide',
+    HELP_SCANNING: 'Scanning',
+    HELP_SCAN: 'Scan',
+    HELP_CAMERA_BUTTON: 'Kamera knapp',
+    HELP_CHECKING: 'Checkning',
+    HELP_CHECK: 'Check',
+    HELP_SYNCING: 'Synkning',
+    HELP_SYNC_BUTTON: 'Synk knapp',
+    HELP_SYNC_BY_DRAG: 'Synk genom drag',
+    HELP_1_1: 'För att scanna, tryck på kamera iconen i det övre högra hörnet.',
+    HELP_1_2: 'Centrera streckkoden i vyn. Om scanning ej lyckas, för din enhet fram och tillbaka över streckkoden.',
+    HELP_2_1: 'För att markera en pall som mottagen, navigera till den aktuella pallen och tryck på justera. Tryck därefter på lämplig status.',
+    HELP_3_1: 'För att synka, tryck på synkknappen i det övre högra hörnet.',
+    HELP_3_2: 'För att synka, drag innehållet på Hemvyn nedåt.',
       
     //Buttons
     BUTTON_SIGNIN_SIGN_IN:'Logga in',
