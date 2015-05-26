@@ -1,5 +1,5 @@
 describe('app', function(){
-    var scope, translate, controller, service, mockedFactory;
+    var scope, translate, controller, service, httpBackend, someServiceMock;
 
     // load the controller's module
     beforeEach(module('app'));
@@ -11,10 +11,9 @@ describe('app', function(){
 
         beforeEach(inject(function($rootScope, $controller, Menu) {
             scope = $rootScope.$new();
-            $controller('MenuCtrl', {$scope: scope});
+            controller = $controller('MenuCtrl', {$scope: scope});
             service = Menu;
             
-            spyOn(Menu,'items').andCallThrough();
         }));
 
         // ==== Tests start here =====
@@ -51,13 +50,11 @@ describe('app', function(){
         
         
     })
-      describe('AboutCtrl', function(){
+   describe('AboutCtrl', function(){
 
         beforeEach(inject(function($rootScope, $controller) {
             scope = $rootScope.$new();
-            $controller('AboutCtrl', {
-                $scope: scope 
-                                     });
+            controller = $controller('AboutCtrl', {$scope: scope});
         }));
        
         // ==== Tests start here =====
@@ -74,28 +71,56 @@ describe('app', function(){
             
         });  
    })
-        describe('SigninCtrl', function(){
-
-            beforeEach(inject(function($rootScope, $controller) {
-                scope = $rootScope.$new();
-                $controller('SigninCtrl', {$scope: scope});
-            }));
-
-            // ==== Tests start here =====
-
-
-            // Unit tests:
-            it('Unit test: test toBe',function(){
-                expect(scope.me).toBe(5);
-            });
-            it('Unit test: test toBe',function(){
-                expect(scope.signIn).toBeDefined;
-            }); 
+   describe('SigninCtrl', function(){
+        beforeEach(inject(function($rootScope, $controller, $q, Signin) {
+            //someServiceMock = jasmine.createSpyObj('Signin', ['login']);
+            //someServiceMock.login.andReturn($q.when('weee'));
             
-            // Integration Tests
+            scope = $rootScope.$new();
+            controller = $controller('SigninCtrl', 
+                {$scope: scope, Signin: Signin});
+        }));
+
+        // ==== Tests start here =====
+
+        // Unit tests:
+        it('Unit test: test me',function(){
+            expect(scope.me).toBe(5);
+        });
+        it('Unit test: test signin',function(){
+            expect(scope.signIn).toBeDefined;
+        }); 
+
+        // Integration Tests
+        it('Integration test: test signIn', function(){
             
-            it('Integration test: Login should be called in signin.js', function(){
-                
-            })
+            var user = {username:'Erik', password:'Olof'}
+            scope.signIn(user);
+            //expect(someServiceMock.login).toHaveBeenCalled();  
+        })
     })
+   describe('palletsCtrl', function(){
+
+        beforeEach(inject(function($rootScope, $controller) {
+            scope = $rootScope.$new();
+            
+            //2 is just for testing
+            controller = $controller('PalletsCtrl', 
+                            {$scope: scope,
+                            count: function(){return 2},
+                            dispatchCheck:2,
+                            palletId:2,
+                            dispatch:2});
+        }));
+
+        // ==== Tests start here =====
+
+        // Unit tests:
+       it('Unit test: test me',function(){
+            expect(scope.me).toBe(5);
+        });
+        it('Unit test: test palletId',function(){
+            expect(scope.palletId).toBe(2);
+        });
+   })
 });

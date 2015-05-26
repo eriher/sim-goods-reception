@@ -8,7 +8,7 @@
             }
         })
         
-        
+        $scope.me = 5;
         $scope.swipeRight = function(){
             $scope.$parent.back();
         }
