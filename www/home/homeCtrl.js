@@ -5,12 +5,7 @@
         $ionicLoading.hide()
     });
     
-    $scope.$on('$ionicView.enter', function(){
-      $scope.counts =  counts();
-    });
-    
     $scope.dispatches = data;
-    
 
     $scope.goTo = function(id) { 
         $state.go('menu.pallets', {dispatchId : id});

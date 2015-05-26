@@ -18,7 +18,7 @@
             //For Intel Security API
             //Comment for tests
             
-            intel.security.secureStorage.write(    
+            intel.security.secureStorage.write(
                 function(){ 
                     console.log('Intel API write: succesful login');
                 },
@@ -60,12 +60,11 @@
             function(){console.log('Intel API delete: success');},
             function(errorObj){console.log('Intel API delete: fail code = '+errorObj.code+', message = '+errorObj.message);},
             {'id':'1'} 
-        ); 
+        );
         //
         authToken = undefined;
         isAuthenticated = false;
         window.localStorage.clear();
-        delete $http.defaults.headers.common.Authorization;
     }
     
     return{

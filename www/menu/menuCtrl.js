@@ -9,8 +9,7 @@
     $scope.back = function() {
             $ionicHistory.nextViewOptions({
                 disableAnimate: true,
-                disableBack: true,
-                historyRoot: true
+                disableBack: true
                 });
  
             $state.go('menu.home')
@@ -23,6 +22,7 @@
         });
         if(dest == 'signin')
         {
+            DataStorage.clearData();
             Signin.logout();
         }
         $state.go(dest);

@@ -72,6 +72,7 @@
                             {
                                 DataStorage.addSyncData(dispatch);
                                 dispatch.status = "checked";
+                                DataStorage.updateLocalStorage();
                                 alert("Dispatch: "+dispatch.dispatch+" has been marked as checked");
                             }
                        return true;
@@ -85,6 +86,7 @@
                             {
                                 DataStorage.addSyncData(dispatch);
                                 dispatch.status = "checked";
+                                DataStorage.updateLocalStorage();
                                 alert("Dispatch: "+dispatch.dispatch+" has been marked as checked");
                             }
                         return true

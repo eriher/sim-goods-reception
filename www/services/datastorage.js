@@ -2,8 +2,7 @@
     angular.module('app.services.dataStorage', [])
 
 .factory('DataStorage', function($q, $rootScope, Network, Toast){
-        var data = JSON.parse(window.localStorage['data'] || '[]');
-        
+        var data = [];
         var updateLocalStorage = function() {
         window.localStorage['data'] = JSON.stringify(data);
         }
@@ -56,6 +55,7 @@
         return null
     }
     var sync = function() {
+        data = JSON.parse(window.localStorage['data'] || '[]');
         var syncData = [];
         var deferred = $q.defer();
     if(window.localStorage['syncData'])
@@ -161,6 +161,9 @@
         },
         updateLocalStorage: function(){
             return updateLocalStorage();
+        },
+        clearData: function() {
+            data = [];
         }
     }
     
