@@ -140,3 +140,6 @@ add animate-show to class:
     box-shadow: 0 0 8px 8px white inset;
 }
 
+img {
+    margin: 10px 0px;
+}
