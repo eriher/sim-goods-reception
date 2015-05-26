@@ -1,13 +1,13 @@
 <ion-view view-title={{navTitle}}>
     <div class="bar bar-subheader item-input-inset">
         {{'HOME_CHECKED_PALLETS'|translate}} {{dispatch.checkedPallets}} / {{dispatch.numPallets}}
-                <i class="icon ion-search placeholder-icon" ng-click="showSearch = !showSearch; searchText = ''"></i>
-        <div class="item-input-wrapper" ng-show="showSearch">
+                <i class="icon ion-search placeholder-icon"></i>
+        <div class="item-input-wrapper">
             <input type="search" placeholder="Search" ng-model="searchText">
             <i ng-show="searchText.length > 0" ng-click="searchText = ''" class="icon ion-close"></i>
         </div>
     </div>
-  <ion-content class="has-subheader">
+  <ion-content class="has-subheader" overflow-scroll="true">
     <ion-list>
         <item ng-repeat = "pallet in dispatch.pallets | filter:searchText" id="{{pallet.id}}">
           <div class="item item-divider" ng-click= "showDetails = !showDetails">

@@ -1,5 +1,5 @@
 (function(){angular.module('app.palletsCtrl', [])
-.controller('PalletsCtrl', function($scope, $stateParams, $state, Network, $location, $ionicActionSheet, $ionicPopup, $filter, dispatch, count, dispatchCheck, palletId) {
+.controller('PalletsCtrl', function($scope, $stateParams, $state, Network, $location, $ionicActionSheet, $ionicPopup, $filter, dispatch, palletId, DataStorage) {
 
         $scope.$on('$ionicView.afterEnter', function () {
             if(palletId){
@@ -15,7 +15,8 @@
         
         $scope.palletId = palletId;
         $scope.dispatch = dispatch;
-
+        $scope.navTitle= 'Dispatch: '+dispatch.dispatch;
+    
         $scope.show = function(pallet) {
             var quantity = pallet.Item.Qty;
             $scope.adjust = quantity;
@@ -37,10 +38,11 @@
                                         if(pallet.status == "unchecked")
                                             dispatch.checkedPallets++;
                                         pallet.status = 'confirmed';
+                                        DataStorage.updateLocalStorage();
                                         break;
                                  case 1:
                                         $ionicPopup.show({
-                                                template: '<input type="number" min="0" ng-model="$parent.adjust">',
+                                                template: '<input type="number" min="1" ng-model="$parent.adjust">',
                                                 title: 'Adjust pallet',
                                                 subTitle: 'Adjust the quantity',
                                                 scope: $scope,
@@ -57,6 +59,7 @@
                                                             dispatch.checkedPallets++;
                                                           pallet.Qty = $scope.adjust;
                                                           pallet.status = 'adjusted';
+                                                          DataStorage.updateLocalStorage();
                                                       }
                                                     }
                                                   }
@@ -65,28 +68,31 @@
                                         break;
                                     
                          }
-                         if(dispatch.checkedPallets == dispatch.numPallets)
-                        {
-                            dispatch.status = "checked";
-                            alert("Dispatch: "+dispatch.dispatch+" has been marked as checked");
-                        }
+                         if(dispatch.checkedPallets == dispatch.numPallets && dispatch.status != "checked")
+                            {
+                                DataStorage.addSyncData(dispatch);
+                                dispatch.status = "checked";
+                                DataStorage.updateLocalStorage();
+                                alert("Dispatch: "+dispatch.dispatch+" has been marked as checked");
+                            }
                        return true;
                      },
                     destructiveButtonClicked: function(){
                         if(pallet.status == "unchecked")
                             dispatch.checkedPallets++;
                         pallet.status="lost";
-                        if(dispatch.checkedPallets == dispatch.numPallets)
+                        DataStorage.updateLocalStorage();
+                        if(dispatch.checkedPallets == dispatch.numPallets && dispatch.status != "checked")
                             {
+                                DataStorage.addSyncData(dispatch);
                                 dispatch.status = "checked";
+                                DataStorage.updateLocalStorage();
                                 alert("Dispatch: "+dispatch.dispatch+" has been marked as checked");
                             }
                         return true
                     }
            });
         }
-    
-    $scope.navTitle= 'Dispatch Id: '+$stateParams.dispatch;
     $scope.mess = 5;
     
     

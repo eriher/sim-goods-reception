@@ -86,8 +86,7 @@
         else {
             $ionicHistory.nextViewOptions({
                 disableAnimate: true,
-                disableBack: true,
-                historyRoot: true
+                disableBack: true
                 });
  
             $state.go('menu.home');
@@ -98,7 +97,8 @@
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
   .state('menu', {
-    url: '/menu',
+      cache: false,
+      url: '/menu',
     abstract: true,
     templateUrl: 'menu/menu.html',
     controller: 'MenuCtrl',
@@ -113,7 +113,8 @@
   })
   
   .state('menu.home', {
-    url: '/home/',
+      cache: false,    
+      url: '/home/',
     views :{
         'menuContent': {
             templateUrl: 'home/home.html',
@@ -131,6 +132,7 @@
     }
   })
   .state('menu.about', {
+      cache: false,
       url: '/about/',
       views: {
           'menuContent': {
@@ -140,6 +142,7 @@
       }
   })
   .state('menu.help', {
+      cache: false,
       url: '/help/',
       views: {
           'menuContent': {
@@ -149,6 +152,7 @@
       }
   })
   .state('menu.pallets', {
+      cache: false,
       url: '/home/:dispatch?palletId',
       views: {
           'menuContent': {
@@ -158,19 +162,12 @@
                   dispatch: function(DataStorage, $stateParams){
                       return DataStorage.getDispatch($stateParams.dispatch);
                   },
-                  count: function(DataStorage, $stateParams){
-                      return function(){ return DataStorage.getCount($stateParams.dispatchId)};
-                  },
-                  dispatchCheck: function(DataStorage){
-                      return function(id){return DataStorage.checkDispatchStatus(id)}
-                  },
                   palletId: function($stateParams) {
                       return $stateParams.palletId
                   }
               }
-          }
-      }
-      
+            }
+        }
   })
   .state('signin', {
       cache: false,
