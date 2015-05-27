@@ -12,13 +12,6 @@
                 console.log("postfail")
             })
     }
-        var dbSync = function() {
-            console.log("sync");
-            //var deferred = $q.defer();
-            //dbPost();
-            return dbTestData2();
-            
-        }
         var dbTestData = function(){
             var customerIDS = JSON.parse(window.localStorage['customerIDS']);
             var promises = customerIDS.map(function(customerID) {
