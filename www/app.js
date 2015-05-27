@@ -42,10 +42,28 @@
     document.addEventListener("deviceready", onDeviceReady, false);
 
     function onDeviceReady() {
-            //Event fires when server returns http 401 (unAuthenticated), tries to login the user again
-        
+                
+        var networkState = navigator.connection.type;
+        var states = {};
+        states[Connection.UNKNOWN]  = 'Unknown connection';
+        states[Connection.ETHERNET] = 'Ethernet connection';
+        states[Connection.WIFI]     = 'WiFi connection';
+        states[Connection.CELL_2G]  = 'Cell 2G connection';
+        states[Connection.CELL_3G]  = 'Cell 3G connection';
+        states[Connection.CELL_4G]  = 'Cell 4G connection';
+        states[Connection.CELL]     = 'Cell generic connection';
+        states[Connection.NONE]     = 'No network connection';
+  
+        //Auto login 
         DataStorage.getUserInfo().then(function(success) {
-            Signin.login(success.username, success.password)
+            if(states[networkState] != 'No network connection'){
+                Signin.login(success.username, success.password)
+            }
+            else{
+                console.log('No internet but saved user! Go home');
+                $rootScope.$broadcast('event:auth-loginConfirmed', status);
+            }
+                 
         });
         //For Intel Security API
         

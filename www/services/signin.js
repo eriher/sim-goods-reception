@@ -10,14 +10,15 @@
     var item =5;
     
     var login = function(name, password){
-            var deferred = $q.defer();
-            Network.login(name, password).then(function(data){
+        
+        var deferred = $q.defer();
+        Network.login(name, password).then(function(data){
             console.log('login success')
             user =  { username: name, password: password};
-                
+
             //For Intel Security API
             //Comment for tests
-            
+
             intel.security.secureStorage.write(    
                 function(){ 
                     console.log('Intel API write: succesful login');
@@ -35,14 +36,15 @@
             // Sets the token as header for all requests
             $http.defaults.headers.common.Authorization = authToken;
             $rootScope.$broadcast('event:auth-loginConfirmed', status);
+
             deferred.resolve(data);
-                
-        },function(fail){
-            console.log("login fail"+fail);
-            $rootScope.$broadcast('event:auth-login-failed', status);
-            deffered.reject(fail);
-        });
-        return deferred.promise;
+
+            },function(fail){
+                console.log("login fail"+fail);
+                $rootScope.$broadcast('event:auth-login-failed', status);
+                deferred.reject(fail);
+            });
+            return deferred.promise;
     }
     
     var storeToken = function(authToken){
