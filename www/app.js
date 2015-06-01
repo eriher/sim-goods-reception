@@ -124,6 +124,10 @@
     controller: 'MenuCtrl',
     resolve: {
         dataReady: function($log,DataStorage){
+            DataStorage.getUserInfo().then(function(success){
+                alert(success.username +' '+ success.password)
+            })
+            
             return DataStorage.sync().then(function(success){
                 $log.log(DataStorage.getData());
                 $log.log("database synced");

@@ -1,6 +1,8 @@
 {
     "jscodehints.detectedExclusions": [
         "C:/Users/Olof/Hybrid apps/sim-goods-reception/www/lib/ionic/js/ionic.bundle.js",
-        "C:/Users/Olof/Hybrid apps/sim-goods-reception/www/services/signin.js"
+        "C:/Users/Olof/Hybrid apps/sim-goods-reception/www/services/signin.js",
+        "C:/Users/Olof/Hybrid apps/sim-goods-reception/platforms/ios/www/lib/ionic/js/ionic.js",
+        "C:/Users/Olof/Hybrid apps/sim-goods-reception/www/services/datastorage.js"
     ]
 }
