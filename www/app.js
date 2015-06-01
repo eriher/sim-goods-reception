@@ -124,7 +124,7 @@
     controller: 'MenuCtrl',
     resolve: {
         dataReady: function($log, DataStorage){
-            return DataStorage.sync().then(function(){
+            return DataStorage.sync().then(function(success){
                 $log.log(DataStorage.getData());
                 $log.log("database synced");
             })
@@ -141,7 +141,9 @@
             controller: 'HomeCtrl',
             resolve: {
                 data: function(dataReady, DataStorage){
-                    return DataStorage.getData()
+                    return function() {
+                        return DataStorage.getData()
+                    };
                 }
             }
         }
