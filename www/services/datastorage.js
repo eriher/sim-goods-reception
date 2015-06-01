@@ -4,7 +4,7 @@
 .factory('DataStorage', function($q, $rootScope, Network, Toast){
         var data = [];
         var updateLocalStorage = function() {
-        window.localStorage['data'] = JSON.stringify(data);
+            window.localStorage['data'] = JSON.stringify(data);
         }
         
         var getUserInfo = function() {
@@ -80,9 +80,9 @@
                 })
             }
             else{
-                for(items in success)
-                    for(item in success[items].data)
-                        syncData.push(success[items].data[item]);
+                for(var i =0; i < success.length; i++)
+                    for(var j =0; j < success[i].data.length; j++)
+                        syncData.push(success[i].data[j]);
                 structure(syncData);
                 deferred.resolve();     
             }
@@ -90,7 +90,7 @@
             console.log("fail in datastorage");
             deferred.reject();
         })
-    }
+    }   
         return deferred.promise
         }
     
@@ -131,6 +131,8 @@
                     data.push(obj);
                 }
             }
+            
+  
             updateLocalStorage();
     }
         var addSyncData = function(dispatch) {

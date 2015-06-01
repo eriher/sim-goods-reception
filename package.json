@@ -26,5 +26,10 @@
     "nl.x-services.plugins.toast",
     "org.apache.cordova.globalization"
   ],
-  "cordovaPlatforms": []
+  "cordovaPlatforms": [
+    {
+      "platform": "android",
+      "locator": "wp8"
+    }
+  ]
 }
