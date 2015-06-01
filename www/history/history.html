@@ -2,7 +2,6 @@
     <div class="bar bar-subheader item-input-inset">
         <select ng-options="item.label | translate for item in items" ng-model="type">
             </select>
-          <i class="icon ion-search placeholder-icon"></i>
         <div class="item-input-wrapper">
             <input type="search" placeholder="Search" ng-model="text">
             <i ng-show="text.length > 0" ng-click="text = ''" class="icon ion-close"></i>

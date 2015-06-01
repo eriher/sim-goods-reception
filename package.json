@@ -30,6 +30,7 @@
     {
       "platform": "android",
       "locator": "wp8"
+
     }
   ]
 }

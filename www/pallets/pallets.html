@@ -8,7 +8,7 @@
             <i ng-show="text.length > 0" ng-click="text = ''" class="icon ion-close"></i>
         </div>
     </div>
-  <ion-content class="has-subheader" overflow-scroll="true">
+  <ion-content class="has-subheader has-footer" overflow-scroll="true">
     <ion-list>
         <item ng-repeat = "pallet in dispatch.pallets | filter:text | searchFilter:text:type">
           <div class="item item-divider" ng-click= "showDetails = !showDetails">
@@ -30,7 +30,7 @@
         </item>
       </ion-list>
     </ion-content>
-    <div class="bar bar-footer bar-balanced">
+              <div class="bar bar-footer bar-stable">
   <div class="title"> {{'HOME_CHECKED_PALLETS'|translate}} {{dispatch.checkedPallets}} / {{dispatch.numPallets}}</div>
 </div>
 </ion-view>

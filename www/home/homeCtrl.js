@@ -5,7 +5,7 @@
         $ionicLoading.hide()
     });
     
-    $scope.dispatches = data;
+    $scope.dispatches = data();
                                  
     $scope.goTo = function(id) {
         console.log(id);
@@ -37,6 +37,7 @@
     $scope.refresh= function(){
         DataStorage.sync().then(function(success){
             $scope.$broadcast('scroll.refreshComplete');
+            $scope.dispatches = data();
         });
     };
 })

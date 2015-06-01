@@ -123,11 +123,10 @@
     templateUrl: 'menu/menu.html',
     controller: 'MenuCtrl',
     resolve: {
-        dataReady: function($log,DataStorage){
+        dataReady: function($log, DataStorage){
             DataStorage.getUserInfo().then(function(success){
                 alert(success.username +' '+ success.password)
             })
-            
             return DataStorage.sync().then(function(success){
                 $log.log(DataStorage.getData());
                 $log.log("database synced");
@@ -145,7 +144,9 @@
             controller: 'HomeCtrl',
             resolve: {
                 data: function(dataReady, DataStorage){
-                    return DataStorage.getData()
+                    return function() {
+                        return DataStorage.getData()
+                    };
                 }
             }
         }
