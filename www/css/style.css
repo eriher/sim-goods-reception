@@ -143,3 +143,12 @@ add animate-show to class:
 img {
     margin: 10px 0px;
 }
+
+.error_red{
+    background-color: red;
+}
+
+.error_input {  
+    border-bottom: 2px solid red;
+}
+

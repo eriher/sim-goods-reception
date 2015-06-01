@@ -6,17 +6,20 @@
                             <img src="http://upload.wikimedia.org/wikipedia/commons/1/1f/Logo_SIM.png" alt="Smiley face" height="128" width="128" >
                     </div>
                 <div class="list" id="icon_white">
-                    <label class="item item-input item-floating-label">
+                    <label id="name_label" class="item item-input item-floating-label ">
                         <span class="input-label">{{ 'SIGNIN_USERNAME' | translate }}</span>
                         <input id="name" type="text" ng-model="name" placeholder="{{'SIGNIN_USERNAME' | translate }}">
                     </label>
-                    <label class="item item-input item-floating-label">
+                    <label id="pw_label" class="item item-input item-floating-label ">
                         <span class="input-label">{{ 'SIGNIN_PASSWORD' | translate }}</span>
                         <input id="pw" ng-model="password" type="password" placeholder="{{'SIGNIN_PASSWORD' | translate }}">
                     </label>
                 </div>
+                <div ng-show="error" class="center_wrapper">
+                    <font color="red">Username or password is to short!</font>
+                </div>
                 <div class="center_wrapper">
-                    <button class="button button-full button-balanced" ng-disabled="!name || !password || name.length < 4 || password.length < 4 " ng-click="signIn(name, password)">{{ 'BUTTON_SIGNIN_SIGN_IN' | translate }}</button>
+                    <button class="button button-full button-balanced" ng-disabled="!name || !password" ng-click="signIn(name, password)">{{ 'BUTTON_SIGNIN_SIGN_IN' | translate }}</button>
                 </div>
             </div>
         </div>

@@ -2,20 +2,19 @@
 .controller('SigninCtrl', function($scope, $state, Signin, $ionicHistory, $ionicLoading) {
     
     $scope.me = 5;
-    
-    
-    
-    
+    $scope.errror = false;
     
     $scope.signIn = function(name, password){
-        if(name.length<5){
-            
+        if(name.length<4 || password.length<4){
+            $scope.error = true;
         }
-        
+        else{
+            $scope.error = false;
             $ionicLoading.show({
             template: '<p class="item-icon-left">Loading... <ion-spinner icon="spiral"/></p>'
             })
-            Signin.login(name,password);    
+            Signin.login(name,password);  
+        }
     }
     
     //Event fires when the login has failed   
