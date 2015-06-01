@@ -38,17 +38,17 @@
         for(var i = 0; i<data.length; i++)
             if(data[i].dispatch == id)
                 return data[i];
-        return [];
+        return null;
     }
     var palletExist = function(id) {
         for(var i = 0; i<data.length; i++)
             for(var j = 0; i<data[i].pallets.length; i++)
                 if(id == data[i].pallets[j].Item.StoolID)
                     return data[i].dispatch;
-        return false;
+        return null;
     }
     var dispatchExist = function(id) {
-        if(getDispatch(id) != [])
+        if(getDispatch(id))
             return true;
         else
             return false;
@@ -57,9 +57,16 @@
         data = JSON.parse(window.localStorage['data'] || '[]');
         var syncData = [];
         var deferred = $q.defer();
-    if(window.localStorage['syncData'])
+    if(window.localStorage['syncData']){
         console.log("unsynced data")
-        //Network.post().then(function(succes){return sync()})
+        Network.post().then(function(succes){
+            moveToSynced();
+            window.localStorage.removeItem('syncData');
+            deferred.resolve();
+            //return sync();
+        })
+    }
+    else{
         Network.dbTestData().then(function(success){
             if(success[0].data[0].DeliveryNoteNumber == "Invalid token")
             {
@@ -83,6 +90,7 @@
             console.log("fail in datastorage");
             deferred.reject();
         })
+    }
         return deferred.promise
         }
     
@@ -123,18 +131,42 @@
                     data.push(obj);
                 }
             }
+            updateLocalStorage();
     }
         var addSyncData = function(dispatch) {
             console.log("addsyncdata"+dispatch.dispatch);
             var syncData = JSON.parse(window.localStorage['syncData'] || '[]');
             var obj = {};
             obj["DeliveryNoteNumber"] = dispatch.dispatch;
-            obj["pallets"] = [];
+            var pallets = [];
             for(var i = 0; i < dispatch.pallets.length; i++)
-                if(dispatch.pallets[i].status != "checked")
-                    obj.pallets.push({StoolID: dispatch.pallets[i].Item.StoolID, Qty: dispatch.pallets[i].Item.Qty})
+                if(dispatch.pallets[i].status != "confirmed")
+                   pallets.push({StoolID: dispatch.pallets[i].Item.StoolID, Qty: dispatch.pallets[i].Item.Qty})
+            if(pallets.length > 0)
+                obj["pallets"] = [];
             syncData.push(obj)
             window.localStorage["syncData"] =  JSON.stringify(syncData);
+        }
+        
+        var moveToSynced = function(){
+            console.log("moveToSynced")
+            var syncData = JSON.parse(window.localStorage['syncData']);
+            var history = JSON.parse(window.localStorage['history'] || '[]')
+            for(var i = 0; i < data.length; i++)
+            {
+                if(syncData.some(function(item){
+                    return item.DeliveryNoteNumber == data[i].dispatch
+                }))
+                    history.push(data.splice(i,1)[0]);
+                console.log(data);
+            }
+            updateLocalStorage();
+            console.log("store history")
+            window.localStorage['history'] = JSON.stringify(history);
+        }
+        
+        var getHistory = function() {
+            return JSON.parse(window.localStorage['history'] || '[]')
         }
     return {
         getData : function(){
@@ -163,6 +195,9 @@
         },
         clearData: function() {
             data = [];
+        },
+        getHistory: function(){
+            return getHistory();
         }
     }
     

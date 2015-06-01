@@ -1,10 +1,10 @@
 (function(){angular.module('app.palletsCtrl', [])
-.controller('PalletsCtrl', function($scope, $stateParams, $state, Network, $location, $ionicActionSheet, $ionicPopup, $filter, dispatch, palletId, DataStorage) {
+.controller('PalletsCtrl', function($scope, $stateParams, $state, Network, $location, $ionicActionSheet, $ionicPopup, $filter, dispatch, pallet, DataStorage) {
 
         $scope.$on('$ionicView.afterEnter', function () {
-            if(palletId){
-                $scope.searchText = palletId;
-                $scope.showSearch = true;
+            if(pallet){
+                    $scope.text = pallet;
+                    $scope.type = $scope.items[1];
             }
         })
         
@@ -13,7 +13,6 @@
             $scope.$parent.back();
         }
         
-        $scope.palletId = palletId;
         $scope.dispatch = dispatch;
         $scope.navTitle= 'Dispatch: '+dispatch.dispatch;
     
@@ -93,6 +92,29 @@
                     }
            });
         }
+        
+        $scope.items =  
+        [{
+            value: "",
+            label: "---"
+        },
+         {
+            value: "stoolID",
+            label: "stoolID"
+        },
+        {
+            value: "status",
+            label: "status"
+         },
+          {
+             value: "supplierID",
+             label: "supplier"
+          },
+         {
+             value: "customerID",
+             label: "customerID"
+         }]
+         $scope.type = $scope.items[0];
     $scope.mess = 5;
     
     

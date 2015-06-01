@@ -1,29 +1,38 @@
 (function() {
 angular.module('app.services.scan', [])
 
-.factory('Scan', function(){
-        
-        var scan = function(){
+.factory('Scan', function($state, DataStorage){
+    
+    var scan = function(){
         try {
             cordova.plugins.barcodeScanner.scan(
                 function (success) {
                     if(!success.cancelled){
-                var scanId = result.text;
-                switch(scanId.charAt(0)) {
-                        case 'N' :
+                        var scanId = success.text;
+                        switch(scanId.charAt(0)) {
+                                case 'N' :
+                                    scanId = scanId.replace('N','');
                                     if(DataStorage.dispatchExist(scanId))
-                                        $state.go('menu.pallets', {dispatchId : scanId})
+                                    {
+                                        alert("dispatch exists"+scanId)
+                                        $state.go('menu.pallets', {dispatch : scanId});
+                                    }
+                                    else
+                                        alert("no dispatch found")
                                     break;
-                        case 'S' :
+                                case 'S' :
+                                    scanId = scanId.replace('S','');
                                     var result = DataStorage.palletExist(scanId);    
                                     if(result)
-                                        $state.go('menu.pallets',{dispatchId: result, palletId: scanId})
+                                        $state.go('menu.pallets',{dispatch: result, pallet: scanId})
+                                    else
+                                        alert("no pallet found")
                                     break;
-                }
-            }
-            else{
-                alert("Scan cancelled");
-            }
+                        }
+                    }
+                    else{
+                        alert("Scan cancelled");
+                    }
                 }, 
                 function (fail) {
                     console.log("Scan failed:"+fail)
@@ -31,7 +40,7 @@ angular.module('app.services.scan', [])
             );
         }
         catch (exc) {
-            deferred.reject({'error':true, 'result': 'exception: ' + exc.toString()});
+            alert("Scan failed");
         }
         }
     return{

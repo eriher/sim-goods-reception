@@ -23,7 +23,9 @@
     'app.signinCtrl',
     'app.aboutCtrl',
     'app.menuCtrl',
-    'app.helpCtrl'
+    'app.helpCtrl',
+    'app.historyCtrl',
+    'app.filters'
 ])
 
 .run(function($rootScope, $ionicPlatform, $ionicHistory, $state, $location, $translate, $ionicPopup, Signin, DataStorage) {
@@ -140,10 +142,21 @@
             resolve: {
                 data: function(dataReady, DataStorage){
                     return DataStorage.getData()
-                },
-                counts: function(dataReady, DataStorage){
-                    return function() { return [0,0]}
-                    //return function(){ return DataStorage.getDispatchesCount()}
+                }
+            }
+        }
+    }
+  })
+  .state('menu.history', {
+      cache: false,    
+      url: '/history/',
+    views :{
+        'menuContent': {
+            templateUrl: 'history/history.html',
+            controller: 'HistoryCtrl',
+            resolve: {
+                history: function(dataReady, DataStorage){
+                    return DataStorage.getHistory()
                 }
             }
         }
@@ -171,7 +184,7 @@
   })
   .state('menu.pallets', {
       cache: false,
-      url: '/home/:dispatch?palletId',
+      url: '/home/:dispatch?pallet',
       views: {
           'menuContent': {
               templateUrl: 'pallets/pallets.html',
@@ -180,8 +193,8 @@
                   dispatch: function(DataStorage, $stateParams){
                       return DataStorage.getDispatch($stateParams.dispatch);
                   },
-                  palletId: function($stateParams) {
-                      return $stateParams.palletId
+                  pallet: function($stateParams) {
+                      return $stateParams.pallet
                   }
               }
             }

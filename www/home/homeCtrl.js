@@ -1,42 +1,43 @@
 (function(){angular.module('app.homeCtrl', ['app.translate'])
-.controller('HomeCtrl', function($scope, $state, DataStorage, $filter, $translate, $ionicLoading, data, counts) {
+.controller('HomeCtrl', function($scope, $state, DataStorage, $filter, $translate, $ionicLoading, data) {
     
     $scope.$on('$ionicView.beforeEnter',function(){
         $ionicLoading.hide()
     });
     
     $scope.dispatches = data;
-
-    $scope.goTo = function(id) { 
-        $state.go('menu.pallets', {dispatchId : id});
-    };
-                                        
-    //Sets date every minute
-    var months = ['JANUARY', 'FEBUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
-    showDate();
-    setInterval(showDate, 60000);
-    function showDate(){
-        var date = new Date();
-        var day = date.getUTCDate();
-        var month = date.getUTCMonth();
-        var year = date.getUTCFullYear();
-        //$scope.today = day+'/'+(month+1)+'-'+year;
-        
-        if($translate.use() == 'en-US')
-            $scope.today = $filter('translate') (months[month]) + ' ' + day +', '+year;
-        else
-            $scope.today = day +' ' + $filter('translate')(months[month]) +  ', '+year;
-        $scope.$apply();
-    }
-    
-    $scope.goTo = function(id) { 
+                                 
+    $scope.goTo = function(id) {
         console.log(id);
         $state.go('menu.pallets', {dispatch : id });
-    }                              
-
+    }
+    $scope.items =  
+        [{
+            value: "",
+            label: "---"
+        },
+        {
+            value: "dispatch",
+            label: "dispatch"
+        },
+        {
+            value: "status",
+            label: "status"
+         },
+          {
+             value: "supplierID",
+             label: "supplier"
+          },
+         {
+             value: "customerID",
+             label: "customerID"
+         }]
+    $scope.type = $scope.items[0];
+    
     $scope.refresh= function(){
-        DataStorage.sync();
-        $scope.$broadcast('scroll.refreshComplete');
+        DataStorage.sync().then(function(success){
+            $scope.$broadcast('scroll.refreshComplete');
+        });
     };
 })
 }())
