@@ -3,14 +3,10 @@
 
 .factory('Network', function($http, $q, Toast){
         
-        var dbPost = function() {
-            $http.post('https://database', {id:"S376", status: "checked"}).success(function(success){
-                console.log("postsuccess")
-            })
-            .error(function(data, status, headers, config){
-                Toast.toast('dbPost failed, HTTP-status: '+status)
-                console.log("postfail")
-            })
+        var post = function() {
+            var deferred = $q.defer();
+            deferred.resolve();
+            return deferred.promise;
     }
         var dbTestData = function(){
             var customerIDS = JSON.parse(window.localStorage['customerIDS']);
@@ -53,6 +49,9 @@
             },
             login: function(name, password) {
                 return login(name, password);
+            },
+            post: function() {
+                return post();
             }
         }
 })

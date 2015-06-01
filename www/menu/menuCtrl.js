@@ -36,27 +36,7 @@
     
     $scope.scanBtn = function(){
         
-               Scan.scan().then(
-            function(result){
-            if(!result.cancelled){
-                var scanId = result.text;
-                switch(scanId.charAt(0)) {
-                        case 'N' :
-                                    console.log("N")
-                                    if(DataStorage.dispatchExist(scanId) == scanId)
-                                        $state.go('menu.pallets', {dispatchId : scanId})
-                                    break;
-                        case 'S' :
-                                    var pallet = DataStorage.palletExist(scanId);    
-                                    if(pallet[0] == scanId)
-                                        $state.go('menu.pallets',{dispatchId: pallet[1], palletId: pallet[0]})
-                                    break;
-                }
-            }
-            else{
-                alert("Scan cancelled");
-            }
-            },function(reject){console.log("Scan failed:"+reject)})
+               Scan.scan()
     }
 })
 }())
