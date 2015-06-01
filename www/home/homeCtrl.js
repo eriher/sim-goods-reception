@@ -1,6 +1,6 @@
 (function(){angular.module('app.homeCtrl', ['app.translate'])
 .controller('HomeCtrl', function($scope, $state, DataStorage, $filter, $translate, $ionicLoading, data) {
-    
+
     $scope.$on('$ionicView.beforeEnter',function(){
         $ionicLoading.hide()
     });

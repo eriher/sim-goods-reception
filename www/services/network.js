@@ -31,6 +31,7 @@
                     deferred.reject("bad login");
             })
             .error(function(data, status, headers, config){
+                Toast.toast('Login failed, HTTP-status: '+status)
                 deferred.reject(status);
             }) 
             return deferred.promise;

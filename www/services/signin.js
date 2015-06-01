@@ -10,7 +10,6 @@
     var item =5;
     
     var login = function(name, password){
-        
         var deferred = $q.defer();
         Network.login(name, password).then(function(data){
             console.log('login success')
@@ -29,6 +28,7 @@
                 {'id':'1', 'data': JSON.stringify(user)}
             );  
             // 
+            
             console.log("before storetoken:"+data[0].Token);
             authToken = data[0].Token;
             storeToken(authToken)

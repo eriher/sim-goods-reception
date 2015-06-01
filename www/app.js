@@ -123,7 +123,11 @@
     templateUrl: 'menu/menu.html',
     controller: 'MenuCtrl',
     resolve: {
+<<<<<<< HEAD
         dataReady: function($log, DataStorage){
+=======
+        dataReady: function($log,DataStorage){
+>>>>>>> 73893c193a6bc72fe7979ffcede0a97a6f08a50a
             return DataStorage.sync().then(function(success){
                 $log.log(DataStorage.getData());
                 $log.log("database synced");

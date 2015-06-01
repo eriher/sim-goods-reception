@@ -3,10 +3,12 @@
     
     $scope.me = 5;
     //If NOT previously checked in
+    
     $scope.signIn = function(user){
+        /*
         $ionicLoading.show({
             template: '<p class="item-icon-left">Loading... <ion-spinner icon="spiral"/></p>'
-        })
+        }) */
         Signin.login(user.name, user.password);
     }
     
@@ -14,7 +16,6 @@
     $scope.$on('event:auth-login-failed', function(e, status) {
         console.log("login failed");
         $ionicLoading.hide()
-        alert('SigninCtrl: login failed!');
         $state.go('signin')
     });
     
