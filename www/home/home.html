@@ -1,11 +1,12 @@
 <ion-view title= "{{'NAVTITLE_HOME' | translate }}">
-    <div class="bar bar-subheader item-input-inset">
+    <div class="bar bar-subheader item-select item-input ">
+            <label class="item item-input">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input type="search" placeholder="Search" ng-model="text">
+            </label>
+        <i ng-show="text.length > 0" ng-click="text = ''" class="icon ion-close"></i>
         <select ng-options="item.label | translate for item in items" ng-model="type">
             </select>
-        <div class="item-input-wrapper">
-            <input type="search" placeholder="Search" ng-model="text">
-            <i ng-show="text.length > 0" ng-click="text = ''" class="icon ion-close"></i>
-        </div>
     </div>
   <ion-content class='has-subheader'>
         <ion-refresher on-refresh='refresh()'></ion-refresher>
@@ -16,7 +17,7 @@
                 <button ng-if="dispatch.status == 'checked' " class="button button-full button-balanced" ng-click='goTo(dispatch.dispatch)'>
                 Delivery: {{dispatch.dispatch}}</button>
             </div>
-            <div class='item item-text-wrap'>
+            <div class='item item-body'>
                 <div class="row responsive-sm">
                     <div class="col">Supplier ID : {{dispatch.supplierID}}</div>
                     <div class="col">Customer ID : {{dispatch.customerID}}</div>
