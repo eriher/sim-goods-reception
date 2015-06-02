@@ -1,5 +1,5 @@
 (function() {
-    angular.module('app.services.signin', [])
+    angular.module('app.signinService', [])
     
 .factory('Signin',  function(Menu, $http, Network, $rootScope, $q){
     

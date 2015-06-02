@@ -3,6 +3,9 @@
         "C:/Users/Olof/Hybrid apps/sim-goods-reception/www/lib/ionic/js/ionic.bundle.js",
         "C:/Users/Olof/Hybrid apps/sim-goods-reception/www/services/signin.js",
         "C:/Users/Olof/Hybrid apps/sim-goods-reception/platforms/ios/www/lib/ionic/js/ionic.js",
-        "C:/Users/Olof/Hybrid apps/sim-goods-reception/www/services/datastorage.js"
+        "C:/Users/Olof/Hybrid apps/sim-goods-reception/www/services/datastorage.js",
+        "C:/Users/erik.hermansson/Documents/sim-goods-reception/platforms/wp8/www/lib/ionic/js/ionic.bundle.js",
+        "C:/Users/erik.hermansson/Documents/sim-goods-reception/platforms/wp8/www/services/datastorage.js",
+        "C:/Users/erik.hermansson/Documents/sim-goods-reception/www/menu/menuCtrl.js"
     ]
 }

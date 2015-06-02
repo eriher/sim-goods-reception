@@ -36,8 +36,10 @@
     
     $scope.refresh= function(){
         DataStorage.sync().then(function(success){
+            console.log("sync complete")
             $scope.$broadcast('scroll.refreshComplete');
             $scope.dispatches = data();
+            console.log(data());
         });
     };
 })

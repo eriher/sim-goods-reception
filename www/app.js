@@ -25,7 +25,8 @@
     'app.menuCtrl',
     'app.helpCtrl',
     'app.historyCtrl',
-    'app.filters'
+    'app.filters',
+    'app.signin'
 ])
 
 .run(function($rootScope, $ionicPlatform, $ionicHistory, $state, $location, $translate, $ionicPopup, Signin, DataStorage) {
@@ -108,7 +109,6 @@
                 disableAnimate: true,
                 disableBack: true
                 });
- 
             $state.go('menu.home');
         }
     }, 140);
@@ -123,13 +123,11 @@
     templateUrl: 'menu/menu.html',
     controller: 'MenuCtrl',
     resolve: {
-        dataReady: function($log, DataStorage){
+        dataReady: function(DataStorage){
             DataStorage.getUserInfo().then(function(success){
                 alert(success.username +' '+ success.password)
             })
             return DataStorage.sync().then(function(success){
-                $log.log(DataStorage.getData());
-                $log.log("database synced");
             })
         }
     }

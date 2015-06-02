@@ -1,5 +1,5 @@
 (function(){ angular.module('app.signinCtrl', [])
-.controller('SigninCtrl', function($scope, $state, Signin, $ionicHistory, $ionicLoading) {
+.controller('SigninCtrl', function($scope, $state, Signin, $ionicHistory, $ionicLoading, $ionicViewSwitcher) {
     
     $scope.me = 5;
     //If NOT previously checked in
@@ -23,6 +23,7 @@
     $scope.$on('event:auth-loginConfirmed', function() {
         console.log("login confirmed");
         if($state.is('signin')){
+            $ionicViewSwitcher.nextDirection("forward"); 
             $state.go('menu.home');
         }
             

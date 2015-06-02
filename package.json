@@ -24,13 +24,17 @@
     "com.phonegap.plugins.barcodescanner",
     "org.apache.cordova.network-information",
     "nl.x-services.plugins.toast",
-    "org.apache.cordova.globalization"
+    "org.apache.cordova.globalization",
+    "com.intel.security"
   ],
   "cordovaPlatforms": [
     {
       "platform": "android",
       "locator": "wp8"
-
+    },
+    {
+      "platform": "android",
+      "locator": "wp8"
     }
   ]
 }

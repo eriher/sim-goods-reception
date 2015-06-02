@@ -14,7 +14,7 @@
     
     $scope.back = function() {
             $ionicHistory.nextViewOptions({
-                disableAnimate: true,
+                //disableAnimate: true,
                 disableBack: true
                 });
  
@@ -30,6 +30,7 @@
         {
             DataStorage.clearData();
             Signin.logout();
+            $ionicViewSwitcher.nextDirection("back"); 
         }
         $state.go(dest);
     }

@@ -62,8 +62,9 @@
         Network.post().then(function(succes){
             moveToSynced();
             window.localStorage.removeItem('syncData');
-            deferred.resolve();
-            //return sync();
+            sync().then(function(success){
+                deferred.resolve();
+            });
         })
     }
     else{
@@ -73,7 +74,9 @@
                 getUserInfo().then(function(success){
                     Network.login(success.username, success.password).then(function(data){
                         window.localStorage.setItem("token", data[0].Token)
-                        return sync()
+                        sync().then(function(success){
+                            deferred.resolve();
+                        });
                     }, function(fail){
                         console.log(fail);
                     })
