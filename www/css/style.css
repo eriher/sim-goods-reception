@@ -37,6 +37,9 @@
     height: 10px;
 }
 
+*{font-family:Trebuchet MS;}
+
+
 .card_dispatch{
     border: 1px solid gray;
     box-shadow:  5px 5px 5px 0px gray
@@ -89,9 +92,7 @@ ion-view{
 #div_center{
     text-align: center;
 }
-.card {
-    box-shadow: 10px 10px 5px #888888;
-}
+
 .item-header{
     background: #444;
     text-align: center;
