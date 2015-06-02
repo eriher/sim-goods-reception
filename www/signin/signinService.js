@@ -64,7 +64,7 @@
             {'id':'1'} 
         );
         //
-        DataStorage.ClearData();
+        DataStorage.clearData();
         authToken = undefined;
         isAuthenticated = false;
         window.localStorage.clear();
