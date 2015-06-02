@@ -66,6 +66,7 @@ ion-view{
     background-image: url(http://i.imgur.com/07t2mb2.gif);
 }
 */
+
 #icon_red {
     font-size: 32px;
     color : red;
@@ -87,6 +88,16 @@ ion-view{
 
 #div_center{
     text-align: center;
+}
+.card {
+    box-shadow: 10px 10px 5px #888888;
+}
+.item-header{
+    background: #444;
+    text-align: center;
+}
+.item-body{
+    background: #f8f8f8;
 }
 /*
 .card1 {
