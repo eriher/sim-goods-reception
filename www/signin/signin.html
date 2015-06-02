@@ -7,17 +7,20 @@
                     <h1>Sim Scanner</h1>
                     </div>
                 <div class="list" id="icon_white">
-                    <label class="item item-input item-floating-label">
+                    <label id="name_label" class="item item-input item-floating-label ">
                         <span class="input-label">{{ 'SIGNIN_USERNAME' | translate }}</span>
-                        <input name="name" type="text" ng-model="user.name" placeholder="{{'SIGNIN_USERNAME' | translate }}" required>
+                        <input id="name" type="text" ng-model="name" placeholder="{{'SIGNIN_USERNAME' | translate }}">
                     </label>
-                    <label class="item item-input item-floating-label">
+                    <label id="pw_label" class="item item-input item-floating-label ">
                         <span class="input-label">{{ 'SIGNIN_PASSWORD' | translate }}</span>
-                        <input name="pw" ng-model="user.password" type="password" placeholder="{{'SIGNIN_PASSWORD' | translate }}" required>
+                        <input id="pw" ng-model="password" type="password" placeholder="{{'SIGNIN_PASSWORD' | translate }}">
                     </label>
                 </div>
+                <div ng-show="error" class="center_wrapper">
+                    <font color="red">Username or password is to short!</font>
+                </div>
                 <div class="center_wrapper">
-                    <button class="button button-full button-balanced" ng-click="signIn(user)">{{ 'BUTTON_SIGNIN_SIGN_IN' | translate }}</button>
+                    <button class="button button-full button-balanced" ng-disabled="!name || !password" ng-click="signIn(name, password)">{{ 'BUTTON_SIGNIN_SIGN_IN' | translate }}</button>
                 </div>
             </div>
         </div>

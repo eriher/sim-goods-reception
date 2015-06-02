@@ -2,19 +2,25 @@
 .controller('SigninCtrl', function($scope, $state, Signin, $ionicHistory, $ionicLoading, $ionicViewSwitcher) {
     
     $scope.me = 5;
-    //If NOT previously checked in
+    $scope.errror = false;
     
-    $scope.signIn = function(user){
-        /*
-        $ionicLoading.show({
+    $scope.signIn = function(name, password){
+        if(name.length<4 || password.length<4){
+            $scope.error = true;
+        }
+        else{
+            $scope.error = false;
+            $ionicLoading.show({
             template: '<p class="item-icon-left">Loading... <ion-spinner icon="spiral"/></p>'
-        }) */
-        Signin.login(user.name, user.password);
+            })
+            Signin.login(name,password);  
+        }
     }
     
     //Event fires when the login has failed   
     $scope.$on('event:auth-login-failed', function(e, status) {
         console.log("login failed");
+        alert('Login failed!')
         $ionicLoading.hide()
         $state.go('signin')
     });
