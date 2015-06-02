@@ -1,5 +1,5 @@
 (function(){ angular.module('app.menuCtrl', [])
-.controller('MenuCtrl', function($scope, $state, Menu, Scan, $ionicHistory, Signin, $ionicViewSwitcher, DataStorage) {
+.controller('MenuCtrl', function($scope, $state, Menu, Scan, $ionicHistory, Signin, $ionicViewSwitcher, DataStorage, $ionicPopup) {
 
     $scope.me = 5;
     $scope.menuItems = 
@@ -26,12 +26,28 @@
             disableBack: true,
             disableAnimate : true
         });
-        if(dest == 'signin')
-        {
-            DataStorage.clearData();
-            Signin.logout();
-        }
+        if(dest == 'signin'){
+            if(window.localStorage['syncData']){
+                var confirmPopup = $ionicPopup.confirm({
+                title: 'Logout',
+                template: 'You have uncommited changes, are you sure you want to logout?'
+                });
+                confirmPopup.then(function(res) {
+                    if(res) {
+                        DataStorage.clearData();
+                        Signin.logout();
+                        $state.go(dest);
+                    } 
+                });
+            }
+        DataStorage.clearData();
+        Signin.logout();
         $state.go(dest);
+        }
+        else{
+            $state.go(dest);
+        }
+        
     }
     
     $scope.scanBtn = function(){

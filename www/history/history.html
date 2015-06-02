@@ -11,20 +11,22 @@
         <ion-refresher on-refresh='refresh()'></ion-refresher>
       <ion-list>
           <ion-item collection-repeat="dispatch in history | filter: text | searchFilter:text:type">
-         <div class="card" >
-            <div class='item item-divider'>
-                <button class="button button-full button-dark" ng-click='goTo(dispatch.dispatch)'>
-                Delivery: {{dispatch.dispatch}}</button>
-            </div>
-            <div class='item item-text-wrap'>
-                <div class="row responsive-sm">
-                    <div class="col">Supplier ID : {{dispatch.supplierID}}</div>
-                    <div class="col">Customer ID : {{dispatch.customerID}}</div>
-                    <div class="col">Status : {{dispatch.status}}</div>
-                    <div class="col">{{'HOME_CHECKED_PALLETS'|translate}} : {{dispatch.checkedPallets}} / {{dispatch.numPallets}}</div>
+            <div class="fade">
+                <div class="card" >
+                    <div class='item item-text-wrap'>
+                        <button class="button button-full button-dark">
+                        Delivery: {{dispatch.dispatch}}</button>
+                    </div>
+                    <div class='item item-text-wrap'>
+                        <div class="row responsive-sm">
+                            <div class="col">Supplier ID : {{dispatch.supplierID}}</div>
+                            <div class="col">Customer ID : {{dispatch.customerID}}</div>
+                            <div class="col">Status : {{dispatch.status}}</div>
+                            <div class="col">{{'HOME_CHECKED_PALLETS'|translate}} : {{dispatch.checkedPallets}} / {{dispatch.numPallets}}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-         </div>
           </ion-item>
       </ion-list>
       </ion-content>

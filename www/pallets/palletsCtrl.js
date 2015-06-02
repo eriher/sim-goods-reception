@@ -22,10 +22,10 @@
                // Show the action sheet
            var hideSheet = $ionicActionSheet.show({
                      buttons: [
-                       { text: '<i class="icon ion-happy"></i>'+$filter('translate')('BUTTON_PALLETS_CONFIRM')  },
-                       { text: '<i class="icon ion-hammer"></i>'+$filter('translate')('BUTTON_PALLETS_ADJUST')  }
+                       { text: '<i class="icon ion-checkmark-round"></i>'+$filter('translate')('BUTTON_PALLETS_CONFIRM')  },
+                       { text: '<i class="icon ion-edit"></i>'+$filter('translate')('BUTTON_PALLETS_ADJUST')  }
                      ],
-                     destructiveText: '<i class="icon ion-nuclear"></i>'+$filter('translate')('BUTTON_PALLETS_LOST'),
+                     destructiveText: '<i class="icon ion-close-round"></i>'+$filter('translate')('BUTTON_PALLETS_LOST'),
                      titleText: $filter('translate')('BUTTON_PALLETS_STATUS')+': '  +pallet.Item.StoolID,
                      cancelText: '<i class="icon ion-sad"></i>'+$filter('translate')('BUTTON_PALLETS_CANCEL'),
                      cancel: function() {

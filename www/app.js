@@ -92,16 +92,17 @@
     
     // For Android and Windows phone, controlling the backbutton!
     $ionicPlatform.registerBackButtonAction(function () {
-        if ($state.is('menu.home') || $state.is('signin') || $state.is('menu.history') || $state.is('menu.help') || $state.is('menu.about')) {
-            var confirmPopup = $ionicPopup.confirm({
-            title: 'Exit',
-            template: 'Are you sure you want to exit?'
-            });
-            confirmPopup.then(function(res) {
-            if(res) {
-                navigator.app.exitApp();
-            } 
-            });
+        if ($state.is('menu.home') || $state.is('signin') || $state.is('menu.history') || $state.is('menu.help') || $state.is('menu.about')) {    
+                var confirmPopup = $ionicPopup.confirm({
+                title: 'Exit',
+                template: 'Are you sure you want to exit?'
+                });
+                confirmPopup.then(function(res) {
+                    if(res) {
+                        navigator.app.exitApp();
+                    } 
+                });   
+            
         } 
         else {
             $ionicHistory.nextViewOptions({
@@ -125,7 +126,7 @@
     resolve: {
         dataReady: function($log, DataStorage){
             DataStorage.getUserInfo().then(function(success){
-                alert(success.username +' '+ success.password)
+                $log.log('getUserInfo succes');
             })
             return DataStorage.sync().then(function(success){
                 $log.log(DataStorage.getData());

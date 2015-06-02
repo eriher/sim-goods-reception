@@ -30,7 +30,10 @@
         </item>
       </ion-list>
     </ion-content>
-              <div class="bar bar-footer bar-stable">
-  <div class="title"> {{'HOME_CHECKED_PALLETS'|translate}} {{dispatch.checkedPallets}} / {{dispatch.numPallets}}</div>
-</div>
+    <div ng-if="dispatch.checkedPallets != dispatch.numPallets" class="bar bar-footer bar-stable">
+        <div class="title"> {{'HOME_CHECKED_PALLETS'|translate}} {{dispatch.checkedPallets}} / {{dispatch.numPallets}}</div>
+    </div>
+    <div ng-if="dispatch.checkedPallets == dispatch.numPallets" class="bar bar-footer bar-balanced">
+        <div class="title"> {{'HOME_CHECKED_PALLETS'|translate}} {{dispatch.checkedPallets}} / {{dispatch.numPallets}}</div>
+    </div>
 </ion-view>
