@@ -1,7 +1,7 @@
 (function() {
-    angular.module('app.services.signin', [])
+    angular.module('app.signinService', [])
     
-.factory('Signin',  function(Menu, $http, Network, $rootScope, $q){
+.factory('Signin',  function(Menu, $http, Network, $rootScope, $q, DataStorage){
     
     var LOCAL_TOKEN_KEY = 'token';
     var isAuthenticated = false;
@@ -64,6 +64,7 @@
             {'id':'1'} 
         );
         //
+        DataStorage.ClearData();
         authToken = undefined;
         isAuthenticated = false;
         window.localStorage.clear();

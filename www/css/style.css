@@ -168,11 +168,3 @@ img {
 .error_input {  
     border-bottom: 2px solid red;
 }
-
-.fade {
-   opacity: 1;
-   transition: opacity .25s ease-in-out;
-   -moz-transition: opacity .25s ease-in-out;
-   -webkit-transition: opacity .25s ease-in-out;
-   }
-

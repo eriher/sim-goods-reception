@@ -14,7 +14,7 @@ angular.module('app.services.scan', [])
                                     scanId = scanId.replace('N','');
                                     if(DataStorage.dispatchExist(scanId))
                                     {
-                                        alert("dispatch exists"+scanId)
+                                        $ionicViewSwitcher.nextDirection("forward"); 
                                         $state.go('menu.pallets', {dispatch : scanId});
                                     }
                                     else
@@ -24,7 +24,10 @@ angular.module('app.services.scan', [])
                                     scanId = scanId.replace('S','');
                                     var result = DataStorage.palletExist(scanId);    
                                     if(result)
+                                    {   
+                                        $ionicViewSwitcher.nextDirection("forward"); 
                                         $state.go('menu.pallets',{dispatch: result, pallet: scanId})
+                                    }
                                     else
                                         alert("no pallet found")
                                     break;

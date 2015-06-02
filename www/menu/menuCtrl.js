@@ -14,7 +14,7 @@
     
     $scope.back = function() {
             $ionicHistory.nextViewOptions({
-                disableAnimate: true,
+                //disableAnimate: true,
                 disableBack: true
                 });
  
@@ -30,19 +30,21 @@
             if(window.localStorage['syncData']){
                 var confirmPopup = $ionicPopup.confirm({
                 title: 'Logout',
-                template: 'You have uncommited changes, are you sure you want to logout?'
+                template: 'Unsyced data will be deleted, are you sure you want to logout?'
                 });
                 confirmPopup.then(function(res) {
                     if(res) {
-                        DataStorage.clearData();
                         Signin.logout();
+                        $ionicViewSwitcher.nextDirection("back"); 
                         $state.go(dest);
                     } 
                 });
             }
-        DataStorage.clearData();
-        Signin.logout();
-        $state.go(dest);
+            else{
+                Signin.logout();
+                $ionicViewSwitcher.nextDirection("back"); 
+                $state.go(dest);   
+            }
         }
         else{
             $state.go(dest);
@@ -51,8 +53,7 @@
     }
     
     $scope.scanBtn = function(){
-        
-               Scan.scan()
+        Scan.scan()
     }
 })
 }())
