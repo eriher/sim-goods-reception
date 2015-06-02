@@ -37,8 +37,27 @@
     height: 10px;
 }
 
+*{font-family:Trebuchet MS;}
+
+
+.card_dispatch{
+    border: 1px solid gray;
+    box-shadow:  5px 5px 5px 0px gray
+}
+
+.background {
+    background-image: url(http://i.imgur.com/07t2mb2.gif);  
+}
+
 .card_trans{
-    background-color: transparent;
+    /*border: 0.5px solid gray;*/
+}
+
+.card_history{
+    background-color: #ffffff;
+    border: 1px solid black;
+    opacity: 0.6;
+    filter: alpha(opacity=60); /* For IE8 and earlier */
 }
 
 /*
@@ -73,9 +92,7 @@ ion-view{
 #div_center{
     text-align: center;
 }
-.card {
-    box-shadow: 5px 5px 3px #888888;
-}
+
 .item-header{
     background: #444;
     text-align: center;

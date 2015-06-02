@@ -106,11 +106,8 @@
                 if(!groups[item.DeliveryNoteNumber]) {
                     groups[item.DeliveryNoteNumber] = [];
                 }
-
-                groups[item.DeliveryNoteNumber].push({
-                    Item: item,
-                    status: "unchecked"
-                });
+                item["status"] = "unchecked";
+                groups[item.DeliveryNoteNumber].push(item);
             }
             
             for(var i = 0; i < data.length; i++){
@@ -128,8 +125,8 @@
                     obj["status"] = "unchecked";
                     obj["checkedPallets"] = 0;
                     obj["numPallets"] = groups[x].length;
-                    obj["customerID"] = (groups[x])[0].Item.CustomerID;
-                    obj["supplierID"] = (groups[x])[0].Item.SupplierID;
+                    obj["customerID"] = (groups[x])[0].CustomerID;
+                    obj["supplierID"] = (groups[x])[0].SupplierID;
                     obj["pallets"] = groups[x];
                     data.push(obj);
                 }

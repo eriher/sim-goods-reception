@@ -50,6 +50,7 @@
     //Signin
     SIGNIN_USERNAME: 'Username',
     SIGNIN_PASSWORD:'Password',
+    SIGNIN_INVALID:'Username or password was incorrect!',
       
     //About
     ABOUT_LICENSE:'Licenses',
@@ -130,6 +131,7 @@
     //Signin
     SIGNIN_USERNAME: 'Användarnamn',
     SIGNIN_PASSWORD:'Lösenord',
+    SIGNIN_INVALID:'Användarnamn eller lösenord var felaktigt!',
       
     //About
     ABOUT_LICENSE:'Licenser',

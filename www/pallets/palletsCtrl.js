@@ -4,7 +4,7 @@
         $scope.$on('$ionicView.afterEnter', function () {
             if(pallet){
                     $scope.text = pallet;
-                    $scope.type = $scope.items[1];
+                    $scope.type = {value: "StoolID", label: "StoolID"};
             }
         })
         
@@ -17,7 +17,7 @@
         $scope.navTitle= 'Dispatch: '+dispatch.dispatch;
     
         $scope.show = function(pallet) {
-            var quantity = pallet.Item.Qty;
+            var quantity = pallet.Qty;
             $scope.adjust = quantity;
                // Show the action sheet
            var hideSheet = $ionicActionSheet.show({
@@ -26,7 +26,7 @@
                        { text: '<i class="icon ion-edit"></i>'+$filter('translate')('BUTTON_PALLETS_ADJUST')  }
                      ],
                      destructiveText: '<i class="icon ion-close-round"></i>'+$filter('translate')('BUTTON_PALLETS_LOST'),
-                     titleText: $filter('translate')('BUTTON_PALLETS_STATUS')+': '  +pallet.Item.StoolID,
+                     titleText: $filter('translate')('BUTTON_PALLETS_STATUS')+': '  +pallet.StoolID,
                      cancelText: '<i class="icon ion-sad"></i>'+$filter('translate')('BUTTON_PALLETS_CANCEL'),
                      cancel: function() {
                           hideSheet();
@@ -51,7 +51,7 @@
                                                     text: '<b>Confirm</b>',
                                                     type: 'button-positive',
                                                     onTap: function(e) {
-                                                      if ($scope.adjust == pallet.Item.Qty) {
+                                                      if ($scope.adjust == pallet.Qty) {
                                                         e.preventDefault();
                                                       } else {
                                                           if(pallet.status == "unchecked")
@@ -97,25 +97,12 @@
         [{
             value: "",
             label: "---"
-        },
-         {
-            value: "stoolID",
-            label: "stoolID"
-        },
-        {
-            value: "status",
-            label: "status"
-         },
-          {
-             value: "supplierID",
-             label: "supplier"
-          },
-         {
-             value: "customerID",
-             label: "customerID"
-         }]
-         $scope.type = $scope.items[0];
-    $scope.mess = 5;
+        }]
+        for(var x in dispatch.pallets[0])
+            if(!(x === "$$hashKey"))
+                $scope.items.push({value: x, label: x});
+        $scope.type = $scope.items[0];
+        $scope.mess = 5;
     
     
 })

@@ -16,7 +16,7 @@
     </div>
   <ion-content class='has-subheader'>
         <ion-refresher on-refresh='refresh()'></ion-refresher>
-         <div class="card" ng-repeat="dispatch in dispatches | filter: text | searchFilter:text:type">
+         <div class="card card_dispatch" ng-repeat="dispatch in dispatches | filter: text | searchFilter:text:type">
             <div class='item item-divider'>
                 <button ng-if="dispatch.status != 'checked' " class="button button-full button-dark" ng-click='goTo(dispatch.dispatch)'>
                     Delivery: {{dispatch.dispatch}}</button>
