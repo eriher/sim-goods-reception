@@ -17,7 +17,7 @@
                     </label>
                 </div>
                 <div ng-show="error" class="center_wrapper">
-                    <font color="red">Username or password is to short!</font>
+                    <font color="red">Username or password was incorrect!</font>
                 </div>
                 <div class="center_wrapper">
                     <button class="button button-full button-balanced" ng-disabled="!name || !password" ng-click="signIn(name, password)">{{ 'BUTTON_SIGNIN_SIGN_IN' | translate }}</button>
