@@ -124,10 +124,7 @@
     controller: 'MenuCtrl',
     resolve: {
         dataReady: function(DataStorage){
-            DataStorage.getUserInfo().then(function(success){
-            })
-            return DataStorage.sync().then(function(success){
-            })
+            return DataStorage.sync();
         }
     }
   })

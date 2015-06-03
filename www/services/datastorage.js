@@ -91,7 +91,7 @@
             }
         },function(fail){
             console.log("fail in datastorage");
-            deferred.reject();
+            deferred.resolve();
         })
     }   
         return deferred.promise

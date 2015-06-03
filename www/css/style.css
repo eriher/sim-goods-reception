@@ -56,6 +56,7 @@
 }
 
 .card_history{
+    border: none !important;
     background-color: #ffffff;
     border: 1px solid black;
     opacity: 0.6;
@@ -181,7 +182,7 @@ add animate-show to class:
     float: right !important;
 }
 .center_wrapper{
-    text-align: center;
+    text-align: center !important;
 }
 
 .image-blurred-edge {

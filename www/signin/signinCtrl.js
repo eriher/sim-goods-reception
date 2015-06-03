@@ -25,10 +25,10 @@
     //Event fires when the login is confirmed
     $scope.$on('event:auth-loginConfirmed', function() {
         console.log("login confirmed");
-        if($state.is('signin')){
+        //if($state.is('signin')){
             $ionicViewSwitcher.nextDirection("forward"); 
             $state.go('menu.home');
-        }
+        //}
             
     });
 
