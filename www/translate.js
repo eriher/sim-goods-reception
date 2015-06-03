@@ -78,6 +78,7 @@
     BUTTON_PALLETS_STATUS:'Status for pallet',
     BUTTON_PALLETS_CANCEL:'Cancel',
     BUTTON_PALLETS_ADJUST:'Adjust',
+    BUTTON_PALLETS_AFFIRM:'Affirm',
     BUTTON_LANG_EN: 'English',
     BUTTON_LANG_SE: 'Swedish',
     BUTTON_BACK: 'Back'
@@ -155,6 +156,7 @@
     //Buttons
     BUTTON_SIGNIN_SIGN_IN:'Logga in',
     BUTTON_PALLETS_CONFIRM:'Godkänn',
+    BUTTON_PALLETS_AFFIRM:'Bekräfta',
     BUTTON_PALLETS_ADJUST:'Justera',
     BUTTON_PALLETS_LOST:'Borttappad',
     BUTTON_PALLETS_STATUS:'Status för pall',
