@@ -15,9 +15,8 @@
     if (!type || '' === type.value) {
       return items;
     }
-      
-    console.log(type);
     return items.filter(function(element, index, array) {
+        console.log(element);
       return element[type.value].indexOf(text) != -1;
     });
     

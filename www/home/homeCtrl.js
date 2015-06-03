@@ -12,26 +12,14 @@
         $state.go('menu.pallets', {dispatch : id });
     }
     $scope.items =  
-        [{
-            value: "",
-            label: "---"
-        },
-        {
-            value: "dispatch",
-            label: "dispatch"
-        },
-        {
-            value: "status",
-            label: "status"
-         },
-          {
-             value: "supplierID",
-             label: "supplier"
-          },
-         {
-             value: "customerID",
-             label: "customerID"
-         }]
+    [{
+         value: "",
+        label: "---"
+    }]
+    for(var x in data()[0]){
+        if(!(x === "pallets" || x == "$$hashKey"))
+            $scope.items.push({value: x, label: x});
+    }
     $scope.type = $scope.items[0];
     
     $scope.refresh= function(){

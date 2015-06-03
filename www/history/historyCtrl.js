@@ -7,23 +7,11 @@
         [{
             value: "",
             label: "---"
-        },
-        {
-            value: "dispatch",
-            label: "dispatch"
-        },
-        {
-            value: "status",
-            label: "status"
-         },
-          {
-             value: "supplierID",
-             label: "supplier"
-          },
-         {
-             value: "customerID",
-             label: "customerID"
-         }]
+        }]
+    for(var x in history[0]){
+        if(!(x === "pallets" || x == "$$hashKey"))
+            $scope.items.push({value: x, label: x});
+    }
     $scope.type = $scope.items[0];
     
 })

@@ -126,7 +126,6 @@
     resolve: {
         dataReady: function(DataStorage){
             DataStorage.getUserInfo().then(function(success){
-                $log.log('getUserInfo succes');
             })
             return DataStorage.sync().then(function(success){
             })
