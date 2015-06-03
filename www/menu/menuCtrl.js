@@ -10,7 +10,12 @@
          { text: 'MENU_SIGN_OUT', iconClass:  'icon ion-log-out', link: 'signin'}
         ];
     // Kommentera bort userName för testning
-    //$scope.userName = JSON.parse(window.localStorage['user']).username;
+   DataStorage.getUserInfo().then(function(success){
+        $scope.userName = success.username;
+    },
+    function(err){
+       console.log('error retriving username in menuCtrl');
+   });
     
     $scope.back = function() {
             $ionicHistory.nextViewOptions({
