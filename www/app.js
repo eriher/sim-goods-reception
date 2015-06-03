@@ -107,7 +107,6 @@
         } 
         else {
             $ionicHistory.nextViewOptions({
-                disableAnimate: true,
                 disableBack: true
                 });
             $state.go('menu.home');

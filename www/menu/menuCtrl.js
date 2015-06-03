@@ -1,6 +1,5 @@
 (function(){ angular.module('app.menuCtrl', [])
 .controller('MenuCtrl', function($scope, $state, Menu, Scan, $ionicHistory, Signin, $ionicViewSwitcher, DataStorage, $ionicPopup) {
-    $scope.test = $state.is("menu.home");
     $scope.me = 5;
     $scope.menuItems = 
         [{ text: 'MENU_HOME', iconClass: 'icon ion-home', link: 'menu.home'},
@@ -22,7 +21,6 @@
                 //disableAnimate: true,
                 disableBack: true
                 });
- 
             $state.go('menu.home')
         }
     

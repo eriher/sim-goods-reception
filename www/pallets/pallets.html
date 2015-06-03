@@ -28,10 +28,12 @@
                 <div class="row responsive-sm">
                     <div class="col">{{'PALLETS_ARTICLE_ID'|translate}}: {{pallet.ArticleNumber}}</div>
                     <div class="col">{{'PALLETS_ORDER_ID'|translate}}: {{pallet.OrderNumber}}</div>
+                </div>
+                <div class="row responsive-sm">
                     <div class="col">{{'PALLETS_QUANTITY'|translate}}: {{pallet.Qty}}</div>
                     <div class="col">{{'PALLETS_STATUS'|translate}}: {{pallet.status}}</div> 
-                    <button class="button button-positive" ng-click="show(pallet)">{{'BUTTON_PALLETS_ADJUST'|translate}}</button>
                 </div>
+                <button class="button button-full button-positive" ng-click="show(pallet)">{{'BUTTON_PALLETS_ADJUST'|translate}}</button>
             </div>
         </item>
       </ion-list>
