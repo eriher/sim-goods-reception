@@ -15,22 +15,20 @@
         </div>
     </div>
   <ion-content class='has-subheader'>
-      <ion-list>
-          <ion-item ng-repeat="dispatch in history | filter: text | searchFilter:text:type">
-         <div class="card card_dispatch card_history " >
+         <div class="card card_dispatch card_history" ng-repeat="dispatch in history | filter: text | searchFilter:text:type">
             <div class='item item-divider'>
                 <button ng-if="dispatch.status == 'checked' " class="button button-full button-balanced" ng-click='goTo(dispatch.dispatch)'>
                 Delivery: {{dispatch.dispatch}}</button>
             </div>
-            <div class='item item-text-wrap'>
+            <div class='item item-body'>
                 <div class="row responsive-sm">
                     <div class="col">Supplier ID : {{dispatch.supplierID}}</div>
                     <div class="col">Customer ID : {{dispatch.customerID}}</div>
+                </div>
+                <div class="row responsive-sm">
                     <div class="col">Status : {{dispatch.status}}</div>
                     <div class="col">{{'HOME_CHECKED_PALLETS'|translate}} : {{dispatch.checkedPallets}} / {{dispatch.numPallets}}</div>
                 </div>
             </div>
-          </ion-item>
-      </ion-list>
       </ion-content>
 </ion-view>

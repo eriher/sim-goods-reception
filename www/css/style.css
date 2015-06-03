@@ -37,12 +37,14 @@
     height: 10px;
 }
 
-*{font-family:Trebuchet MS;}
-
-
 .card_dispatch{
     border: 1px solid gray;
     box-shadow:  5px 5px 5px 0px gray
+}
+
+.bar-subheader{
+    border: 1px solid gray;
+    box-shadow: 3px 3px 3px 3px gray
 }
 
 .background {

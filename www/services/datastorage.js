@@ -43,7 +43,7 @@
     var palletExist = function(id) {
         for(var i = 0; i<data.length; i++)
             for(var j = 0; i<data[i].pallets.length; i++)
-                if(id == data[i].pallets[j].Item.StoolID)
+                if(id == data[i].pallets[j].StoolID)
                     return data[i].dispatch;
         return null;
     }
@@ -143,7 +143,7 @@
             var pallets = [];
             for(var i = 0; i < dispatch.pallets.length; i++)
                 if(dispatch.pallets[i].status != "confirmed")
-                   pallets.push({StoolID: dispatch.pallets[i].Item.StoolID, Qty: dispatch.pallets[i].Item.Qty})
+                   pallets.push({StoolID: dispatch.pallets[i].StoolID, Qty: dispatch.pallets[i].Qty})
             if(pallets.length > 0)
                 obj["pallets"] = [];
             syncData.push(obj)
