@@ -41,7 +41,7 @@
                                         break;
                                  case 1:
                                         $ionicPopup.show({
-                                                template: '<input type="number" min="1" ng-model="$parent.adjust">',
+                                                template: '<input type="tel" min="0" ng-model="$parent.adjust">',
                                                 title: 'Adjust pallet',
                                                 subTitle: 'Adjust the quantity',
                                                 scope: $scope,

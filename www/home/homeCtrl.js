@@ -4,7 +4,7 @@
     $scope.$on('$ionicView.beforeEnter',function(){
         $ionicLoading.hide()
     });
-    
+    $scope.date = new Date().toJSON().slice(0,10);
     $scope.dispatches = data();
                                  
     $scope.goTo = function(id) {

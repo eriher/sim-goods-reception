@@ -2,7 +2,7 @@
 .controller('HistoryCtrl', function($scope, $filter, $translate, history) {
     
     $scope.history = history;
-                                 
+    $scope.date = new Date().toJSON().slice(0,10);                             
     $scope.items =  
         [{
             value: "",

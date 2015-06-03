@@ -45,7 +45,6 @@
     document.addEventListener("deviceready", onDeviceReady, false);
 
     function onDeviceReady() {
-                
         var networkState = navigator.connection.type;
         var states = {};
         states[Connection.UNKNOWN]  = 'Unknown connection';
