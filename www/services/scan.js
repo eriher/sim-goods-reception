@@ -1,7 +1,7 @@
 (function() {
 angular.module('app.services.scan', [])
 
-.factory('Scan', function($state, DataStorage){
+.factory('Scan', function($state, $ionicViewSwitcher, DataStorage, Toast){
     
     var scan = function(){
         try {
@@ -14,29 +14,30 @@ angular.module('app.services.scan', [])
                                     scanId = scanId.replace('N','');
                                     if(DataStorage.dispatchExist(scanId))
                                     {
-                                         alert("dispatch found")
                                         $ionicViewSwitcher.nextDirection("forward"); 
                                         $state.go('menu.pallets', {dispatch : scanId});
                                     }
                                     else
-                                        alert("no dispatch found")
+                                        Toast.toast("no dispatch found");
                                     break;
                                 case 'S' :
                                     scanId = scanId.replace('S','');
                                     var result = DataStorage.palletExist(scanId);    
                                     if(result)
                                     {   
-                                        alert("no pallet found")
                                         $ionicViewSwitcher.nextDirection("forward"); 
                                         $state.go('menu.pallets',{dispatch: result, pallet: scanId})
                                     }
                                     else
-                                        alert("no pallet found")
+                                        Toast.toast("no pallet found");
+                                    break;
+                                default :
+                                    Toast.toast("invalid scan");
                                     break;
                         }
                     }
                     else{
-                        alert("Scan cancelled");
+                        Toast.toast("Scan cancelled");
                     }
                 }, 
                 function (fail) {
@@ -45,7 +46,7 @@ angular.module('app.services.scan', [])
             );
         }
         catch (exc) {
-            alert("Scan failed");
+            Toast.toast("Scan failed");
         }
         }
     return{

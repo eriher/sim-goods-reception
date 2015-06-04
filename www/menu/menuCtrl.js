@@ -1,5 +1,5 @@
 (function(){ angular.module('app.menuCtrl', [])
-.controller('MenuCtrl', function($scope, $state, Menu, Scan, $ionicHistory, Signin, $ionicViewSwitcher, DataStorage, $ionicPopup) {
+.controller('MenuCtrl', function($scope, $state, Scan, $ionicHistory, Signin, $ionicViewSwitcher, DataStorage, $ionicPopup) {
     $scope.me = 5;
     $scope.menuItems = 
         [{ text: 'MENU_HOME', iconClass: 'icon ion-home', link: 'menu.home'},

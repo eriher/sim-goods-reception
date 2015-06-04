@@ -1,7 +1,6 @@
 (function(){ angular.module('app.signinCtrl', [])
-.controller('SigninCtrl', function($scope, $state, Signin, $ionicHistory, $ionicLoading, $ionicViewSwitcher) {
-    
-    $scope.me = 5;
+.controller('SigninCtrl', function($scope, $state, Signin, $ionicLoading, $ionicViewSwitcher) {
+
     $scope.errror = false;
     
     $scope.signIn = function(name, password){
@@ -26,6 +25,7 @@
     $scope.$on('event:auth-loginConfirmed', function() {
         console.log("login confirmed");
         //if($state.is('signin')){
+            $ionicLoading.hide()
             $ionicViewSwitcher.nextDirection("forward"); 
             $state.go('menu.home');
         //}

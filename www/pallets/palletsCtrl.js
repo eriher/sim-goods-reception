@@ -1,17 +1,37 @@
 (function(){angular.module('app.palletsCtrl', [])
 .controller('PalletsCtrl', function($scope, $stateParams, $state, Network, $location, $ionicActionSheet, $ionicPopup, $filter, dispatch, pallet, DataStorage) {
 
-        $scope.$on('$ionicView.afterEnter', function () {
+        $scope.$on('$ionicView.beforeEnter', function () {
+                    $scope.items =  
+        [{
+            value: "",
+            label: "---"
+        }]
+        
+        for(var x in dispatch.pallets[0])
+            if(!(x === "$$hashKey"))
+                $scope.items.push({value: x, label: x.slice(0,10)});
+        $scope.type = $scope.items[0];
             if(pallet){
+                    $scope.type = $scope.items[7];
                     $scope.text = pallet;
-                    $scope.type = {value: "StoolID", label: "StoolID"};
             }
         })
         
-        $scope.me = 5;
         $scope.swipeRight = function(){
             $scope.$parent.back();
         }
+        
+        $scope.items =  
+        [{
+            value: "",
+            label: "---"
+        }]
+        
+        for(var x in dispatch.pallets[0])
+            if(!(x === "$$hashKey"))
+                $scope.items.push({value: x, label: x.slice(0,10)});
+        $scope.type = $scope.items[0];
         
         $scope.dispatch = dispatch;
         $scope.navTitle= 'Dispatch: '+dispatch.dispatch;
@@ -91,19 +111,6 @@
                         return true
                     }
            });
-        }
-        
-        $scope.items =  
-        [{
-            value: "",
-            label: "---"
-        }]
-        for(var x in dispatch.pallets[0])
-            if(!(x === "$$hashKey"))
-                $scope.items.push({value: x, label: x});
-        $scope.type = $scope.items[0];
-        $scope.mess = 5;
-    
-    
+        }  
 })
 }())

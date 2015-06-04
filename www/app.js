@@ -23,13 +23,12 @@
     'app.signinCtrl',
     'app.aboutCtrl',
     'app.menuCtrl',
-    'app.helpCtrl',
     'app.historyCtrl',
     'app.filters',
     'app.signin'
 ])
 
-.run(function($rootScope, $ionicPlatform, $ionicHistory, $state, $location, $translate, $ionicPopup, Signin, DataStorage) {
+.run(function($rootScope, $ionicPlatform, $ionicHistory, $state, $translate, $ionicPopup, Signin, DataStorage) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -136,7 +135,7 @@
             templateUrl: 'home/home.html',
             controller: 'HomeCtrl',
             resolve: {
-                data: function(dataReady, DataStorage){
+                dispatches: function(dataReady, DataStorage){
                     return function() {
                         return DataStorage.getData()
                     };
@@ -175,8 +174,7 @@
       url: '/help/',
       views: {
           'menuContent': {
-              templateUrl: 'help/help.html',
-              controller: 'HelpCtrl'
+              templateUrl: 'help/help.html'
           }
       }
   })

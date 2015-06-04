@@ -1,7 +1,7 @@
 (function() {
     angular.module('app.signinService', [])
     
-.factory('Signin',  function(Menu, $http, Network, $rootScope, $q, DataStorage){
+.factory('Signin',  function($http, Network, $rootScope, $q, DataStorage){
     
     var LOCAL_TOKEN_KEY = 'token';
     var isAuthenticated = false;

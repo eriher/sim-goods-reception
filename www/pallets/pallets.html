@@ -2,19 +2,20 @@
     <div class="bar bar-subheader item-input-inset">
          <div class="row item-input item-select">
             <div class="col">
-                 <label class="item item-input">
+                <label class="item item-input">
                     <i class="icon ion-search placeholder-icon"></i>
                     <input type="search" placeholder="Search" ng-model="text">
-                    
                 </label>
              </div>
-             <div class="col col-10"><i ng-show="text.length > 0" ng-click="text = ''" class="icon ion-close"></i></div>
-            <div class="col">        
-                    <select ng-options="item.label | translate for item in items" ng-model="type"></select>
+             <div class="col col-10">
+                 <i ng-show="text.length > 0" ng-click="text = ''" class="icon ion-close"></i>
+             </div>
+             <div class="col">
+                 <select ng-options="item.label | translate for item in items" ng-model="type"></select>
              </div>
         </div>
     </div>
-  <ion-content class="has-subheader has-footer" overflow-scroll="true">
+  <ion-content class="has-subheader has-footer">
     <ion-list>
         <item ng-repeat = "pallet in dispatch.pallets | filter:text | searchFilter:text:type">
           <div class="item item-divider" ng-click= "showDetails = !showDetails">
