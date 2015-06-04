@@ -122,7 +122,7 @@
                     console.log("group has dispatch" + x);
                     var obj = {};
                     obj["dispatch"] = x;
-                    obj["status"] = "unchecked";
+                    obj["status"] = "incoming";
                     obj["checkedPallets"] = 0;
                     obj["numPallets"] = groups[x].length;
                     obj["customerID"] = (groups[x])[0].CustomerID;
@@ -131,8 +131,6 @@
                     data.push(obj);
                 }
             }
-            
-  
             updateLocalStorage();
     }
         var addSyncData = function(dispatch) {
@@ -156,10 +154,15 @@
             var history = JSON.parse(window.localStorage['history'] || '[]')
             for(var i = 0; i < data.length; i++)
             {
+                //checks if items of syncdata contains a dispatch
                 if(syncData.some(function(item){
                     return item.DeliveryNoteNumber == data[i].dispatch
-                }))
-                    history.push(data.splice(i,1)[0]);
+                })){
+                    //if it does put it in history and remove it from data
+                    var syncitem = data.splice(i,1)[0]
+                    syncitem["status"]="synced";
+                    history.push(syncitem);
+                }
                 console.log(data);
             }
             updateLocalStorage();

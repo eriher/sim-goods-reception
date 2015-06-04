@@ -18,7 +18,7 @@
       <div ng-if="history.length > 0" class="item item-divider" align-text="center">{{date}}</div>
          <div class="card card_dispatch card_history" ng-repeat="dispatch in history | filter: text | searchFilter:text:type">
             <div class='item item-divider'>
-                <button ng-if="dispatch.status == 'checked' " class="button button-full button-balanced" ng-click='goTo(dispatch.dispatch)'>
+                <button class="button button-full button-balanced" ng-click='goTo(dispatch.dispatch)'>
                 Delivery: {{dispatch.dispatch}}</button>
             </div>
             <div class='item item-body'>

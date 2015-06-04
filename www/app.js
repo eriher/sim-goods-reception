@@ -28,7 +28,7 @@
     'app.signin'
 ])
 
-.run(["$rootScope", "$ionicPlatform", "$ionicHistory", "$state", "$translate", "$ionicPopup", "Signin", "DataStorage", function($rootScope, $ionicPlatform, $ionicHistory, $state, $translate, $ionicPopup, Signin, DataStorage) {
+.run(["$rootScope", "$ionicPlatform", "$ionicHistory", "$state", "$translate", "$ionicPopup",  "$timeout", "Signin", "DataStorage", function($rootScope, $ionicPlatform, $ionicHistory, $state, $translate, $ionicPopup, $timeout, Signin, DataStorage) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)

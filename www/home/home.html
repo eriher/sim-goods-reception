@@ -1,6 +1,6 @@
 <ion-view view-title="{{'NAVTITLE_HOME' | translate }}">
     <div class="bar bar-subheader item-input-inset">
-         <div class="row item-input item-select">
+         <div class="row item-input">
             <div class="col">
                 <label class="item item-input">
                     <i class="icon ion-search placeholder-icon"></i>
@@ -11,11 +11,12 @@
                  <i ng-show="text.length > 0" ng-click="text = ''" class="icon ion-close"></i>
              </div>
              <div class="col">
-                 <select ng-options="item.label | translate for item in items" ng-model="type"></select>
+                 <button class="button button-full button-clear button-positive" ng-click="show()">
+                     {{type.label}}
+                </button>  
              </div>
         </div>
     </div>
-    
   <ion-content class='has-subheader'>
         <ion-refresher on-refresh='refresh()'></ion-refresher>
       <div class="item item-divider" align-text="center">{{date}}</div>
