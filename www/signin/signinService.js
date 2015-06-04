@@ -1,7 +1,7 @@
 (function() {
     angular.module('app.signinService', [])
     
-.factory('Signin',  function($http, Network, $rootScope, $q, DataStorage){
+.factory('Signin',  ["$http", "Network", "$rootScope", "$q", "DataStorage", function($http, Network, $rootScope, $q, DataStorage){
     
     var LOCAL_TOKEN_KEY = 'token';
     var isAuthenticated = false;
@@ -87,5 +87,5 @@
             return user;
         }
     }      
-})
+}])
 }())

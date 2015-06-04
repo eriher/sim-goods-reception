@@ -28,7 +28,7 @@
     'app.signin'
 ])
 
-.run(function($rootScope, $ionicPlatform, $ionicHistory, $state, $translate, $ionicPopup, Signin, DataStorage) {
+.run(["$rootScope", "$ionicPlatform", "$ionicHistory", "$state", "$translate", "$ionicPopup", "Signin", "DataStorage", function($rootScope, $ionicPlatform, $ionicHistory, $state, $translate, $ionicPopup, Signin, DataStorage) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -110,9 +110,9 @@
             $state.go('menu.home');
         }
     }, 140);
-})
+}])
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider) {
   $stateProvider
   .state('menu', {
       cache: false,
@@ -121,9 +121,9 @@
     templateUrl: 'menu/menu.html',
     controller: 'MenuCtrl',
     resolve: {
-        dataReady: function(DataStorage){
+        dataReady: ["DataStorage", function(DataStorage){
             return DataStorage.sync();
-        }
+        }]
     }
   })
   
@@ -135,11 +135,11 @@
             templateUrl: 'home/home.html',
             controller: 'HomeCtrl',
             resolve: {
-                dispatches: function(dataReady, DataStorage){
+                dispatches: ["dataReady", "DataStorage", function(dataReady, DataStorage){
                     return function() {
                         return DataStorage.getData()
                     };
-                }
+                }]
             }
         }
     }
@@ -152,9 +152,9 @@
             templateUrl: 'history/history.html',
             controller: 'HistoryCtrl',
             resolve: {
-                history: function(dataReady, DataStorage){
+                history: ["dataReady", "DataStorage", function(dataReady, DataStorage){
                     return DataStorage.getHistory()
-                }
+                }]
             }
         }
     }
@@ -186,12 +186,12 @@
               templateUrl: 'pallets/pallets.html',
               controller: 'PalletsCtrl',
               resolve: {
-                  dispatch: function(DataStorage, $stateParams){
+                  dispatch: ["DataStorage", "$stateParams", function(DataStorage, $stateParams){
                       return DataStorage.getDispatch($stateParams.dispatch);
-                  },
-                  pallet: function($stateParams) {
+                  }],
+                  pallet: ["$stateParams", function($stateParams) {
                       return $stateParams.pallet
-                  }
+                  }]
               }
             }
         }
@@ -205,5 +205,5 @@
 
   
   $urlRouterProvider.otherwise('/signin/');
-});
+}]);
 }());

@@ -1,7 +1,7 @@
 (function() {
 angular.module('app.services.scan', [])
 
-.factory('Scan', function($state, $ionicViewSwitcher, DataStorage, Toast){
+.factory('Scan', ["$state", "$ionicViewSwitcher", "DataStorage", "Toast", function($state, $ionicViewSwitcher, DataStorage, Toast){
     
     var scan = function(){
         try {
@@ -52,5 +52,5 @@ angular.module('app.services.scan', [])
     return{
         scan : scan
     }
-})
+}])
 }())

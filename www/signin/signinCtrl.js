@@ -1,5 +1,5 @@
 (function(){ angular.module('app.signinCtrl', [])
-.controller('SigninCtrl', function($scope, $state, Signin, $ionicLoading, $ionicViewSwitcher) {
+.controller('SigninCtrl', ["$scope", "$state", "Signin", "$ionicLoading", "$ionicViewSwitcher", function($scope, $state, Signin, $ionicLoading, $ionicViewSwitcher) {
 
     $scope.errror = false;
     
@@ -38,5 +38,5 @@
         Signin.login(user.username, user.password);
   })
 
-})
+}])
 }())

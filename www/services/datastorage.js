@@ -1,7 +1,7 @@
 (function() {
     angular.module('app.services.dataStorage', [])
 
-.factory('DataStorage', function($q, $rootScope, Network, Toast){
+.factory('DataStorage', ["$q", "$rootScope", "Network", "Toast", function($q, $rootScope, Network, Toast){
         var data = [];
         var updateLocalStorage = function() {
             window.localStorage['data'] = JSON.stringify(data);
@@ -203,5 +203,5 @@
         }
     }
     
-})
+}])
 }())

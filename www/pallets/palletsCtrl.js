@@ -1,5 +1,5 @@
 (function(){angular.module('app.palletsCtrl', [])
-.controller('PalletsCtrl', function($scope, $stateParams, $state, Network, $location, $ionicActionSheet, $ionicPopup, $filter, dispatch, pallet, DataStorage) {
+.controller('PalletsCtrl', ["$scope", "$stateParams", "$state", "Network", "$location", "$ionicActionSheet", "$ionicPopup", "$filter", "dispatch", "pallet", "DataStorage", function($scope, $stateParams, $state, Network, $location, $ionicActionSheet, $ionicPopup, $filter, dispatch, pallet, DataStorage) {
 
         $scope.$on('$ionicView.beforeEnter', function () {
                     $scope.items =  
@@ -112,5 +112,5 @@
                     }
            });
         }  
-})
+}])
 }())

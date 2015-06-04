@@ -1,7 +1,7 @@
 (function() {
 angular.module('app.services.toast', [])
 
-.factory('Toast', function($q, $window){
+.factory('Toast', ["$q", "$window", function($q, $window){
         
         var toast = function(message){
             var deferred = $q.defer();
@@ -25,5 +25,5 @@ angular.module('app.services.toast', [])
         toast : toast
     }
 
-})
+}])
 }())

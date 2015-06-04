@@ -1,6 +1,6 @@
 (function(){angular.module('app.translate', ['pascalprecht.translate'])
 
-.config(function ($translateProvider) {
+.config(["$translateProvider", function ($translateProvider) {
   $translateProvider.translations('en-US', {
     
     //Months
@@ -167,6 +167,6 @@
       
   });
   $translateProvider.preferredLanguage('en-US');
-});
+}]);
 
 }());

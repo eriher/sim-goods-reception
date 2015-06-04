@@ -1,7 +1,7 @@
 (function() {
     angular.module('app.services.network', [])
 
-.factory('Network', function($http, $q, Toast){
+.factory('Network', ["$http", "$q", "Toast", function($http, $q, Toast){
         
         var post = function() {
             var deferred = $q.defer();
@@ -55,5 +55,5 @@
                 return post();
             }
         }
-})
+}])
 }())

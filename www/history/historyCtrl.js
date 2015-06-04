@@ -1,5 +1,5 @@
 (function(){angular.module('app.historyCtrl', ['app.translate'])
-.controller('HistoryCtrl', function($scope, $filter, $translate, history) {
+.controller('HistoryCtrl', ["$scope", "$filter", "$translate", "history", function($scope, $filter, $translate, history) {
     
     $scope.history = history;
     $scope.date = new Date().toJSON().slice(0,10);                             
@@ -14,5 +14,5 @@
     }
     $scope.type = $scope.items[0];
     
-})
+}])
 }())

@@ -1,5 +1,5 @@
 (function(){angular.module('app.homeCtrl', ['app.translate'])
-.controller('HomeCtrl', function($scope, $state, DataStorage, $translate, dispatches) {
+.controller('HomeCtrl', ["$scope", "$state", "DataStorage", "$translate", "dispatches", function($scope, $state, DataStorage, $translate, dispatches) {
 
     $scope.date = new Date().toJSON().slice(0,10);
     $scope.dispatches = dispatches();
@@ -25,5 +25,5 @@
             $scope.dispatches = dispatches();
         });
     };
-})
+}])
 }())

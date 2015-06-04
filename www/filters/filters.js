@@ -22,7 +22,7 @@
     
   };
 })
-    .filter('groupByMonthYear', function($parse) {
+    .filter('groupByMonthYear', ["$parse", function($parse) {
     var dividers = {};
 
     return function(input) {
@@ -56,5 +56,5 @@
 
         return output;
     };
-})
+}])
 })()
