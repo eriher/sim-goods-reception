@@ -7,10 +7,10 @@
                     $scope.text = pallet;
             }
         })
-        
         $scope.swipeRight = function(){
             $scope.$parent.back();
         }
+        $scope.navTitle = dispatch.dispatch;
         $scope.dispatch = dispatch;
         $scope.items =  
     [{
