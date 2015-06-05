@@ -39,9 +39,9 @@
         text: "OrderNumber",
      },
     {
-        value: "supplierID",
-        label: "supplierID",
-        text: "supplierID",
+        value: "SupplierID",
+        label: "SupplierID",
+        text: "SupplierID",
     }
     ]
     $scope.type = $scope.items[0];

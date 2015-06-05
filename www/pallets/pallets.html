@@ -36,7 +36,11 @@
                     <div class="col">{{'PALLETS_QUANTITY'|translate}}: {{pallet.Qty}}</div>
                     <div class="col">{{'PALLETS_STATUS'|translate}}: {{pallet.status}}</div> 
                 </div>
-                <button class="button button-full button-positive" ng-click="affirmWindow(pallet)">{{'BUTTON_PALLETS_AFFIRM'|translate}}</button>
+              <div class="row responsive-sm">
+                  <div class="col">Supplier ID: {{pallet.SupplierID}}</div>
+                  <div class="col">Customer ID: {{pallet.CustomerID}}</div> 
+              </div>
+            <button class="button button-full button-positive" ng-click="affirmWindow(pallet)">{{'BUTTON_PALLETS_AFFIRM'|translate}}</button>
             </div>
         </item>
       </ion-list>
