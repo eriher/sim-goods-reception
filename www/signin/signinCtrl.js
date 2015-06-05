@@ -32,11 +32,5 @@
             
     });
 
-    //Event fires when server returns http 401 (unAuthenticated), tries to login the user again
-    $scope.$on('event:auth-loginRequired', function(e, rejection) {
-        var user = JSON.parse(window.localStorage['user'] || '{}');
-        Signin.login(user.username, user.password);
-  })
-
 }])
 }())
