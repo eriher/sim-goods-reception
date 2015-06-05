@@ -7,17 +7,6 @@
         console.log(id);
         $state.go('menu.pallets', {dispatch : id });
     }
-    $scope.items =  
-    [{
-         value: "",
-        label: "---",
-        text: "---",
-    }]
-    for(var x in $scope.dispatches[0]){
-        if(!(x === "pallets" || x == "$$hashKey"))
-            $scope.items.push({value: x, label: x, text: x});
-    }
-    $scope.type = $scope.items[0];
     
     $scope.refresh= function(){
         DataStorage.sync().then(function(success){
@@ -25,7 +14,35 @@
             $scope.dispatches = dispatches();
         });
     };
-            $scope.show = function() {
+    $scope.items =  
+    [{
+        value: "",
+        label: "---",
+        text: "---",
+    },
+    {
+        value: "dispatch",
+        label: "dispatch",
+        text: "dispatch",
+    },
+    {
+        value: "status",
+        label: "status",
+        text: "status",
+    },
+    {
+        value: "customerID",
+        label: "customerID",
+        text: "customerID",
+    },
+    {
+        value: "supplierID",
+        label: "supplierID",
+        text: "supplierID",
+    }
+    ]
+    $scope.type = $scope.items[0];
+            $scope.selectType = function() {
            var hideSheet = $ionicActionSheet.show({
                      buttons: $scope.items,
                      titleText: "filter",

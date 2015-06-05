@@ -1,6 +1,6 @@
 <ion-view view-title="{{'NAVTITLE_HOME' | translate }}">
     <div class="bar bar-subheader item-input-inset">
-         <div class="row item-input">
+         <div class="row item-input item-select">
             <div class="col">
                 <label class="item item-input">
                     <i class="icon ion-search placeholder-icon"></i>
@@ -11,8 +11,8 @@
                  <i ng-show="text.length > 0" ng-click="text = ''" class="icon ion-close"></i>
              </div>
              <div class="col">
-                 <button class="button button-full button-clear button-positive" ng-click="show()">
-                     {{type.label}}
+                 <button class="button button-full button-clear button-positive" ng-click="selectType()">
+                     {{type.text}}
                 </button>  
              </div>
         </div>

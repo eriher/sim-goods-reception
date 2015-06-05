@@ -9,8 +9,10 @@
                 </label>
              </div>
              <div class="col col-10"><i ng-show="text.length > 0" ng-click="text = ''" class="icon ion-close"></i></div>
-            <div class="col">        
-                    <select ng-options="item.label | translate for item in items" ng-model="type"></select>
+             <div class="col">
+                <button class="button button-full button-clear button-positive" ng-click="selectType()">
+                     {{type.text}}
+                </button>  
              </div>
         </div>
     </div>
