@@ -17,8 +17,8 @@
     $scope.items =  
     [{
         value: "",
-        label: "---",
-        text: "---",
+        label: "------",
+        text: "------",
     },
     {
         value: "dispatch",

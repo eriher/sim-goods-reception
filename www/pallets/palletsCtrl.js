@@ -15,8 +15,8 @@
         $scope.items =  
     [{
         value: "",
-        label: "---",
-        text: "---",
+        label: "------",
+        text: "------",
     },
     {
         value: "StoolID",

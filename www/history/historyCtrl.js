@@ -1,13 +1,13 @@
 (function(){angular.module('app.historyCtrl', ['app.translate'])
-.controller('HistoryCtrl', ["$scope", "$filter", "$translate", "history", function($scope, $filter, $translate, history) {
+.controller('HistoryCtrl', ["$scope", "$filter", "$translate", "history","$ionicActionSheet", function($scope, $filter, $translate, history, $ionicActionSheet) {
     
     $scope.history = history;
     $scope.date = new Date().toJSON().slice(0,10);                             
     $scope.items =  
     [{
         value: "",
-        label: "---",
-        text: "---",
+        label: "------",
+        text: "------",
     },
     {
         value: "dispatch",
