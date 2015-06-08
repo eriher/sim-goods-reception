@@ -22,7 +22,6 @@
         */
         var getUserInfo = function() {
             var deferred = $q.defer();
-            try
             intel.security.secureStorage.read(
             function(instanceID){
                 return intel.security.secureData.getData(
