@@ -2,41 +2,67 @@
 .controller('PalletsCtrl', ["$scope", "$stateParams", "$state", "Network", "$location", "$ionicActionSheet", "$ionicPopup", "$filter", "dispatch", "pallet", "DataStorage", function($scope, $stateParams, $state, Network, $location, $ionicActionSheet, $ionicPopup, $filter, dispatch, pallet, DataStorage) {
 
         $scope.$on('$ionicView.beforeEnter', function () {
-                    $scope.items =  
-        [{
-            value: "",
-            label: "---"
-        }]
-        
-        for(var x in dispatch.pallets[0])
-            if(!(x === "$$hashKey"))
-                $scope.items.push({value: x, label: x.slice(0,10)});
-        $scope.type = $scope.items[0];
             if(pallet){
-                    $scope.type = $scope.items[7];
+                    $scope.type = $scope.items[1];
                     $scope.text = pallet;
             }
         })
-        
         $scope.swipeRight = function(){
             $scope.$parent.back();
         }
-        
-        $scope.items =  
-        [{
-            value: "",
-            label: "---"
-        }]
-        
-        for(var x in dispatch.pallets[0])
-            if(!(x === "$$hashKey"))
-                $scope.items.push({value: x, label: x.slice(0,10)});
-        $scope.type = $scope.items[0];
-        
+        $scope.navTitle = dispatch.dispatch;
         $scope.dispatch = dispatch;
-        $scope.navTitle= 'Dispatch: '+dispatch.dispatch;
+        $scope.items =  
+    [{
+        value: "",
+        label: "------",
+        text: "------",
+    },
+    {
+        value: "StoolID",
+        label: "StoolID",
+        text: "StoolID",
+    },
+    {
+        value: "status",
+        label: "status",
+        text: "status",
+    },
+    {
+        value: "ArticleNumber",
+        label: "ArticleNumber",
+        text: "ArticleNumber",
+    },
+     {
+          value: "OrderNumber",
+        label: "OrderNumber",
+        text: "OrderNumber",
+     },
+    {
+        value: "SupplierID",
+        label: "SupplierID",
+        text: "SupplierID",
+    }
+    ]
+    $scope.type = $scope.items[0];
     
-        $scope.show = function(pallet) {
+    $scope.selectType = function() {
+       var hideSheet = $ionicActionSheet.show({
+                 buttons: $scope.items,
+                 titleText: "filter",
+                 cancelText: "cancel",
+                 cancel: function() {
+                        hideSheet();
+                },
+                buttonClicked: function(index) {
+                    $scope.type = $scope.items[index];
+                    return true;
+                }
+           });
+    }
+    
+    
+        $scope.affirmWindow = function(pallet) {
             var quantity = pallet.Qty;
             $scope.adjust = quantity;
                // Show the action sheet

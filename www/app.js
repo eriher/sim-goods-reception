@@ -28,7 +28,7 @@
     'app.signin'
 ])
 
-.run(["$rootScope", "$ionicPlatform", "$ionicHistory", "$state", "$translate", "$ionicPopup", "Signin", "DataStorage", function($rootScope, $ionicPlatform, $ionicHistory, $state, $translate, $ionicPopup, Signin, DataStorage) {
+.run(["$rootScope", "$ionicPlatform", "$ionicHistory", "$state", "$translate", "$ionicPopup",  "$timeout", "Signin", "DataStorage", "$ionicViewSwitcher", function($rootScope, $ionicPlatform, $ionicHistory, $state, $translate, $ionicPopup, $timeout, Signin, DataStorage, $ionicViewSwitcher) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -55,18 +55,20 @@
         states[Connection.CELL]     = 'Cell generic connection';
         states[Connection.NONE]     = 'No network connection';
   
-        //Auto login 
+        //Auto login
         DataStorage.getUserInfo().then(function(success) {
             if(states[networkState] != 'No network connection'){
+                //Internet connection, login the user
                 Signin.login(success.username, success.password)
             }
             else{
-                console.log('No internet but saved user! Go home');
+                //No internet but saved user! Go to Home.
                 $rootScope.$broadcast('event:auth-loginConfirmed', status);
-            }
-                 
+            }        
+        },
+        function(error){
+            //No saved user, do nothing.
         });
-        //For Intel Security API
         
          
         // 
@@ -104,6 +106,7 @@
             
         } 
         else {
+             $ionicViewSwitcher.nextDirection("backward"); 
             $ionicHistory.nextViewOptions({
                 disableBack: true
                 });

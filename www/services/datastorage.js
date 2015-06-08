@@ -58,6 +58,7 @@
         var syncData = [];
         var deferred = $q.defer();
     if(window.localStorage['syncData']){
+        //Unsynced data in local storage.
         console.log("unsynced data")
         Network.post().then(function(succes){
             moveToSynced();
@@ -68,34 +69,36 @@
         })
     }
     else{
+        //No unsynced data, get new data.
         Network.dbTestData().then(function(success){
-            if(success[0].data[0].DeliveryNoteNumber == "Invalid token")
-            {
-                getUserInfo().then(function(success){
-                    Network.login(success.username, success.password).then(function(data){
-                        window.localStorage.setItem("token", data[0].Token)
-                        sync().then(function(success){
-                            deferred.resolve();
-                        });
-                    }, function(fail){
-                        console.log(fail);
+                if(success[0].data[0].DeliveryNoteNumber == "Invalid token"){
+                    //If token is unvalid, login the user and try again.
+                    getUserInfo().then(function(success){
+                        Network.login(success.username, success.password).then(function(data){
+                            window.localStorage.setItem("token", data[0].Token)
+                            sync().then(function(success){
+                                deferred.resolve();
+                            });
+                        }, function(fail){
+                            console.log(fail);
+                        })
                     })
-                })
-            }
-            else{
-                for(var i =0; i < success.length; i++)
-                    for(var j =0; j < success[i].data.length; j++)
-                        syncData.push(success[i].data[j]);
-                structure(syncData);
-                deferred.resolve();     
-            }
-        },function(fail){
-            console.log("fail in datastorage");
-            deferred.resolve();
-        })
-    }   
-        return deferred.promise
-        }
+                }
+                else{
+                    //If token is valid, structure the data
+                    for(var i =0; i < success.length; i++)
+                        for(var j =0; j < success[i].data.length; j++)
+                            syncData.push(success[i].data[j]);
+                    structure(syncData);
+                    deferred.resolve();     
+                }
+            },function(fail){
+                console.log("fail in datastorage");
+                deferred.resolve();
+            })
+        }   
+    return deferred.promise
+    }
     
         function structure(indata) {
             var groups = {};
@@ -122,7 +125,7 @@
                     console.log("group has dispatch" + x);
                     var obj = {};
                     obj["dispatch"] = x;
-                    obj["status"] = "unchecked";
+                    obj["status"] = "incoming";
                     obj["checkedPallets"] = 0;
                     obj["numPallets"] = groups[x].length;
                     obj["customerID"] = (groups[x])[0].CustomerID;
@@ -131,8 +134,6 @@
                     data.push(obj);
                 }
             }
-            
-  
             updateLocalStorage();
     }
         var addSyncData = function(dispatch) {
@@ -156,10 +157,15 @@
             var history = JSON.parse(window.localStorage['history'] || '[]')
             for(var i = 0; i < data.length; i++)
             {
+                //checks if items of syncdata contains a dispatch
                 if(syncData.some(function(item){
                     return item.DeliveryNoteNumber == data[i].dispatch
-                }))
-                    history.push(data.splice(i,1)[0]);
+                })){
+                    //if it does put it in history and remove it from data
+                    var syncitem = data.splice(i,1)[0]
+                    syncitem["status"]="synced";
+                    history.push(syncitem);
+                }
                 console.log(data);
             }
             updateLocalStorage();

@@ -12,8 +12,7 @@ angular.module('app.services.scan', [])
                         switch(scanId.charAt(0)) {
                                 case 'N' :
                                     scanId = scanId.replace('N','');
-                                    if(DataStorage.dispatchExist(scanId))
-                                    {
+                                    if(DataStorage.dispatchExist(scanId)){
                                         $ionicViewSwitcher.nextDirection("forward"); 
                                         $state.go('menu.pallets', {dispatch : scanId});
                                     }
@@ -23,8 +22,7 @@ angular.module('app.services.scan', [])
                                 case 'S' :
                                     scanId = scanId.replace('S','');
                                     var result = DataStorage.palletExist(scanId);    
-                                    if(result)
-                                    {   
+                                    if(result){   
                                         $ionicViewSwitcher.nextDirection("forward"); 
                                         $state.go('menu.pallets',{dispatch: result, pallet: scanId})
                                     }
@@ -48,7 +46,7 @@ angular.module('app.services.scan', [])
         catch (exc) {
             Toast.toast("Scan failed");
         }
-        }
+    }
     return{
         scan : scan
     }
