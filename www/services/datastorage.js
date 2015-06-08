@@ -1,14 +1,28 @@
+    /**
+    *
+    *Handles storage, getting and structuring of data
+    *
+    **/
 (function() {
     angular.module('app.services.dataStorage', [])
 
 .factory('DataStorage', ["$q", "$rootScope", "Network", "Toast", function($q, $rootScope, Network, Toast){
-        var data = [];
-        var updateLocalStorage = function() {
+        
+    //variablee for storing most data in application, should probably move over to using local storage directly
+    var data = [];
+        
+    //updates localstorage, to be called after data hase been altered. Should be replaced with some double data binding
+    var updateLocalStorage = function() {
             window.localStorage['data'] = JSON.stringify(data);
         }
-        
+    
+        /*
+        Gets userinfo from intel secure storage
+        returns: object user {username, passowrd}
+        */
         var getUserInfo = function() {
             var deferred = $q.defer();
+            try
             intel.security.secureStorage.read(
             function(instanceID){
                 return intel.security.secureData.getData(
@@ -29,10 +43,15 @@
             return deferred.promise;
         }
 
-        
+    //Getter for data array
     var getData = function() {
         return data;
     }
+    /*
+    *Get delivery by deliverynotenumber
+    *expects: deliverynotenumber
+    *returns: if exist: delivery object, else: null
+    */
     var getDispatch = function(id) {
         console.log("getpallets"+id)
         for(var i = 0; i<data.length; i++)
@@ -40,6 +59,11 @@
                 return data[i];
         return null;
     }
+    /*
+    *Checks if a stool exists
+    *expects: stoolid
+    *returns: if exists: delivernotenumber with existing stool, else: null
+    */
     var palletExist = function(id) {
         for(var i = 0; i<data.length; i++)
             for(var j = 0; i<data[i].pallets.length; i++)
@@ -47,29 +71,38 @@
                     return data[i].dispatch;
         return null;
     }
+    /*
+    *Checks if a delivery exists
+    *expects: stoolid
+    *returns: if exists: true , else: false
+    */
     var dispatchExist = function(id) {
         if(getDispatch(id))
             return true;
         else
             return false;
     }
+    /*
+    *Syncs data with server
+    */
     var sync = function() {
         data = JSON.parse(window.localStorage['data'] || '[]');
         var syncData = [];
         var deferred = $q.defer();
     if(window.localStorage['syncData']){
-        //Unsynced data in local storage.
-        console.log("unsynced data")
+        //Unsynced data in local storage, post to server.
         Network.post().then(function(succes){
-            moveToSynced();
+            //move synced data to history and remove it from syncdata
+            moveToHistory();
             window.localStorage.removeItem('syncData');
+            //call sync again
             sync().then(function(success){
                 deferred.resolve();
             });
         })
     }
     else{
-        //No unsynced data, get new data.
+        //No unsynced data, get data from server.
         Network.dbTestData().then(function(success){
                 if(success[0].data[0].DeliveryNoteNumber == "Invalid token"){
                     //If token is unvalid, login the user and try again.
@@ -99,20 +132,24 @@
         }   
     return deferred.promise
     }
-    
+        /*
+        *structures data for usage in the app. Data recieved is unstructured, will be grouped by deliverynotenumber
+        *expects: array of objects
+        *returns: array of objects grouped by deliverynotenumber
+        */
         function structure(indata) {
             var groups = {};
 
             for(var i = 0; i < indata.length; i++) {
                 var item = indata[i];
-
+                
                 if(!groups[item.DeliveryNoteNumber]) {
                     groups[item.DeliveryNoteNumber] = [];
                 }
                 item["status"] = "unchecked";
                 groups[item.DeliveryNoteNumber].push(item);
             }
-            
+            //checks if dispatch was already in localstorage
             for(var i = 0; i < data.length; i++){
                 if(groups[data[i].dispatch]){
                     console.log("found existing dispatch")
@@ -136,6 +173,10 @@
             }
             updateLocalStorage();
     }
+        /**
+        *adds data to syncdata localstorage
+        *expects: object dispatch
+        */
         var addSyncData = function(dispatch) {
             console.log("addsyncdata"+dispatch.dispatch);
             var syncData = JSON.parse(window.localStorage['syncData'] || '[]');
@@ -150,9 +191,10 @@
             syncData.push(obj)
             window.localStorage["syncData"] =  JSON.stringify(syncData);
         }
-        
-        var moveToSynced = function(){
-            console.log("moveToSynced")
+        /**
+        *moves syncdata to history
+        **/
+        var moveToHistory = function(){
             var syncData = JSON.parse(window.localStorage['syncData']);
             var history = JSON.parse(window.localStorage['history'] || '[]')
             for(var i = 0; i < data.length; i++)
@@ -172,7 +214,7 @@
             console.log("store history")
             window.localStorage['history'] = JSON.stringify(history);
         }
-        
+        //getter for history, not really needed can just be called in controllers
         var getHistory = function() {
             return JSON.parse(window.localStorage['history'] || '[]')
         }

@@ -1,3 +1,6 @@
+/*
+*Handles toast messages, uses showlongtop preset for now..
+*/
 (function() {
 angular.module('app.services.toast', [])
 

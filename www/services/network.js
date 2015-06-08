@@ -1,13 +1,18 @@
+/**
+*Handles network communication
+*/
 (function() {
     angular.module('app.services.network', [])
-
 .factory('Network', ["$http", "$q", "Toast", function($http, $q, Toast){
         
+    //placeholder post
         var post = function() {
             var deferred = $q.defer();
             deferred.resolve();
             return deferred.promise;
     }
+        //gets data from restful webserver, gets data for all customerids. 
+        //token and customerid is gathered from localstorage
         var dbTestData = function(){
             var customerIDS = JSON.parse(window.localStorage['customerIDS']);
             var promises = customerIDS.map(function(customerID) {
@@ -17,7 +22,8 @@
             });
             return $q.all(promises);
         }
-        
+        //handles login, sends username and password
+        //returns token and customerids
         var login = function(name, password){
             var deferred = $q.defer();
             $http.get('http://sim.apper.se/WCF.Sandbox/Test.svc/REST/Test/login', {

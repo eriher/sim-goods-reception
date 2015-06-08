@@ -1,3 +1,9 @@
+/**
+*Handles the scanning process
+*Scanning of deliverynote and stoolid is supported
+*If items exists in local data user will be taken to corresponding view
+*/
+
 (function() {
 angular.module('app.services.scan', [])
 
