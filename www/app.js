@@ -55,18 +55,20 @@
         states[Connection.CELL]     = 'Cell generic connection';
         states[Connection.NONE]     = 'No network connection';
   
-        //Auto login 
+        //Auto login
         DataStorage.getUserInfo().then(function(success) {
             if(states[networkState] != 'No network connection'){
+                //Internet connection, login the user
                 Signin.login(success.username, success.password)
             }
             else{
-                console.log('No internet but saved user! Go home');
+                //No internet but saved user! Go to Home.
                 $rootScope.$broadcast('event:auth-loginConfirmed', status);
-            }
-                 
+            }        
+        },
+        function(error){
+            //No saved user, do nothing.
         });
-        //For Intel Security API
         
          
         // 

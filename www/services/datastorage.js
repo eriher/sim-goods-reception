@@ -58,6 +58,7 @@
         var syncData = [];
         var deferred = $q.defer();
     if(window.localStorage['syncData']){
+        //Unsynced data in local storage.
         console.log("unsynced data")
         Network.post().then(function(succes){
             moveToSynced();
@@ -68,34 +69,36 @@
         })
     }
     else{
+        //No unsynced data, get new data.
         Network.dbTestData().then(function(success){
-            if(success[0].data[0].DeliveryNoteNumber == "Invalid token")
-            {
-                getUserInfo().then(function(success){
-                    Network.login(success.username, success.password).then(function(data){
-                        window.localStorage.setItem("token", data[0].Token)
-                        sync().then(function(success){
-                            deferred.resolve();
-                        });
-                    }, function(fail){
-                        console.log(fail);
+                if(success[0].data[0].DeliveryNoteNumber == "Invalid token"){
+                    //If token is unvalid, login the user and try again.
+                    getUserInfo().then(function(success){
+                        Network.login(success.username, success.password).then(function(data){
+                            window.localStorage.setItem("token", data[0].Token)
+                            sync().then(function(success){
+                                deferred.resolve();
+                            });
+                        }, function(fail){
+                            console.log(fail);
+                        })
                     })
-                })
-            }
-            else{
-                for(var i =0; i < success.length; i++)
-                    for(var j =0; j < success[i].data.length; j++)
-                        syncData.push(success[i].data[j]);
-                structure(syncData);
-                deferred.resolve();     
-            }
-        },function(fail){
-            console.log("fail in datastorage");
-            deferred.resolve();
-        })
-    }   
-        return deferred.promise
-        }
+                }
+                else{
+                    //If token is valid, structure the data
+                    for(var i =0; i < success.length; i++)
+                        for(var j =0; j < success[i].data.length; j++)
+                            syncData.push(success[i].data[j]);
+                    structure(syncData);
+                    deferred.resolve();     
+                }
+            },function(fail){
+                console.log("fail in datastorage");
+                deferred.resolve();
+            })
+        }   
+    return deferred.promise
+    }
     
         function structure(indata) {
             var groups = {};
