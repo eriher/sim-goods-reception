@@ -115,6 +115,9 @@
     }, 140);
 }])
 
+/**
+*Navigation: contains navigation structure, it also contains resolving of data for controllers
+**/
 .config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider) {
   $stateProvider
   .state('menu', {
@@ -124,6 +127,7 @@
     templateUrl: 'menu/menu.html',
     controller: 'MenuCtrl',
     resolve: {
+        //this  will make sure no other view is loaded until data is synced
         dataReady: ["DataStorage", function(DataStorage){
             return DataStorage.sync();
         }]
