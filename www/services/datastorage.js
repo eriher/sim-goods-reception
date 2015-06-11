@@ -94,16 +94,17 @@
             //move synced data to history and remove it from syncdata
             moveToHistory();
             window.localStorage.removeItem('syncData');
+            deferred.resolve();
             //call sync again
-            sync().then(function(success){
-                deferred.resolve();
-            });
+            //sync().then(function(success){
+            //    deferred.resolve();
+            //});
         })
     }
     else{
         //No unsynced data, get data from server.
         Network.dbTestData().then(function(success){
-                if(success[0].data[0].DeliveryNoteNumber == "Invalid token"){
+                if(success.data.DeliveryNoteNumber == "Invalid token"){
                     //If token is unvalid, login the user and try again.
                     getUserInfo().then(function(success){
                         Network.login(success.username, success.password).then(function(data){
@@ -118,10 +119,8 @@
                 }
                 else{
                     //If token is valid, structure the data
-                    for(var i =0; i < success.length; i++)
-                        for(var j =0; j < success[i].data.length; j++)
-                            syncData.push(success[i].data[j]);
-                    structure(syncData);
+                    structure(success.data);
+                    console.log(data);
                     deferred.resolve();     
                 }
             },function(fail){
