@@ -1,5 +1,3 @@
 # sim-goods-reception
 
-Plugins: 
-ionic plugin add org.apache.cordova.network-information
-ionic plugin add org.apache.cordova.globalization
+Användes för presentation, använder json server för att generera test data.
