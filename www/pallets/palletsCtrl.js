@@ -1,18 +1,23 @@
 (function(){angular.module('app.palletsCtrl', [])
 .controller('PalletsCtrl', ["$scope", "$stateParams", "$state", "Network", "$location", "$ionicActionSheet", "$ionicPopup", "$filter", "dispatch", "pallet", "DataStorage", function($scope, $stateParams, $state, Network, $location, $ionicActionSheet, $ionicPopup, $filter, dispatch, pallet, DataStorage) {
-
-        $scope.$on('$ionicView.beforeEnter', function () {
-            if(pallet){
-                    $scope.type = $scope.items[1];
-                    $scope.text = pallet;
-            }
-        })
-        $scope.swipeRight = function(){
-            $scope.$parent.back();
+    //checks if pallet is sent as route parameter, this is done during a scan
+    $scope.$on('$ionicView.beforeEnter', function () {
+        if(pallet){
+                //sets type in filter to palletID
+                $scope.type = $scope.items[1];
+                $scope.text = pallet;
         }
-        $scope.navTitle = dispatch.dispatch;
-        $scope.dispatch = dispatch;
-        $scope.items =  
+    })
+    //enables swipe to go back
+    $scope.swipeRight = function(){
+        $scope.$parent.back();
+    }
+    //sets navtitle to dispatchnumber
+    $scope.navTitle = dispatch.dispatch;
+    //contains data for the dispatch, is used to populate the html
+    $scope.dispatch = dispatch;
+    //contains the different filter options    
+    $scope.items =  
     [{
         value: "",
         label: "------",
@@ -44,8 +49,10 @@
         text: "SupplierID",
     }
     ]
+    //the default filter selection
     $scope.type = $scope.items[0];
     
+    //select filter, uses ionic actionsheet
     $scope.selectType = function() {
        var hideSheet = $ionicActionSheet.show({
                  buttons: $scope.items,
