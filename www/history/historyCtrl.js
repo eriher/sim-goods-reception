@@ -1,3 +1,8 @@
+/*
+    Controller for History module.
+    Contains funtionality for displaying synced dispatches.
+*/
+
 (function(){angular.module('app.historyCtrl', ['app.translate'])
 .controller('HistoryCtrl', ["$scope", "$filter", "$translate", "history","$ionicActionSheet", function($scope, $filter, $translate, history, $ionicActionSheet) {
     
@@ -31,6 +36,8 @@
     }
     ]
     $scope.type = $scope.items[0];
+    
+    // Filter function, should be moved to own directive
     $scope.selectType = function() {
         var hideSheet = $ionicActionSheet.show({
             buttons: $scope.items,

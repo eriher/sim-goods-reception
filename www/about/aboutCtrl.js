@@ -1,3 +1,8 @@
+/*
+    Controller for About module.
+    Contains function for changing language.
+*/
+
 (function(){
     angular.module('app.aboutCtrl', ['app.translate'])
 

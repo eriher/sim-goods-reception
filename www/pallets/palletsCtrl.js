@@ -1,51 +1,57 @@
+/*
+    Controller for Pallets module.
+    Contains functonality to display dispatch notes.
+*/
+
 (function(){angular.module('app.palletsCtrl', [])
 .controller('PalletsCtrl', ["$scope", "$stateParams", "$state", "Network", "$location", "$ionicActionSheet", "$ionicPopup", "$filter", "dispatch", "pallet", "DataStorage", function($scope, $stateParams, $state, Network, $location, $ionicActionSheet, $ionicPopup, $filter, dispatch, pallet, DataStorage) {
 
-        $scope.$on('$ionicView.beforeEnter', function () {
-            if(pallet){
-                    $scope.type = $scope.items[1];
-                    $scope.text = pallet;
-            }
-        })
-        $scope.swipeRight = function(){
-            $scope.$parent.back();
+        
+    $scope.$on('$ionicView.beforeEnter', function () {
+        if(pallet){
+                $scope.type = $scope.items[1];
+                $scope.text = pallet;
         }
-        $scope.navTitle = dispatch.dispatch;
-        $scope.dispatch = dispatch;
-        $scope.items =  
-    [{
-        value: "",
-        label: "------",
-        text: "------",
-    },
-    {
-        value: "StoolID",
-        label: "StoolID",
-        text: "StoolID",
-    },
-    {
-        value: "status",
-        label: "status",
-        text: "status",
-    },
-    {
-        value: "ArticleNumber",
-        label: "ArticleNumber",
-        text: "ArticleNumber",
-    },
-     {
-          value: "OrderNumber",
-        label: "OrderNumber",
-        text: "OrderNumber",
-     },
-    {
-        value: "SupplierID",
-        label: "SupplierID",
-        text: "SupplierID",
+    })
+    $scope.swipeRight = function(){
+        $scope.$parent.back();
     }
-    ]
+    $scope.navTitle = dispatch.dispatch;
+    $scope.dispatch = dispatch;
+    $scope.items =  
+        [{
+            value: "",
+            label: "------",
+            text: "------",
+        },
+        {
+            value: "StoolID",
+            label: "StoolID",
+            text: "StoolID",
+        },
+        {
+            value: "status",
+            label: "status",
+            text: "status",
+        },
+        {
+            value: "ArticleNumber",
+            label: "ArticleNumber",
+            text: "ArticleNumber",
+        },
+         {
+              value: "OrderNumber",
+            label: "OrderNumber",
+            text: "OrderNumber",
+         },
+        {
+            value: "SupplierID",
+            label: "SupplierID",
+            text: "SupplierID",
+        }]
     $scope.type = $scope.items[0];
     
+    // Filter function, should be moved to own directiv
     $scope.selectType = function() {
        var hideSheet = $ionicActionSheet.show({
                  buttons: $scope.items,

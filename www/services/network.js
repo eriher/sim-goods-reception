@@ -14,7 +14,7 @@
         //gets data from restful webserver, gets data for all customerids. 
         //token and customerid is gathered from localstorage
         var dbTestData = function(){
-                return $http.get('http://localhost:3000/pallets/');
+                return $http.get('http://192.168.56.1:3000/pallets/');
         }
         //handles login, sends username and password
         //returns token and customerids

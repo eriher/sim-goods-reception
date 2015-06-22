@@ -14,6 +14,12 @@
    limitations under the License.
    
 */
+
+/*
+    Main module for project.
+    Contains auto-login, auto language settings and navigation.
+*/
+
 (function(){angular.module('app', [
     'ionic',
     'app.translate',
@@ -42,7 +48,9 @@
   });
     
     document.addEventListener("deviceready", onDeviceReady, false);
-
+    
+    // Function gets called when device is ready
+    // Contains auto-login and auto language setting
     function onDeviceReady() {
         var networkState = navigator.connection.type;
         var states = {};
@@ -55,25 +63,23 @@
         states[Connection.CELL]     = 'Cell generic connection';
         states[Connection.NONE]     = 'No network connection';
   
-        //Auto login
+        // Auto login
         DataStorage.getUserInfo().then(function(success) {
             if(states[networkState] != 'No network connection'){
-                //Internet connection, login the user
+                // Internet connection, login the user
                 Signin.login(success.username, success.password)
             }
             else{
-                //No internet but saved user! Go to Home.
+                // No internet but saved user! Go to Home
                 $rootScope.$broadcast('event:auth-loginConfirmed', status);
             }        
         },
         function(error){
-            //No saved user, do nothing.
+            // No saved user, do nothing.
         });
         
-         
-        // 
-        //Get preferred Language and sets it to current language
-        //If preferred language not available in translate.js, use default
+        // Get preferred Language and sets it to current language
+        // If preferred language not available in translate.js, use default
         navigator.globalization.getPreferredLanguage(
         function (language) {
             if(language.value == 'sv-SE' || language.value == 'en-US')
@@ -88,7 +94,6 @@
             console.log ('Error getting language, using default..\n');
         }
         );
-
     };
     
     // For Android and Windows phone, controlling the backbutton!
@@ -103,7 +108,6 @@
                         navigator.app.exitApp();
                     } 
                 });   
-            
         } 
         else {
              $ionicViewSwitcher.nextDirection("backward"); 
