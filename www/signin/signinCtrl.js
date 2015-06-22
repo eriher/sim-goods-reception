@@ -7,8 +7,11 @@
 
     $scope.errror = false;
     
-    // Login function 
-    // expects (string) name, (string) password
+    /* 
+        Login function
+        @param string name
+        @param string password
+    */
     $scope.signIn = function(name, password){
 
             $ionicLoading.show({
