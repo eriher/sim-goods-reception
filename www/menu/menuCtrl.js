@@ -1,3 +1,7 @@
+/*
+    Controller for Menu module.
+    Contains funtionality for sidemenu.
+*/
 (function(){ angular.module('app.menuCtrl', [])
 .controller('MenuCtrl', ["$scope", "$state", "Scan", "$ionicHistory", "Signin", "$ionicViewSwitcher", "DataStorage", "$ionicPopup", function($scope, $state, Scan, $ionicHistory, Signin, $ionicViewSwitcher, DataStorage, $ionicPopup) {
     $scope.me = 5;

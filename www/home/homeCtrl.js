@@ -1,3 +1,7 @@
+/*
+    Controller for Home module.
+    Contains funtionality for filter and retrieving dispatches.
+*/
 (function(){angular.module('app.homeCtrl', ['app.translate'])
 .controller('HomeCtrl', ["$scope", "$state", "DataStorage", "$translate", "dispatches", "$ionicActionSheet" , function($scope, $state, DataStorage, $translate, dispatches, $ionicActionSheet) {
  

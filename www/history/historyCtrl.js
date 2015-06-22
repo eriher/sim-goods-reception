@@ -1,3 +1,7 @@
+/*
+    Controller for History module.
+    Contains funtionality for displaying synced dispatches.
+*/
 (function(){angular.module('app.historyCtrl', ['app.translate'])
 .controller('HistoryCtrl', ["$scope", "$filter", "$translate", "history","$ionicActionSheet", function($scope, $filter, $translate, history, $ionicActionSheet) {
     

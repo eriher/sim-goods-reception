@@ -1,3 +1,7 @@
+/*
+    Controller for Pallets module.
+    Contains functonality to display dispatch notes.
+*/
 (function(){angular.module('app.palletsCtrl', [])
 .controller('PalletsCtrl', ["$scope", "$stateParams", "$state", "Network", "$location", "$ionicActionSheet", "$ionicPopup", "$filter", "dispatch", "pallet", "DataStorage", function($scope, $stateParams, $state, Network, $location, $ionicActionSheet, $ionicPopup, $filter, dispatch, pallet, DataStorage) {
 

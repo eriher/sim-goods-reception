@@ -66,16 +66,6 @@
     filter: alpha(opacity=60); /* For IE8 and earlier */
 }
 
-/*
-ion-nav-view {
-    background-image: url(http://i.imgur.com/07t2mb2.gif);
-}
-
-ion-view{
-    background-image: url(http://i.imgur.com/07t2mb2.gif);
-}
-*/
-
 #icon_red {
     font-size: 32px;
     color : red;
@@ -106,81 +96,7 @@ ion-view{
 .item-body{
     background: #f8f8f8;
 }
-/*
-.card1 {
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    border-top-left-radius: 10px !important;
-    border-top-right-radius: 10px !important;
-    border-bottom-left-radius: 10px !important;
-    border-bottom-right-radius: 10px !important;
-}
 
-.card2 {
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-    border-top-left-radius: 10px !important;
-    border-top-right-radius: 10px !important;
-    border-bottom-left-radius: 10px !important;
-    border-bottom-right-radius: 10px !important;
-}
-#clap {
-        text-align: center;
-        width: 100%;
-}
-
-#input {   
-    text-align: center;
-    width: 100%;
-    border-top-left-radius: 5px !important;
-    border-top-right-radius: 5px !important;
-    border-bottom-left-radius: 5px !important;
-    border-bottom-right-radius: 5px !important;
-    margin-top: 10px;
-    margin-bottom: 10px;  
-}
-#tabul {  
-    margin-top: 30px;
-    text-align: center;
-}
-  
-REMOVED FOR NOW, DOES NOT WORK WELL ON MOBILE PLATFORM
-Courtesy of the fine people at AnuglarJS
-add animate-show to class:
-
-.animate-show {
-  line-height: 20px;
-  opacity: 1;
-  padding: 10px;
-  border: 1px solid black;
-  background: white;
-}
-
-.animate-show.ng-hide-add.ng-hide-add-active,
-.animate-show.ng-hide-remove.ng-hide-remove-active {
-  -webkit-transition: all linear 0.5s;
-  transition: all linear 0.5s;
-}
-
-.animate-show.ng-hide {
-  line-height: 0;
-  opacity: 0;
-  padding: 0 10px;
-}
-
-.icon ion-plus-circled {
-    font-size: 32px;
-    float: right !important;
-    box-shadow: 0 5px 0 #006599;
-}
-
-.icon ion-minus-circled {
-    font-size: 32px;
-    float: right !important;
-    box-shadow: 0 5px 0 #006599;
-}*/
 .float_right{
     float: right !important;
 }
