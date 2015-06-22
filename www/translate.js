@@ -1,3 +1,7 @@
+/*
+    Module for translate
+    Contains english and swedish dictionary.
+*/
 (function(){angular.module('app.translate', ['pascalprecht.translate'])
 
 .config(["$translateProvider", function ($translateProvider) {

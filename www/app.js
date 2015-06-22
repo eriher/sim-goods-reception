@@ -14,6 +14,13 @@
    limitations under the License.
    
 */
+
+/*
+    Main module for project.
+    Contains auto-login, auto language settings and navigation.
+
+*/
+
 (function(){angular.module('app', [
     'ionic',
     'app.translate',
@@ -43,6 +50,8 @@
     
     document.addEventListener("deviceready", onDeviceReady, false);
 
+    // Function gets called when device is ready
+    // Contains auto-login and auto language setting
     function onDeviceReady() {
         var networkState = navigator.connection.type;
         var states = {};

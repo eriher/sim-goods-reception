@@ -1,3 +1,6 @@
+/*
+    Tests for controllers
+*/
 describe('app', function(){
     var scope, translate, controller, service, httpBackend, someServiceMock;
 
@@ -28,10 +31,6 @@ describe('app', function(){
         it('Unit test: menuItems should be 5',function(){
             expect(scope.menuItems.length).toBe(5);
         }); 
- 
-        it('Unit test: test toBe',function(){
-            expect(scope.me).toBe(5);
-        });
        
         it('Scanbtn should be defined',function(){
             expect(scope.scanBtn).toBeDefined();
@@ -59,12 +58,6 @@ describe('app', function(){
        
         // ==== Tests start here =====
 
-            // Unit tests:
-       
-        it('Unit test: Test toBe',function(){
-            expect(scope.me).toBe(5);
-        }); 
-       
        //Still needs some work
         it('Unit test: Test language',function(){
             expect(scope.changeLanguage).toBeDefined();
@@ -73,9 +66,6 @@ describe('app', function(){
    })
    describe('SigninCtrl', function(){
         beforeEach(inject(function($rootScope, $controller, $q, Signin) {
-            //someServiceMock = jasmine.createSpyObj('Signin', ['login']);
-            //someServiceMock.login.andReturn($q.when('weee'));
-            
             scope = $rootScope.$new();
             controller = $controller('SigninCtrl', 
                 {$scope: scope, Signin: Signin});
@@ -84,9 +74,6 @@ describe('app', function(){
         // ==== Tests start here =====
 
         // Unit tests:
-        it('Unit test: test me',function(){
-            expect(scope.me).toBe(5);
-        });
         it('Unit test: test signin',function(){
             expect(scope.signIn).toBeDefined;
         }); 
@@ -116,9 +103,6 @@ describe('app', function(){
         // ==== Tests start here =====
 
         // Unit tests:
-       it('Unit test: test me',function(){
-            expect(scope.me).toBe(5);
-        });
         it('Unit test: test palletId',function(){
             expect(scope.palletId).toBe(2);
         });

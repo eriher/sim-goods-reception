@@ -1,3 +1,6 @@
+/*
+    Tests for services
+*/
 describe("Services", function(){
 
     beforeEach(module("app.services"));
