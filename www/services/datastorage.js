@@ -18,10 +18,11 @@
     
         /*
         Gets userinfo from intel secure storage
-        returns: object user {username, passowrd}
+        returns: promise
         */
         var getUserInfo = function() {
             var deferred = $q.defer();
+            try {
             intel.security.secureStorage.read(
             function(instanceID){
                 return intel.security.secureData.getData(
@@ -39,6 +40,9 @@
                 console.log('fail: code = '+errorObj.code+', message = '+errorObj.message);
                 return undefined;
             },{'id':'1'})
+            } catch (error) {
+                deferred.resolve(JSON.parse(window.localStorage['user']))
+            }
             return deferred.promise;
         }
 

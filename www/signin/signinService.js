@@ -17,8 +17,8 @@
 
             //For Intel Security API
             //Comment for tests
-            
-            intel.security.secureStorage.write(
+            try {
+                intel.security.secureStorage.write(
                 function(){ 
                     console.log('Intel API write: succesful login');
                 },
@@ -26,8 +26,10 @@
                     console.log('Intel API write: fail code = '+errorObj.code+', message = '+errorObj.message);
                 },
                 {'id':'1', 'data': JSON.stringify(user)}
-            );  
-            // 
+            ); 
+            } catch (error) {
+                window.localStorage.setItem("user", JSON.stringify(user));
+            }
             
             console.log("before storetoken:"+data[0].Token);
             authToken = data[0].Token;
@@ -57,12 +59,16 @@
     
         //For Intel Security API 
         //Comment for tests
-        
-        intel.security.secureStorage.delete(    
+        try {
+            intel.security.secureStorage.delete(    
             function(){console.log('Intel API delete: success');},
             function(errorObj){console.log('Intel API delete: fail code = '+errorObj.code+', message = '+errorObj.message);},
             {'id':'1'} 
         );
+        } catch (error) {
+            
+        }
+
         //
         DataStorage.clearData();
         authToken = undefined;
