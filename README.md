@@ -12,6 +12,7 @@ sim goodsreception
 8. ionic build android
 9. ionic emulate android / install in emulator/phone manually or run on windows phone emulator through visual studio if building wp8
 
+
 To run quickly on mobile device use ionic view.
 1. Install ionic view app on phone.
 2. Upload project through ionic cli, ionic upload
