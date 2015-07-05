@@ -17,4 +17,3 @@ To run quickly on mobile device use ionic view.
 2. Upload project through ionic cli, ionic upload
 3. Project will appear in ionic view.
 
-
