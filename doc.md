@@ -1,6 +1,6 @@
 Known issues: can only sync one dispatch at a time.
 
-#Main
+####Main
 Main-modulen kopplar ihop applikationens olika delar och konfigurerar applikationen vid uppstart. Den ansvarar även för navigation mellan de olika vyerna inom applikationen. Ionic använder Angular-UI-Router, en AngularJS modul, vilket är ett navigationssystem baserat på vyer [39]. Det finns stöd för nästlade vyer, vilket används i menyn. Det går även att implementera mer avancerad funktionalitet vid navigation till en vy, som inläsning av data eller anrop till tjänster. Detta leder till en bättre kodstruktur då denna typ av funktionalitet samlas.
 
 Globalization användas för att avgöra vilket språk mobilenheten använder. Denna information används sedan av Translate för att ställa in språket i applikationen. Innehåller även funktionalitet för inhämtning av tidszon.
