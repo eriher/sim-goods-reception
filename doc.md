@@ -43,7 +43,7 @@ About-vyn innehåller information om de licenser applikationen brukar och har fu
 ####SearchFilter
 Filter är en del av AngularJS, de fungerar genom att ta in en mängd element och ge tillbaka en delmängd beroende på villkor. Filter används i applikationen för att filtrera vid sökningen, villkoret är då söksträngen. Användare ska kunna söka efter leveranser och pallar beroende på deras innehåll. Vid vanlig sökning används de filter som är inbyggda i AngularJS. Men problem uppstår när olika fält kan innehålla samma eller delar av samma teckenkombinationer. För att lösa detta används ett filter som ger funktionalitet att söka efter ett specifikt fält.
 
-Services
+###Services
 
 ####DataStorage
 DataStorage ansvarar för synkronisering, sortering och lagring av data. Synkronisering används för att samordna data som finns lokalt på enheten med servern. Synkroniseringen utförs i två steg (Figur 7.5). I det första steget skickas osynkroniserad data till servern om sådan data existerar. I det andra hämtas data. DataStorage använder sig av Network service för att kommunicera med servern. Data som hämtas sorteras efter leverans och behandlas genom tillägg av information som underlättar bearbetning i applikationen. För lagring av data används Web Storage i form av Local Storage. Local Storage används för att lagra leverans-, synkroniserings- och historikdata mellan sessioner. Användarnamn och lösenord sparas även för automatisk inloggning. Local Storage valdes för att det stöds av alla plattformarna.
