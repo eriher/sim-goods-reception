@@ -36,6 +36,7 @@
 ])
 
 .run(["$rootScope", "$ionicPlatform", "$ionicHistory", "$state", "$translate", "$ionicPopup",  "$timeout", "Signin", "DataStorage", "$ionicViewSwitcher", function($rootScope, $ionicPlatform, $ionicHistory, $state, $translate, $ionicPopup, $timeout, Signin, DataStorage, $ionicViewSwitcher) {
+    
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
