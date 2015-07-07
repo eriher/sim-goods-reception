@@ -1,4 +1,4 @@
-sim goodsreception
+sim good sreception
 ===
 
 ### How to run
